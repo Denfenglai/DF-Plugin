@@ -15,6 +15,15 @@
       "contributions": [
         "example"
       ]
+    },
+    {
+      "login": "TimeRainStarSky",
+      "name": "时雨◎星空",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63490117?v=4",
+      "profile": "https://github.com/TimeRainStarSky",
+      "contributions": [
+        "mentoring"
+      ]
     }
   ],
   "contributorsPerLine": 7,
