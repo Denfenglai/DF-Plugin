@@ -1,9 +1,16 @@
 # DF-Plugin
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+![Nodejs](https://img.shields.io/badge/-Node.js-3C873A?style=flat&logo=Node.js&logoColor=white)
+![JavaScript](https://img.shields.io/badge/-JavaScript-eed718?style=flat&logo=javascript&logoColor=ffffff)
+![Static Badge](https://img.shields.io/badge/Yunzai_Bot-V3.0-red)
+![Static Badge](https://img.shields.io/badge/Miao_Yunzai-V3-yellow)
+![Static Badge](https://img.shields.io/badge/TRSS_Yunzai-V3-blue)
 
-### 当前进度：0%
+[![star](https://gitee.com/DenFengLai/DF-Plugin/badge/star.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/stargazers)
+[![fork](https://gitee.com/DenFengLai/DF-Plugin/badge/fork.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/members)
+
+[![Fork me on Gitee](https://gitee.com/DenFengLai/DF-Plugin/widgets/widget_6.svg)](https://gitee.com/DenFengLai/DF-Plugin)
+
+### 当前进度：10%
 
 #### 刨坑....
 适用于Miao-Yunzai和TRSS-Yunzai的拓展插件，打算继承[Yenai-Plugin](https://yenai.trss.me)文件结构（CV），基于此结构进行二创、修改。
@@ -18,7 +25,7 @@ git clone -b master --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugi
 git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
 ```
 
-## 已实现的功能
+## 已实现的功能 🤗
 
 <details><summary>随机图片</summary>
 
@@ -78,6 +85,9 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 - [ ] 删库跑路（×
 
 ## 贡献者 ✨
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 感谢这些了不起的人 ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
