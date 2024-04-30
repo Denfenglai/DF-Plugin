@@ -43,12 +43,15 @@ export class bigPicture extends plugin {
       return;
     }
     await e.reply(`✅ 检测到${img.length}张图片`);
-    
+
     // 获取卡片
     let a, msg;
     for (let i of img) {
-      a = await this.e.bot.uploadImage(`${i}`);
-      msg = await this.DT(a['url'], '喵喵喵！');
+        // 双重编码
+        const encoded = encodeURIComponent(i);
+        a = encodeURIComponent(encoded)
+//      a = await this.e.bot.uploadImage(`${i}`);
+      msg = await this.DT(a, '喵喵喵！');
       e.reply(segment.json(msg));
     }
   }
