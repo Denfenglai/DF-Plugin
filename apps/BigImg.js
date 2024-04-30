@@ -55,7 +55,7 @@ export class bigPicture extends plugin {
 
   /** 
    * 工具函数：卡片签名
-   * @param link - 图片地址列表
+   * @param link - 图片地址
    * @param yx - 卡片外显
    * @return data - 返回数据
    */
