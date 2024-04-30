@@ -28,6 +28,7 @@ export class SummonShigure extends plugin {
 
   async summon(e) {
     if (trss) return;
+    if (e.group.pickMember(id).info) return e.reply('群里没有找到Ta哦')
     trss = true;
     this.userId = id
     this.setContext("食欲")
@@ -41,6 +42,7 @@ export class SummonShigure extends plugin {
   async sb时雨() {
     if (!trss) return
     trss = false
+    e.reply('已结束召唤')
     this.finish("食欲")
   }
   
