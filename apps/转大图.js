@@ -48,7 +48,7 @@ export class bigPicture extends plugin {
     let a, msg;
     for (let i of img) {
       a = await this.e.bot.uploadImage(`${i}`);
-      msg = await this.DT(a['url']);
+      msg = await this.DT(a['url'], '喵喵喵！');
       e.reply(segment.json(msg));
     }
   }
@@ -56,11 +56,12 @@ export class bigPicture extends plugin {
   /** 
    * 工具函数：卡片签名
    * @param link - 图片地址列表
-   * @return msg - 消息列表
+   * @param yx - 卡片外显
+   * @return data - 返回数据
    */
-  async DT(link) {
+  async DT(link, yx = '[图转卡]') {
     logger.mark("卡片签名：", link)
-    const response = await fetch(`http://api.mrgnb.cn/API/qq_ark37.php?url=${link}`);
+    const response = await fetch(`http://api.mrgnb.cn/API/qq_ark37.php?url=${link}&yx=${yx}`);
     const data = await response.text();
     return data;
   }
