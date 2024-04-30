@@ -11,7 +11,7 @@ export class bigPicture extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: '^#?转?大图', // 转大图
+          reg: '^#?(转?大图|图转卡)', // 转大图
           fnc: "imageCard"
         },
       ]
@@ -24,14 +24,14 @@ export class bigPicture extends plugin {
     if (!img) return false
     
     /** 处理参数 */
-    const token = e.msg.replace(/^#?转?大图/, "").trim()
+    const token = e.msg.replace(/#?(转?大图|图转卡)/, "").trim()
     const parts = token.split(':')
     /** 标题 */
     const title = parts[0] ||''
     /** 子标题 */
     const sub = parts[1] || ''
     /** 外显 */
-    const yx = parts[2] || ''
+    const yx = parts[2] || '[DF图转卡]'
     
     let link, msg;
     for (let i of img) {
@@ -79,7 +79,7 @@ export class bigPicture extends plugin {
    * @param yx - 卡片外显
    * @return data - json卡片代码
    */
-  async DT(link, title='', subtitle='', yx='[图转卡]') {
+  async DT(link, title, subtitle, yx) {
     logger.mark("卡片签名:", link)
     const response = await fetch(`http://api.mrgnb.cn/API/qq_ark37.php?url=${link}&title=${title}&subtitle=${subtitle}&yx=${yx}`);
     const data = await response.text();
