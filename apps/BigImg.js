@@ -38,8 +38,7 @@ export class bigPicture extends plugin {
     }
 
     if (_.isEmpty(img)) {
-      this.setContext("_ImageLinkContext");
-      await this.reply("⚠ 请发送图片");
+      await this.reply("⚠ 请回复或带图使用");
       return;
     }
     await e.reply(`✅ 检测到${img.length}张图片`);
