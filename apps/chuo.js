@@ -6,7 +6,7 @@ export class example extends plugin{
         name: '柴郡戳一戳',
         dsc: '戳一戳机器人发送柴郡表情包',
         event: 'notice.group.poke',
-        priority: 1,
+        priority: 114514,
         rule: [{ fnc: 'caochuo' }]
         }
     )
