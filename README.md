@@ -31,46 +31,52 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 - #来张JK / 黑丝 / cos / 腿子
 
+- 从API获取一张图片
+    
 </details>
 
 <details><summary>给主人带话</summary>
-
+      
  - #联系主人 + `消息内容`  
- 
-年久失修，指不定报错
+      
+- 年久失修，指不定报错
 
 </details>
 
 <details><summary>随机网易云</summary>
-
+       
 - #来首歌
+
+- 从API获取一首网易云歌曲
 
 </details>
 
 <details><summary>文字转卡片</summary>
-
+     
 - #文转卡 + `内容:标题:外显`
-
-注：文字内容必填，其他选填   
-
-例：`#文转卡114:514:1919`
+  
+- 注：内容参数必填，其他选填   
+   
+- 例：`#文转卡114:514:1919`
 
 </details>
-
+    
 <details><summary>图片转卡片</summary>
-
-- #图转卡/发大图 + 回复或带图
-
-可选参数：`标题:子标题:外显`  
-
-例：`#图转卡114:514:1919` ＋ 图片
+    
+- #图转卡/发大图 + `图片`
+    
+- 可选参数：`标题:子标题:外显`  
+   
+- 例：`#图转卡114:514:1919` ＋ `图片`
 
 </details>
 
 <details><summary>柴郡戳一戳</summary>
+    
+- 戳一戳返回柴郡猫表情包
 
-- 戳一戳返回柴郡猫表情包（默认开，暂时无法关）
-
+- （默认开，暂时无法关）
+  
 </details>
 
 ## 计划工程 📄
