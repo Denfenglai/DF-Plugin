@@ -1,9 +1,10 @@
 # DF-Plugin
+
 ![Nodejs](https://img.shields.io/badge/-Node.js-3C873A?style=flat&logo=Node.js&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/-JavaScript-eed718?style=flat&logo=javascript&logoColor=ffffff)
-![Static Badge](https://img.shields.io/badge/Yunzai_Bot-V3.0-red)
-![Static Badge](https://img.shields.io/badge/Miao_Yunzai-V3-yellow)
-![Static Badge](https://img.shields.io/badge/TRSS_Yunzai-V3-blue)
+![Yunzai-Bot](https://img.shields.io/badge/Yunzai_Bot-V3.0-red)
+![Miao-Yunzai](https://img.shields.io/badge/Miao_Yunzai-V3-yellow)
+![TRSS-Yunzai](https://img.shields.io/badge/TRSS_Yunzai-V3-blue)
 
 [![star](https://gitee.com/DenFengLai/DF-Plugin/badge/star.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/stargazers)
 [![fork](https://gitee.com/DenFengLai/DF-Plugin/badge/fork.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/members)
@@ -13,7 +14,12 @@
 ### 当前进度：10%
 
 #### 刨坑....
+
 适用于Miao-Yunzai和TRSS-Yunzai的拓展插件，打算继承[Yenai-Plugin](https://yenai.trss.me)文件结构（CV），基于此结构进行二创、修改。
+
+### [Card-Plugin](https://gitee.com/DengFengLai-F/Card-Plugin)
+
+本插件的衍生分支，仅保留了转卡功能，对于只想使用`卡片`功能的用户，可以安装该[插件](https://gitee.com/DengFengLai-F/Card-Plugin)，但是此插件可能不会经常维护，请酌情考虑。
 
 ## 安装教程 💡
 
@@ -121,6 +127,10 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 1. 本项目仅供学习使用，请勿用于商业等场景。  
 
 2. 项目内图片、API等资源均来源于网络，如果侵犯了您的利益请联系我进行删除。
+
+## 意见反馈🍀
+
+如果您对本插件有什么建议或使用遇到了bug欢迎对本项目提交issues，我会尽可能完善。
 
 ## 参与贡献 🎨
 
