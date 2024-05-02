@@ -1,5 +1,4 @@
-import fetch from "node-fetch";
-import { ImageLink } from "../model/imgLink.js"
+import { ImageLink, ImageCard } from "../model/index.js"
 
 export class bigPicture extends plugin {
 
@@ -39,24 +38,8 @@ export class bigPicture extends plugin {
       const encoded = encodeURIComponent(i);
       link = encodeURIComponent(encoded);
       /** 生成卡片代码 */
-      msg = await this.DT(link, title, sub, yx);
+      msg = await ImageCard(link, title, sub, yx);
       await e.reply(segment.json(msg));
     }
-  }
-
-
-  /** 
-   * 工具函数：生成卡片代码
-   * @param link - 图片地址
-   * @param title - 标题
-   * @param subtitle - 子标题
-   * @param yx - 卡片外显
-   * @return data - json卡片代码
-   */
-  async DT(link, title, subtitle, yx) {
-    logger.mark("卡片签名:", link)
-    const response = await fetch(`http://api.mrgnb.cn/API/qq_ark37.php?url=${link}&title=${title}&subtitle=${subtitle}&yx=${yx}`);
-    const data = await response.text();
-    return data;
   }
 }
