@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
+import { TextCard } from "../model/index.js"
 
-export class TextCard extends plugin {
+export class Textcard extends plugin {
 
   constructor() {
     super({
@@ -29,20 +30,7 @@ export class TextCard extends plugin {
     const yx = parts[2] || '[DF文转卡]'
     if (!msg) return e.reply('文字内容不能为空！')
     
-    const data = await this.ark(msg, bt, yx)
+    const data = await TextCard(msg, bt, yx)
     await e.reply(segment.json(data))
  }
- 
-   /**
-    * 生成卡片消息
-    * @param msg - 消息内容
-    * @param bt - 标题
-    * @param yx - 外显
-    * @return data - 卡片数据
-    */
-  async ark(msg, bt, yx) {
-    const response = await fetch(`http://api.mrgnb.cn/API/qq_ark.php?name=${msg}&title=${bt}&yx=${yx}`);
-    const data = await response.text();
-    return data;
-  }
 }
