@@ -117,6 +117,11 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 本段遵循 [all-contributors](https://github.com/all-contributors/all-contributors) 规范，欢迎任何形式的贡献！
 
+## 免责声明💬
+
+1. 本项目仅供学习使用，请勿用于商业等场景。  
+
+2. 项目内图片、API等资源均来源于网络，如果侵犯了您的利益请联系我删除。
 
 ## 参与贡献 🎨
 
