@@ -44,13 +44,13 @@ export class Example extends plugin {
     }
 
     if (!(BotList.includes(Bot_id))) {
-      e.reply("❎ 错误：Bot_id不存在，请检查Bot是否上线或Bot_id错误：\n${Bot_id}");
+      e.reply(`❎ 错误：Bot_id不存在，请检查Bot是否上线或Bot_id错误：\n${Bot_id}`);
       logger.error("[联系主人]致命错误：未找到对应Bot");
       return false;
     }
 
     if (!Bot[Bot_id].fl.get(Master_id)) {
-      e.reply('❎ 错误：Bot未找到主人好友，请检查Master_id是否正确：\n${Master_id}')
+      e.reply(`❎ 错误：Bot未找到主人好友，请检查Master_id是否正确：\n${Master_id}`)
       return false;
     }
 
