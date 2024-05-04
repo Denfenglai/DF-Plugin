@@ -68,6 +68,8 @@ export class Example extends plugin {
       if (master?.length) { masterQQ = master }
     }
     
+    if (Bot[bot].fl.get(masterQQ[0])) return e.reply(`❎ 该Bot暂无主人好友，请尝试自行联系：${masterQQ[0]}`)
+    
     await Bot[bot].pickFriend(masterQQ[0]).sendMsg(msg)
       .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${masterQQ[0]}`))
       .then(() => redis.set(key, '1', { EX: cd }))
