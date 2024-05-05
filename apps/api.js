@@ -32,26 +32,22 @@ export class example extends plugin {
   }
   
   async jk(e) {
-      e.reply(segment.image(`https://api.suyanw.cn/api/jk.php`));
-      return true; 
+    return e.reply(segment.image(`https://api.suyanw.cn/api/jk.php`));
   }
       
   async hs(e) {
-      e.reply(["唉嗨害，黑丝来咯",segment.image(`https://api.suyanw.cn/api/hs.php`)]);   
-      return true;
-      }
+    return e.reply(["唉嗨害，黑丝来咯",segment.image(`https://api.suyanw.cn/api/hs.php`)]);   
+  }
 
   async cos(e) {
-      e.reply(["cos来咯~",segment.image(`https://api.suyanw.cn/api/cos.php`)]);
-      return true;
-        }
+    return e.reply(["cos来咯~",segment.image(`https://api.suyanw.cn/api/cos.php`)]);
+  }
   async kkt(e) {
-      const response = await fetch(`https://api.suyanw.cn/api/meitui.php`);
-      const data = await response.text();
-      const links = data.match(/https?:\/\/[^ ]+/g); // 提取出链接
-      e.reply(["看吧涩批！",segment.image(`${links}`)]);
-      return true;
-      }
-  }      
+    const response = await fetch(`https://api.suyanw.cn/api/meitui.php`);
+    const data = await response.text();
+    const links = data.match(/https?:\/\/[^ ]+/g);
+    return e.reply(["看吧涩批！",segment.image(`${links}`)]);
+  }
+}      
     
   

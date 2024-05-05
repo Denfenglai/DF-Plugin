@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
 import common from '../../../lib/common/common.js';
-//  2024.1.19  5:11 AM
+//  初次编写时间：2024.1.19  5:11 AM
 export class example extends plugin {
   constructor() {
     super({
@@ -10,7 +10,7 @@ export class example extends plugin {
       dsc: '随机网易云音乐',
       event: 'message',
       /** 优先级，数字越小等级越高 */
-      priority: 40,
+      priority: 400,
       rule: [
         {
           /** 命令正则匹配 */
@@ -27,7 +27,7 @@ export class example extends plugin {
         /** 从API获取数据 */ 
         const response = await fetch(`https://api.suyanw.cn/api/neran.php?hh=\n`);
         /** 获取数据失败 */
-        if (!response) return false
+        if (!response) return e.reply('获取歌曲信息失败，请稍后重试！')
         /** 处理数据 */
         const data = await response.text();
         const img = data.match(/https?:\/\/[^ ]+.jpg/g);
