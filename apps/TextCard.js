@@ -28,7 +28,9 @@ export class Textcard extends plugin {
     /** 外显 */
     const yx = parts[2] || '[DF文转卡]'
     
+    /** 生成卡片代码 */
     const data = await TextCard(msg, bt, yx)
+    /** 发送卡片 */
     await e.reply(segment.json(data))
  }
 }
