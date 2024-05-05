@@ -1,4 +1,5 @@
 import fetch from "node-fetch"
+import { Config } from "../components/index.js"
 
 export class example extends plugin{
     constructor(){
@@ -13,7 +14,8 @@ export class example extends plugin{
 }
 
 async caochuo (e){
-    if(e.target_id == e.self_id){
+    if ( !Config.other.chuo ) return false
+    if ( e.target_id == e.self_id ) {
         let Num = Math.floor(Math.random() * 161) + 1;
         let url = `https://i.dengfenglai.icu/柴郡猫/${Num}.png`
         logger.debug(`[DF：柴郡戳一戳] 开始图片任务: ${url} `)

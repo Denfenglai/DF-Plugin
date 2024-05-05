@@ -32,13 +32,12 @@ export class bigPicture extends plugin {
     /** 外显 */
     const yx = parts[2] || '[DF图转卡]'
     
-    let link, msg;
     for (let i of img) {
       /** 编码URL */
       const encoded = encodeURIComponent(i);
-      link = encoded
+      const link = encoded
       /** 生成卡片代码 */
-      msg = await ImageCard(link, title, sub, yx);
+      const msg = await ImageCard(link, title, sub, yx);
       await e.reply(segment.json(msg));
     }
   }
