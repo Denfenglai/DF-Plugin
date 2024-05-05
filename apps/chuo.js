@@ -1,19 +1,19 @@
 import fetch from "node-fetch"
 import { Config } from "../components/index.js"
 
-export class example extends plugin{
+export class Chuo extends plugin{
     constructor(){
     super({
         name: '柴郡戳一戳',
         dsc: '戳一戳机器人发送柴郡表情包',
         event: 'notice.group.poke',
-        priority: 114514,
-        rule: [{ fnc: 'caochuo' }]
+        priority: 114,
+        rule: [{ fnc: 'chuo' }]
         }
     )
 }
 
-async caochuo (e){
+async chuo (e){
     if ( !Config.other.chuo ) return false
     if ( e.target_id == e.self_id ) {
         let Num = Math.floor(Math.random() * 161) + 1;
