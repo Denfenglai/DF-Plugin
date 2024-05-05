@@ -9,7 +9,7 @@ import fetch from "node-fetch";
    * @return data - json卡片代码
    */
   async function ImageCard(link, title, subtitle, yx) {
-    logger.mark("正在签名卡片，请稍候...")
+    logger.mark("正在签名卡片，请稍候...");
     const response = await fetch(`http://api.mrgnb.cn/API/qq_ark37.php?url=${link}&title=${title}&subtitle=${subtitle}&yx=${yx}`);
     const data = await response.text();
     return data;
@@ -23,6 +23,7 @@ import fetch from "node-fetch";
     * @return data - 卡片数据
     */
   async function TextCard(msg, bt, yx) {
+    logger.mark("正在签名卡片，请稍候...");
     const response = await fetch(`http://api.mrgnb.cn/API/qq_ark.php?name=${msg}&title=${bt}&yx=${yx}`);
     const data = await response.text();
     return data;

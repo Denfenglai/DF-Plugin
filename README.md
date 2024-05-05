@@ -45,7 +45,7 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
       
  - #联系主人 + `消息内容`  
       
-- 年久失修，指不定报错
+- 详细配置请见`config/sendMaster.yaml`
 
 </details>
 
@@ -81,7 +81,7 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
     
 - 戳一戳返回柴郡猫表情包
 
-- （默认开，暂时无法关）
+- 可在`config/other.yaml`中开启
   
 </details>
 
@@ -89,9 +89,9 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 - [x] 能跑
 - [x] 能用
+- [x] 支持用户自定义配置
 - [ ] 添加帮助信息和版本信息
 - [ ] 丰富功能、添加模块
-- [ ] 支持用户自定义配置
 - [ ] 持续完善
 - [ ] .......
 - [ ] 删库跑路（×
