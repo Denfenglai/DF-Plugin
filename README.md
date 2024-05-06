@@ -69,11 +69,9 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
     
 <details><summary>图片转卡片</summary>
     
-- #图转卡/发大图 + `图片`
-    
-- 可选参数：`标题:子标题:外显`  
+- ~~#图转卡/发大图 + `图片`~~
    
-- 例：`#图转卡114:514:1919` ＋ `图片`
+- 图转卡被和谐，丸不了辣
 
 </details>
 
