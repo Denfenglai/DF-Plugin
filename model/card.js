@@ -22,7 +22,7 @@ import fetch from "node-fetch";
    * @param yx - 外显
    * @return data - json卡片代码
    */
-  async function TextCard(msg, bt='', yx=) {
+  async function TextCard(msg, bt='', yx='') {
     logger.mark("正在签名卡片，请稍候...");
     const response = await fetch(`http://api.mrgnb.cn/API/qq_ark.php?name=${msg}&title=${bt}&yx=${yx}`);
     const data = await response.text();
