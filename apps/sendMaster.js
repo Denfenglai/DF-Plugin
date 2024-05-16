@@ -42,7 +42,7 @@ export class Example extends plugin {
     const name = e.sender.nickname
     const id   = e.user_id
     const bot  = e.bot.uin
-    const type = e.bot?.version.id || 'QQ'
+    const type = e.bot?.version?.id || e?.adapter_id || 'QQ'
     const group = e.group_id || `私聊`
     
     /** 制作消息 */
