@@ -21,7 +21,6 @@ export class genshin extends plugin {
     if (ys[this.e.group_id] || !Config.other.ys) return false
     this.reply(segment.image(`${process.cwd()}/plugins/DF-Plugin/resources/img/ys.png`))
     ys[this.e.group_id] = true
-    setTimeout(() => delete ys[this.e.group_id], 900000)
     return false
   }
 }
