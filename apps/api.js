@@ -9,19 +9,19 @@ export class example extends plugin {
       priority: 500,
       rule: [
         {
-          reg: "^#?来张?(j|J)(k|K)|制服(小姐姐)?",
+          reg: "^#?来张?(j|J)(k|K)|制服(小姐姐)?$",
           fnc: "jk"
         },
         {
-          reg: "^#?(来张)?黑丝",
+          reg: "^#?(来张)?黑丝$",
           fnc: "hs"
         },
         {
-          reg: "^#?(来张)?(C|c)(O|o)(S|s)",
+          reg: "^#?(来张)?(C|c)(O|o)(S|s)$",
           fnc: "cos"
         },
         {
-          reg: "^#?(看看腿|来张腿)(子)?",
+          reg: "^#?(看看腿|来张腿)(子)?$",
           fnc: "kkt"
         }
       ]
