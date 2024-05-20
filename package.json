@@ -1,0 +1,39 @@
+{
+  "name": "df-plugin",
+  "version": "1.0.0",
+  "description": "Yunzai-Bot扩展插件",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "lint": "lint-staged --allow-empty",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/DenFengLai/DF-Plugin.git"
+  },
+  "keywords": [
+    "Miao-Yunzai",
+    "TRSS-Yunzai",
+    "DF-Plugin"
+  ],
+  "author": "DengFengLai",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsdoc": "^48.2.3",
+    "eslint-plugin-promise": "^6.1.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix"
+    ]
+  }
+}
