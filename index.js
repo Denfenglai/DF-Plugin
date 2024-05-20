@@ -1,9 +1,8 @@
 import chalk from "chalk"
-import Data from "./components/Data.js"
-import fs from "fs"
+import { Data } from "./components/index.js"
 
 logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
-logger.info(chalk.rgb(134, 142, 204)(`DF-Plugin载入成功！`))
+logger.info(chalk.rgb(134, 142, 204)("DF-Plugin载入成功！"))
 logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
 
 global.ReplyError = class ReplyError extends Error {
