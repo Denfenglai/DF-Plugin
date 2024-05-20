@@ -3,13 +3,11 @@ import chokidar from "chokidar"
 import fs from "node:fs"
 import YamlReader from "./YamlReader.js"
 import cfg from "../../../lib/config/config.js"
-import loader from "../../../lib/plugins/loader.js"
-import _ from "lodash"
-import moment from "moment"
 
 const Path = process.cwd()
 const Plugin_Name = "DF-Plugin"
 const Plugin_Path = `${Path}/plugins/${Plugin_Name}`
+
 class Config {
   constructor() {
     this.config = {}
@@ -49,7 +47,8 @@ class Config {
 
   get other() {
     return this.getDefOrConfig("other")
-    }
+  }
+
   /**
    * 默认配置和用户配置
    * @param name
@@ -154,4 +153,5 @@ class Config {
     }
   }
 }
+
 export default new Config()
