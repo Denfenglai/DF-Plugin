@@ -1,4 +1,4 @@
-import fetch from "node-fetch"
+import moment from "moment"
 import common from "../../../lib/common/common.js"
 import { Config } from "../components/index.js"
 
@@ -24,18 +24,13 @@ export class Example extends plugin {
     let { open, cd, BotId } = Config.sendMaster
     if (!open) return e.reply("该功能暂未开启，请先让主人开启才能用哦")
 
-    if (await redis.get(key)) {
-      e.reply("操作频繁，请稍后再试！")
-      return true
-    }
+    if (await redis.get(key)) return e.reply("操作频繁，请稍后再试！")
 
     const text = e.msg.replace(/#?联系主人\s?/g, "")
     if (!text) return e.reply("❎ 消息不能为空")
 
-    /** 从API获取触发时间 */
-    const response = await fetch("http://quan.suning.com/getSysTime.do")
-    const data = await response.json()
-    const time = data.sysTime2 || "未知"
+    /** 获取触发时间 */
+    const time = moment().format("YYYY-MM-DD HH:mm:ss")
 
     /** 处理发送者信息 */
     const img = e.member.getAvatarUrl()
@@ -75,7 +70,7 @@ export class Example extends plugin {
     const Master = Config.sendMaster.Master
     let masterQQ = Config.masterQQ
     const master = Config.master[botUin]
-    if (master?.length) { masterQQ = master }
+    if (master?.length) masterQQ = master
     if (Master == 1) {
       if (Bot?.sendMasterMsg) {
         await Bot.sendMasterMsg(msg)
