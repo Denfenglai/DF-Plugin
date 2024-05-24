@@ -47,7 +47,7 @@ export class Example extends plugin {
       `平台: ${type}\n`,
       `昵称：${name}\n`,
       `号码：${id}\n`,
-      ` BOT：${bot}\n`,
+      `BOT：${bot}\n`,
       `来自：${group}\n`,
       `时间：${time}\n`,
       "消息内容:\n",
