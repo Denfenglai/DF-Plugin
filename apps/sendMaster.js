@@ -26,9 +26,12 @@ export class Example extends plugin {
 
     if (await redis.get(key)) return e.reply("操作频繁，请稍后再试！")
 
-    const text = e.msg.replace(/#?联系主人\s?/g, "")
-    if (!text) return e.reply("❎ 消息不能为空")
+    if (e.message.length > 0 && e.message[0].text) {
+      e.message[0].text = e.message[0].text.replace(/#?联系主人/, "")
+      if (!e.message[0].text) e.message.shift()
+    }
 
+    if (e.message.length === 0) return e.reply("❎ 消息不能为空")
     /** 获取触发时间 */
     const time = moment().format("YYYY-MM-DD HH:mm:ss")
 
@@ -50,15 +53,19 @@ export class Example extends plugin {
       `BOT：${bot}\n`,
       `来自：${group}\n`,
       `时间：${time}\n`,
-      "消息内容:\n",
-      text
+      "消息内容:\n"
     ]
+
+    msg.push(...e.message)
 
     if (BotId == 0) { BotId = bot }
     await this.sendMasterMsg(msg, BotId)
       .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${Config.masterQQ[0]}`))
       .then(() => redis.set(key, "1", { EX: cd }))
-      .catch(err => e.reply(`❎ 消息发送失败，请尝试自行联系：${Config.masterQQ[0]}\n错误信息：${err}`))
+      .catch(err => {
+        e.reply(`❎ 消息发送失败，请尝试自行联系：${Config.masterQQ[0]}\n错误信息：${err}`)
+        logger.error(err)
+      })
   }
 
   /**
