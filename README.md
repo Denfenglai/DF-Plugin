@@ -97,7 +97,7 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 ## 贡献者 ✨
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 感谢这些了不起的人 ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -109,8 +109,9 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yeyang52"><img src="https://avatars.githubusercontent.com/u/107110851?v=4?s=100" width="100px;" alt="yeyang"/><br /><sub><b>yeyang</b></sub></a><br /><a href="#example-yeyang52" title="Examples">💡</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/TimeRainStarSky"><img src="https://avatars.githubusercontent.com/u/63490117?v=4?s=100" width="100px;" alt="时雨◎星空"/><br /><sub><b>时雨◎星空</b></sub></a><br /><a href="#mentoring-TimeRainStarSky" title="Mentoring">🧑‍🏫</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/TimeRainStarSky"><img src="https://avatars.githubusercontent.com/u/63490117?v=4?s=100" width="100px;" alt="时雨◎星空"/><br /><sub><b>时雨◎星空</b></sub></a><br /><a href="#mentoring-TimeRainStarSky" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/Denfenglai/DF-Plugin/commits?author=TimeRainStarSky" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/qsyhh"><img src="https://avatars.githubusercontent.com/u/132750431?v=4?s=100" width="100px;" alt="其实雨很好"/><br /><sub><b>其实雨很好</b></sub></a><br /><a href="https://github.com/Denfenglai/DF-Plugin/commits?author=qsyhh" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Admilkk"><img src="https://avatars.githubusercontent.com/u/78579687?v=4?s=100" width="100px;" alt="admilk"/><br /><sub><b>admilk</b></sub></a><br /><a href="https://github.com/Denfenglai/DF-Plugin/commits?author=Admilkk" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
