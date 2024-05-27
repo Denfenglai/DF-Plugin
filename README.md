@@ -12,17 +12,13 @@
 
 [![Fork me on Gitee](https://gitee.com/DenFengLai/DF-Plugin/widgets/widget_6.svg)](https://gitee.com/DenFengLai/DF-Plugin)
 
-### 当前进度：10%
+### 当前进度：15%
 
 #### 刨坑....
 
 适用于Miao-Yunzai和TRSS-Yunzai的拓展插件，打算继承[Yenai-Plugin](https://yenai.trss.me)文件结构（CV），基于此结构进行二创、修改。
 
-### [Card-Plugin](https://gitee.com/DengFengLai-F/Card-Plugin)
-
-本插件的衍生分支，仅保留了转卡功能，对于只想使用`卡片`功能的用户，可以安装该[插件](https://gitee.com/DengFengLai-F/Card-Plugin)，但是此插件可能不会经常维护，请酌情考虑。
-
-## 安装教程 💡
+## 💡 安装教程
 
 ```sh
 # 使用Gitee
@@ -32,7 +28,7 @@ git clone -b master --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugi
 git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
 ```
 
-## 已实现的功能 🤗
+## 🤗 已实现的功能
 
 <details><summary>随机图片</summary>
 
@@ -76,15 +72,25 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 </details>
 
-<details><summary>柴郡戳一戳</summary>
+<details><summary>随机表情戳一戳</summary>
     
-- 戳一戳返回柴郡猫表情包
+戳一戳返回随机表情包  
 
-- 可在`config/other.yaml`中开启
+配置项：
+
+- `柴郡表情包：1`
+- `丛雨表情包：2`
+- `诗歌剧：3`
+- `千恋万花表情包：4`
+- `小南梁表情包：5`
+- `自定义表情包：0`
+  - 自行在`resources/chuo/default`中添加图片
+  - 没有会报错
+- `config/other.yaml`中配置 `chuoType`
   
 </details>
 
-## 计划工程 📄
+## 📄 计划工程 
 
 - [x] 能跑
 - [x] 能用
@@ -95,7 +101,7 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 - [ ] .......
 - [ ] 删库跑路（×
 
-## 贡献者 ✨
+## ✨ 贡献者
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -123,16 +129,16 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 本段遵循 [all-contributors](https://github.com/all-contributors/all-contributors) 规范，欢迎任何形式的贡献！
 
-## 免责声明💬
+## 💬 免责声明
 
 1. 本项目仅供学习使用，请勿用于商业等场景。  
 
 2. 项目内图片、API等资源均来源于网络，如果侵犯了您的利益请联系我进行删除。
 
-## 意见反馈🍀
+## 🍀 意见反馈
 
 如果您对本插件有什么建议或使用遇到了bug欢迎对本项目提交issues，我会尽可能完善。
 
-## 参与贡献 🎨
+## 🎨 参与贡献
 
 如果您对本项目有兴趣，欢迎对本项目进行[Pull Requests](https://github.com/DenFengLai/DF-Plugin/pulls)
