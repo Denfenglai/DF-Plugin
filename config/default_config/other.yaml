@@ -1,4 +1,14 @@
 # 戳一戳开关
-chuo: false
+chuo: true
+
+# 戳一戳图片设置
+# 1：柴郡表情包 
+# 2：丛雨表情包 
+# 3：诗歌剧表情包 
+# 4：千恋万花表情包 
+# 5：小南梁表情包
+# 0：自定义图片（自行在resources/chuo/default中添加）
+chuoType: 1
+
 # 原神关键词发图
 ys: true
