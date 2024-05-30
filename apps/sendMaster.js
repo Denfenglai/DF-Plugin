@@ -22,33 +22,34 @@ export class Example extends plugin {
   }
 
   async contact(e) {
-    if (isSend) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
-    let { open, cd, BotId } = Config.sendMaster
-    if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦")
+    try {
+      if (isSend) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
+      let { open, cd, BotId } = Config.sendMaster
+      if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦")
 
-    if (await redis.get(key)) return e.reply("❎ 操作频繁，请稍后再试！")
+      if (await redis.get(key)) return e.reply("❎ 操作频繁，请稍后再试！")
 
-    if (e.message.length > 0 && e.message[0].text) {
-      e.message[0].text = e.message[0].text.replace(/#?联系主人/, "")
-      if (!e.message[0].text) e.message.shift()
-    }
+      if (e.message.length > 0 && e.message[0].text) {
+        e.message[0].text = e.message[0].text.replace(/#?联系主人/, "")
+        if (!e.message[0].text) e.message.shift()
+      }
 
-    if (e.message.length === 0) return e.reply("❎ 消息不能为空")
-    /** 获取触发时间 */
-    const time = moment().format("YYYY-MM-DD HH:mm:ss")
+      if (e.message.length === 0) return e.reply("❎ 消息不能为空")
+      /** 获取触发时间 */
+      const time = moment().format("YYYY-MM-DD HH:mm:ss")
 
-    /** 处理发送者信息 */
-    const img = e.member.getAvatarUrl()
-    const name = e.sender.nickname
-    const id = e.user_id
-    const bot = e.bot.uin
-    const type = e.bot?.version?.id || e?.adapter_id || "QQ"
-    const group = e.group_id || "私聊"
+      /** 处理发送者信息 */
+      const img = e.member?.getAvatarUrl() || e.friend.getAvatarUrl()
+      const name = e.sender.nickname
+      const id = e.user_id
+      const bot = e.bot.uin
+      const type = e.bot?.version?.id || e?.adapter_id || "QQ"
+      const group = e.isGroup ? e.group_id : "私聊"
 
-    /** 制作消息 */
-    const msg = [
-      "联系主人消息",
-      segment.image(`${img}`),
+      /** 制作消息 */
+      const msg = [
+        "联系主人消息",
+        segment.image(img),
       `平台: ${type}\n`,
       `昵称：${name}\n`,
       `号码：${id}\n`,
@@ -56,21 +57,25 @@ export class Example extends plugin {
       `来自：${group}\n`,
       `时间：${time}\n`,
       "消息内容:\n"
-    ]
+      ]
 
-    msg.push(...e.message)
+      msg.push(...e.message)
 
-    if (BotId == 0) { BotId = bot }
+      if (BotId == 0) { BotId = bot }
 
-    isSend = true
-    await this.sendMasterMsg(msg, BotId)
-      .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${Config.masterQQ[0]}`))
-      .then(() => redis.set(key, "1", { EX: cd }))
-      .catch(err => {
-        e.reply(`❎ 消息发送失败，请尝试自行联系：${Config.masterQQ[0]}\n错误信息：${err}`)
-        logger.error(err)
-      })
-    isSend = false
+      isSend = true
+      await this.sendMasterMsg(msg, BotId)
+        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${Config.masterQQ[0]}`))
+        .then(() => redis.set(key, "1", { EX: cd }))
+        .catch(err => {
+          e.reply(`❎ 消息发送失败，请尝试自行联系：${Config.masterQQ[0]}\n错误信息：${err}`)
+          logger.error(err)
+        })
+      isSend = false
+    } catch (error) {
+      e.reply("❎ 出错误辣，请稍后重试")
+      logger.error(error)
+    }
   }
 
   /**
@@ -83,16 +88,17 @@ export class Example extends plugin {
     let masterQQ = Config.masterQQ
     const master = Config.master[botUin]
     if (master?.length) masterQQ = master
-    if (Master == 1) {
+    else botUin = undefined
+    if (Master === 1) {
       if (Bot?.sendMasterMsg) {
         await Bot.sendMasterMsg(msg, Bot.uin, 2000)
       } else {
         for (const i of masterQQ) {
           await common.relpyPrivate(i, msg, botUin)
+          await common.sleep(2000)
         }
-        await common.sleep(2000)
       }
-    } else if (Master == 0) {
+    } else if (Master === 0) {
       await common.relpyPrivate(masterQQ[0], msg, botUin)
     } else {
       await common.relpyPrivate(Master, msg, botUin)

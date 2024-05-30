@@ -26,10 +26,10 @@
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsdoc": "^48.2.3",
-    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-jsdoc": "^48.2.7",
+    "eslint-plugin-promise": "^6.2.0",
     "husky": "^9.0.11",
-    "lint-staged": "^15.2.2"
+    "lint-staged": "^15.2.5"
   },
   "lint-staged": {
     "*.js": [
