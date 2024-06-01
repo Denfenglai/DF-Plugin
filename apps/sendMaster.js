@@ -27,7 +27,7 @@ export class SendMasterMsgs extends plugin {
       let { open, cd, BotId } = Config.sendMaster
       if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦")
 
-      if (await redis.get(key)) return e.reply("❎ 操作频繁，请稍后再试！")
+      if (await redis.get(key)&&!e.isMaster) return e.reply("❎ 操作频繁，请稍后再试！")
 
       if (e.message.length > 0 && e.message[0].text) {
         e.message[0].text = e.message[0].text.replace(/#?联系主人/, "")
@@ -65,10 +65,10 @@ export class SendMasterMsgs extends plugin {
 
       isSend = true
       await this.sendMasterMsg(msg, BotId)
-        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${Config.masterQQ[0]}`))
+        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${Config.masterQQ[0] == 'stdin'? Config.masterQQ[1]? Config.masterQQ[1]:Config.masterQQ[0]:Config.masterQQ[0]}`))
         .then(() => redis.set(key, "1", { EX: cd }))
         .catch(err => {
-          e.reply(`❎ 消息发送失败，请尝试自行联系：${Config.masterQQ[0]}\n错误信息：${err}`)
+          e.reply(`❎ 消息发送失败，请尝试自行联系：${Config.masterQQ[0] == 'stdin'? Config.masterQQ[1]? Config.masterQQ[1]:Config.masterQQ[0]:Config.masterQQ[0]}\n错误信息：${err}`)
           logger.error(err)
         })
       isSend = false
