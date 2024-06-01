@@ -30,6 +30,7 @@ global.ReplyError = class ReplyError extends Error {
 logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
 logger.info(chalk.rgb(134, 142, 204)("DF-Plugin载入成功！"))
 logger.info(chalk.rgb(134, 142, 204)(`共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`))
+logger.info(chalk.rgb(134, 142, 204)(`耗时 ${endTime - startTime} 毫秒`))
 logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
 export { apps }
 async function appsOut({ AppsName }) {
