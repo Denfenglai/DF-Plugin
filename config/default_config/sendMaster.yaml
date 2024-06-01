@@ -7,3 +7,5 @@ cd: 300
 Master: 0
 # 指定某个Bot发送 为0时为触发Bot
 BotId: 0
+# 是否发送触发者的头像（微信请关闭此项）
+sendAvatar: true
