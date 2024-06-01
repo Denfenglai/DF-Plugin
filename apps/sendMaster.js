@@ -5,7 +5,7 @@ import { Config } from "../components/index.js"
 const key = "DF:contact"
 let isSend = false
 
-export class Example extends plugin {
+export class SendMasterMsgs extends plugin {
   constructor() {
     super({
       name: "联系主人",

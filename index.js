@@ -30,6 +30,7 @@ global.ReplyError = class ReplyError extends Error {
 logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
 logger.info(chalk.rgb(134, 142, 204)("DF-Plugin载入成功！"))
 logger.info(chalk.rgb(134, 142, 204)(`共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`))
+logger.info(chalk.rgb(134, 142, 204)(`耗时 ${endTime - startTime} 毫秒`))
 logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
 export { apps }
 async function appsOut({ AppsName }) {
@@ -51,12 +52,13 @@ async function appsOut({ AppsName }) {
           if (typeof allExport[key] === 'function' && allExport[key].prototype) {
             if (!apps.hasOwnProperty(key)) {
               apps[key] = allExport[key];
+              loadedFilesCount++;
             } else {
               logger.info(`[DF-Plugin] 已存在 class ${key} 同名导出: ${item}`);
+               loadedFilesCounterr++;
             }
           }
         }
-        loadedFilesCount++;
       } catch (error) {
         logger.error(`[DF-Plugin] 加载 ${item} 文件失败: ${error.message}`);
         loadedFilesCounterr++;

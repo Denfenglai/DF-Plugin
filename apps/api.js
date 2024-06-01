@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
 
-export class example extends plugin {
+export class api extends plugin {
   constructor() {
     super({
       name: "给我图",
