@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "lint": "lint-staged --allow-empty",
-    "prepare": "husky"
+    "lint": "lint-staged --allow-empty"
   },
   "repository": {
     "type": "git",
