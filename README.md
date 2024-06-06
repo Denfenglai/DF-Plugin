@@ -2,6 +2,7 @@
 
 ![Nodejs](https://img.shields.io/badge/-Node.js-3C873A?style=flat&logo=Node.js&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/-JavaScript-eed718?style=flat&logo=javascript&logoColor=ffffff)
+[![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.dev)
 
 ![Yunzai-Bot](https://img.shields.io/badge/Yunzai_Bot-V3.0-red)
 ![Miao-Yunzai](https://img.shields.io/badge/Miao_Yunzai-V3-yellow)
@@ -12,19 +13,19 @@
 
 [![Fork me on Gitee](https://gitee.com/DenFengLai/DF-Plugin/widgets/widget_6.svg)](https://gitee.com/DenFengLai/DF-Plugin)
 
-### 当前进度：15%
-
-#### 刨坑....
+### 咕咕中：15%
 
 适用于Miao-Yunzai和TRSS-Yunzai的拓展插件，打算继承[Yenai-Plugin](https://yenai.trss.me)文件结构（CV），基于此结构进行二创、修改。
 
 ## 💡 安装教程
 
+- 使用Gitee
 ```sh
-# 使用Gitee
 git clone -b master --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
+```
 
-# 使用Githhb
+- 使用Githhb
+```sh
 git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
 ```
 
@@ -64,14 +65,6 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 </details>
     
-<details><summary>图片转卡片</summary>
-    
-- ~~#图转卡/发大图 + `图片`~~
-   
-- 图转卡被和谐，丸不了辣
-
-</details>
-
 <details><summary>随机表情戳一戳</summary>
     
 戳一戳返回随机表情包  
