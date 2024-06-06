@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo; echo -e "\e[1;35m-----------使用gitmoji编辑提交------------\e[0m"
+
+echo "- 遵循: https://gitmoji.dev/"
+
+exec < /dev/tty
+
+pnpm run moji $1 $2
