@@ -1,9 +1,11 @@
+import _ from "lodash"
+import cfg from "../../../lib/config/config.js"
 import moment from "moment"
 import common from "../../../lib/common/common.js"
 import { Config } from "../components/index.js"
 
 const key = "DF:contact"
-let isSend = false
+let Sending = false
 
 export class SendMasterMsgs extends plugin {
   constructor() {
@@ -23,15 +25,33 @@ export class SendMasterMsgs extends plugin {
 
   async contact(e) {
     try {
-      if (isSend) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
+      if (Sending) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
       let { open, cd, BotId, sendAvatar } = Config.sendMaster
       if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦")
 
       if (await redis.get(key) && !e.isMaster) return e.reply("❎ 操作频繁，请稍后再试！")
 
-      if (e.message.length > 0 && e.message[0].text) {
-        e.message[0].text = e.message[0].text.replace(/#?联系主人/, "")
-        if (!e.message[0].text) e.message.shift()
+      /** 处理艾特 */
+      e.message = e.message.filter(item => item.type !== "at")
+      /** 处理消息 */
+      for (let msgElement of e.message) {
+        if (msgElement.type === "text") {
+          msgElement.text = msgElement.text.replace("#联系主人", "").trim()
+          if (e.isGroup) {
+            let groupCfg = cfg.getGroup(e.self_id, e.group_id) || cfg.getGroup(e.group_id)
+            let alias = groupCfg.botAlias
+            if (!Array.isArray(alias)) {
+              alias = [ alias ]
+            }
+            for (let name of alias) {
+              if (msgElement.text.startsWith(name)) {
+                msgElement.text = _.trimStart(msgElement.text, name).trim()
+                e.hasAlias = true
+                break
+              }
+            }
+          }
+        }
       }
 
       if (e.message.length === 0) return e.reply("❎ 消息不能为空")
@@ -40,20 +60,18 @@ export class SendMasterMsgs extends plugin {
 
       /** 处理发送者信息 */
       const img = e.member?.getAvatarUrl() || e.friend.getAvatarUrl()
-      const name = e.sender.nickname
-      const id = e.user_id
-      const bot = e.bot.uin
+      const id = `${e.sender.nickname}(${e.user_id})`
+      const bot = `${e.bot.nickname}(${e.bot.uin})`
       const type = e.bot?.version?.id || e?.adapter_id || "QQ"
-      const group = e.isGroup ? e.group_id : "私聊"
+      const group = e.isGroup ? `${e.group.name}(${e.group_id})` : "私聊"
 
       /** 制作消息 */
       const msg = [
         "联系主人消息\n",
         sendAvatar ? segment.image(img) : "",
-        `平台: ${type}\n`,
-        `昵称：${name}\n`,
-        `号码：${id}\n`,
         `BOT：${bot}\n`,
+        `平台: ${type}\n`,
+        `用户：${id}\n`,
         `来自：${group}\n`,
         `时间：${time}\n`,
         "消息内容:\n"
@@ -63,17 +81,24 @@ export class SendMasterMsgs extends plugin {
 
       if (BotId == 0) { BotId = bot }
 
-      isSend = true
+      this.masterQQ = Config.sendMaster.Master !== 1 && Config.sendMaster.Master !== 0
+        ? Config.sendMaster.Master
+        : (Config.masterQQ[0] == "stdin"
+            ? (Config.masterQQ[1] ? Config.masterQQ[1] : Config.masterQQ[0])
+            : Config.masterQQ[0])
+
+      Sending = true
+      /** 发送消息给主人，处理异常信息 */
       await this.sendMasterMsg(msg, BotId)
-        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${Config.masterQQ[0] == "stdin" ? Config.masterQQ[1] ? Config.masterQQ[1] : Config.masterQQ[0] : Config.masterQQ[0]}`))
+        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${this.masterQQ}`))
         .then(() => redis.set(key, "1", { EX: cd }))
         .catch(err => {
-          e.reply(`❎ 消息发送失败，请尝试自行联系：${Config.masterQQ[0] == "stdin" ? Config.masterQQ[1] ? Config.masterQQ[1] : Config.masterQQ[0] : Config.masterQQ[0]}\n错误信息：${err}`)
+          e.reply(`❎ 消息发送失败，请尝试自行联系：${this.masterQQ}\n错误信息：${err}`)
           logger.error(err)
         })
-      isSend = false
+      Sending = false
     } catch (error) {
-      e.reply("❎ 出错误辣，请稍后重试")
+      e.reply("❎ 出错误辣(ᗒᗩᗕ)՞，稍后重试吧")
       logger.error(error)
     }
   }
@@ -84,24 +109,31 @@ export class SendMasterMsgs extends plugin {
    * @param botUin
    */
   async sendMasterMsg(msg, botUin = Bot.uin) {
+    /** 获取配置信息 */
     const Master = Config.sendMaster.Master
     let masterQQ = Config.masterQQ
+    /** 处理喵崽 */
     if (Config.master) {
       const master = Config.master[botUin]
       if (master?.length) masterQQ = master
       else botUin = undefined
     }
+    /** 发送全部主人 */
     if (Master === 1) {
+      /** TRSS发全部主人函数 */
       if (Bot?.sendMasterMsg) {
         await Bot.sendMasterMsg(msg, Bot.uin, 2000)
       } else {
+        /** 遍历发送主人 */
         for (const i of masterQQ) {
           await common.relpyPrivate(i, msg, botUin)
           await common.sleep(2000)
         }
       }
+    /** 发送首位主人 */
     } else if (Master === 0) {
       await common.relpyPrivate(masterQQ[0], msg, botUin)
+    /** 发送指定主人 */
     } else {
       await common.relpyPrivate(Master, msg, botUin)
     }
