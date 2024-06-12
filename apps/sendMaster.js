@@ -69,10 +69,10 @@ export class SendMasterMsgs extends plugin {
       const msg = [
         "联系主人消息\n",
         sendAvatar ? segment.image(img) : "",
-        `BOT：${bot}\n`,
         `平台: ${type}\n`,
         `用户：${id}\n`,
         `来自：${group}\n`,
+        `BOT：${bot}\n`,
         `时间：${time}\n`,
         "消息内容:\n"
       ]
