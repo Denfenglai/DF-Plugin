@@ -1,8 +1,8 @@
 import _ from "lodash"
 import cfg from "../../../lib/config/config.js"
 import moment from "moment"
-import common from "../../../lib/common/common.js"
 import { Config } from "../components/index.js"
+import { sendMasterMsg } from "../model/index.js"
 
 const key = "DF:contact"
 let Sending = false
@@ -26,6 +26,7 @@ export class SendMasterMsgs extends plugin {
   async contact(e) {
     try {
       if (Sending) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
+
       let { open, cd, BotId, sendAvatar } = Config.sendMaster
       if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦")
 
@@ -55,6 +56,7 @@ export class SendMasterMsgs extends plugin {
       }
 
       if (e.message.length === 0) return e.reply("❎ 消息不能为空")
+
       /** 获取触发时间 */
       const time = moment().format("YYYY-MM-DD HH:mm:ss")
 
@@ -89,7 +91,7 @@ export class SendMasterMsgs extends plugin {
 
       Sending = true
       /** 发送消息给主人，处理异常信息 */
-      await this.sendMasterMsg(msg, BotId)
+      await sendMasterMsg(msg, BotId)
         .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${this.masterQQ}`))
         .then(() => redis.set(key, "1", { EX: cd }))
         .catch(err => {
@@ -100,42 +102,6 @@ export class SendMasterMsgs extends plugin {
     } catch (error) {
       e.reply("❎ 出错误辣(ᗒᗩᗕ)՞，稍后重试吧")
       logger.error(error)
-    }
-  }
-
-  /**
-   * 发送主人消息
-   * @param msg
-   * @param botUin
-   */
-  async sendMasterMsg(msg, botUin = Bot.uin) {
-    /** 获取配置信息 */
-    const Master = Config.sendMaster.Master
-    let masterQQ = Config.masterQQ
-    /** 处理喵崽 */
-    if (Config.master) {
-      const master = Config.master[botUin]
-      if (master?.length) masterQQ = master
-      else botUin = undefined
-    }
-    /** 发送全部主人 */
-    if (Master === 1) {
-      /** TRSS发全部主人函数 */
-      if (Bot?.sendMasterMsg) {
-        await Bot.sendMasterMsg(msg, Bot.uin, 2000)
-      } else {
-        /** 遍历发送主人 */
-        for (const i of masterQQ) {
-          await common.relpyPrivate(i, msg, botUin)
-          await common.sleep(2000)
-        }
-      }
-    /** 发送首位主人 */
-    } else if (Master === 0) {
-      await common.relpyPrivate(masterQQ[0], msg, botUin)
-    /** 发送指定主人 */
-    } else {
-      await common.relpyPrivate(Master, msg, botUin)
     }
   }
 }

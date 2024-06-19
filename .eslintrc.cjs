@@ -19,8 +19,7 @@ module.exports = {
     redis: true,
     logger: true,
     plugin: true,
-    segment: true,
-    ReplyError: true
+    segment: true
   },
   rules: {
     "eqeqeq": [ "off" ],

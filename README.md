@@ -55,16 +55,6 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 </details>
 
-<details><summary>文字转卡片</summary>
-     
-- #文转卡 + `内容:标题:外显`
-  
-- 注：内容参数必填，其他选填   
-   
-- 例：`#文转卡114:514:1919`
-
-</details>
-    
 <details><summary>随机表情戳一戳</summary>
     
 戳一戳返回随机表情包  
@@ -89,10 +79,10 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 - [x] 能用
 - [x] 支持用户自定义配置
 - [ ] 添加帮助信息和版本信息
-- [ ] 丰富功能、添加模块
+- [ ] 丰富功能
 - [ ] 持续完善
 - [ ] .......
-- [ ] 删库跑路（×
+- [ ] ~~删库跑路~~
 
 ## ✨ 贡献者
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->

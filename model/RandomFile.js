@@ -5,7 +5,7 @@ import path from "path"
 /**
  * 随机获取一个文件
  * @param dirPath - 文件夹路径
- * @returns 文件路径或false
+ * @returns {string} path - 文件路径
  */
 export function randomFile(dirPath) {
   try {
@@ -16,7 +16,6 @@ export function randomFile(dirPath) {
     const fileName = _.sample(files)
     return path.join(dirPath, fileName)
   } catch (err) {
-    logger.error(`[DF]获取文件错误: ${dirPath}\n${err}`)
-    return false
+    throw new Error(`[DF]获取文件错误: ${dirPath}\n${err}`)
   }
 }
