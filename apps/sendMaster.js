@@ -32,6 +32,8 @@ export class SendMasterMsgs extends plugin {
 
       if (await redis.get(key) && !e.isMaster) return e.reply("❎ 操作频繁，请稍后再试！")
 
+      Sending = true
+
       /** 处理艾特 */
       e.message = e.message.filter(item => item.type !== "at")
       /** 处理消息 */
@@ -81,15 +83,14 @@ export class SendMasterMsgs extends plugin {
 
       msg.push(...e.message)
 
-      if (BotId == 0) { BotId = bot }
-
       this.masterQQ = Config.sendMaster.Master !== 1 && Config.sendMaster.Master !== 0
         ? Config.sendMaster.Master
         : (Config.masterQQ[0] == "stdin"
             ? (Config.masterQQ[1] ? Config.masterQQ[1] : Config.masterQQ[0])
             : Config.masterQQ[0])
 
-      Sending = true
+      if (BotId == 0) { BotId = e.bot.uin }
+
       /** 发送消息给主人，处理异常信息 */
       await sendMasterMsg(msg, BotId)
         .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${this.masterQQ}`))
@@ -100,7 +101,8 @@ export class SendMasterMsgs extends plugin {
         })
       Sending = false
     } catch (error) {
-      e.reply("❎ 出错误辣(ᗒᗩᗕ)՞，稍后重试吧")
+      e.reply("❎ 出错误辣，稍后重试吧")
+      Sending = false
       logger.error(error)
     }
   }
