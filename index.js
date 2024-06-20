@@ -23,10 +23,10 @@ apps = loadedApps
 loadedFilesCount = count
 loadedFilesCounterr = counterr
 logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
-logger.info(chalk.rgb(134, 142, 204)("DF-Plugin载入成功！"))
-logger.info(chalk.rgb(134, 142, 204)(`共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`))
-logger.info(chalk.rgb(134, 142, 204)(`耗时 ${endTime - startTime} 毫秒`))
-logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
+logger.info(chalk.rgb(82, 242, 255)("DF-Plugin 载入成功！"))
+logger.info(chalk.rgb(82, 242, 255)("作者：等风来"))
+logger.info(chalk.rgb(82, 242, 255)(`共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`))
+logger.info(chalk.rgb(82, 242, 255)(`耗时 ${endTime - startTime} 毫秒`))
 export { apps }
 async function appsOut({ AppsName }) {
   const firstName = path.join("plugins", AppName)
@@ -55,7 +55,8 @@ async function appsOut({ AppsName }) {
           }
         }
       } catch (error) {
-        logger.error(`[DF-Plugin] 加载 ${item} 文件失败: ${error.message}`)
+        logger.error(`[DF-Plugin] 载入插件错误 ${logger.red(item)}`)
+        logger.error(error)
         loadedFilesCounterr++
       }
     }))
