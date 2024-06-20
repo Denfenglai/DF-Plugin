@@ -38,10 +38,9 @@ export class SendMasterMsgs extends plugin {
       let { open, cd, BotId, sendAvatar } = Config.sendMaster
       if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦")
       if (await redis.get(key) && !e.isMaster) return e.reply("❎ 操作频繁，请稍后再试！")
+
       Sending = true
-      /** 处理艾特 */
       e.message = e.message.filter(item => item.type !== "at")
-      /** 处理消息 */
       for (let msgElement of e.message) {
         if (msgElement.type === "text") {
           msgElement.text = msgElement.text.replace("#联系主人", "").trim()
@@ -62,15 +61,14 @@ export class SendMasterMsgs extends plugin {
         }
       }
       if (e.message.length === 0) return e.reply("❎ 消息不能为空")
-      /** 获取触发时间 */
-      const time = moment().format("YYYY-MM-DD HH:mm:ss")
-      /** 处理发送者信息 */
+
+      const type = e.bot?.version?.id || e?.adapter_id || "QQ"
       const img = e.member?.getAvatarUrl() || e.friend.getAvatarUrl()
       const id = `${e.sender.nickname}(${e.user_id})`
-      const bot = `${e.bot.nickname}(${e.bot.uin})`
-      const type = e.bot?.version?.id || e?.adapter_id || "QQ"
       const group = e.isGroup ? `${e.group.name}(${e.group_id})` : "私聊"
-      /** 制作消息 */
+      const bot = `${e.bot.nickname}(${e.bot.uin})`
+      const time = moment().format("YYYY-MM-DD HH:mm:ss")
+
       const msg = [
         `联系主人消息(${e.seq})\n`,
         sendAvatar ? segment.image(img) : "",
@@ -86,19 +84,20 @@ export class SendMasterMsgs extends plugin {
         "\n-------------\n",
         "引用该消息：#回复 <内容>"
       )
+
       const info = {
         bot: e.bot.uin,
         group: e.isGroup ? e.group_id : false,
         id: e.user_id,
         message_id: e.message_id
       }
+
       this.masterQQ = Config.sendMaster.Master !== 1 && Config.sendMaster.Master !== 0
         ? Config.sendMaster.Master
         : (Config.masterQQ[0] == "stdin"
             ? (Config.masterQQ[1] ? Config.masterQQ[1] : Config.masterQQ[0])
             : Config.masterQQ[0])
       if (BotId == 0) BotId = e.bot.uin
-      /** 发送消息给主人，处理异常信息 */
       await sendMasterMsg(msg, BotId)
         .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${this.masterQQ}`))
         .then(() => redis.set(key, "1", { EX: cd }))
