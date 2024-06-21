@@ -68,7 +68,7 @@ export function supportGuoba() {
           }
         },
         {
-          field: "sendMaster.Master",
+          field: "sendMaster.BotId",
           label: "Bot配置",
           bottomHelpMessage: "指定某个Bot发送，为0时为触发Bot",
           component: "Input",
