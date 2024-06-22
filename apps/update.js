@@ -1,4 +1,13 @@
-import { update as Update } from "../../other/update.js"
+let Update
+try {
+  Update = (import("../../other/update.js").update)
+} catch (err) {
+  try {
+    Update = (import("../../system-plugin/apps/update.ts").update)
+  } catch (err) {
+    logger.warn("[DF-Plugin] 导入本体更新模块失败，将无法使用 #DF更新 命令")
+  }
+}
 
 export class DFupdate extends plugin {
   constructor() {
