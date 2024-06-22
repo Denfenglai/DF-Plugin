@@ -33,6 +33,7 @@ module.exports = {
     "array-bracket-spacing": [ "error", "always" ],
     "space-before-function-paren": [ "error", "never" ],
     "no-invalid-this": "error",
+    "import/no-unresolved": "off",
     // 插件规则
     "jsdoc/require-returns": 0,
     "jsdoc/require-jsdoc": 0,

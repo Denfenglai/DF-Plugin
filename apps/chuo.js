@@ -7,18 +7,17 @@ const PluginPath = `${process.cwd()}/plugins/DF-Plugin`
 
 export class Chuo extends plugin {
   constructor() {
-    super({
-      name: "DF:戳一戳",
-      dsc: "戳一戳机器人发送随机表情包",
-      event: "notice.group.poke",
-      priority: 114,
-      rule: [ { fnc: "poke" } ]
-    })
+    super()
+    this.name = "DF:戳一戳"
+    this.dsc = "戳一戳机器人发送随机表情包"
+    this.event = "notice.group.poke"
+    this.priority = 114
+    this.rule = [ { fnc: this.poke.name } ]
   }
 
   async poke() {
     const { chuo, chuoType } = Config.other
-    if (!chuo) return false
+    if (!chuo) return true
     if (this.e.target_id == this.e.self_id) {
       const path = `${PluginPath}/resources/chuo/${type[chuoType]}`
       const file = await randomFile(path)

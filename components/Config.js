@@ -2,7 +2,7 @@ import YAML from "yaml"
 import chokidar from "chokidar"
 import fs from "node:fs"
 import YamlReader from "./YamlReader.js"
-import cfg from "../../../lib/config/config.js"
+import { ConfigController as cfg } from "yunzai/config"
 
 const Path = process.cwd()
 const Plugin_Name = "DF-Plugin"

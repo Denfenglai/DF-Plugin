@@ -1,5 +1,5 @@
 import { Config } from "../components/index.js"
-import common from "../../../lib/common/common.js"
+import * as common from "yunzai/core"
 
 /**
  * 发送主人消息

@@ -8,12 +8,6 @@ const moduleCache = new Map()
 let loadedFilesCount = 0
 let loadedFilesCounterr = 0
 let apps
-global.ReplyError = class ReplyError extends Error {
-  constructor(message) {
-    super(message)
-    this.name = "ReplyError"
-  }
-}
 
 const startTime = Date.now()
 logger.info("[DF-Plugin] 开始加载插件")
@@ -23,7 +17,7 @@ apps = loadedApps
 loadedFilesCount = count
 loadedFilesCounterr = counterr
 logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
-logger.info(chalk.rgb(82, 242, 255)("DF-Plugin 载入成功！"))
+logger.info(chalk.rgb(82, 242, 255)("DF-Plugin 载入完成！"))
 logger.info(chalk.rgb(82, 242, 255)("作者：等风来"))
 logger.info(chalk.rgb(82, 242, 255)(`共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`))
 logger.info(chalk.rgb(82, 242, 255)(`耗时 ${endTime - startTime} 毫秒`))
