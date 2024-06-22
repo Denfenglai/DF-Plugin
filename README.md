@@ -6,6 +6,7 @@
 
 ![Yunzai-Bot](https://img.shields.io/badge/Yunzai_Bot-V3.0-red)
 ![Miao-Yunzai](https://img.shields.io/badge/Miao_Yunzai-V3-yellow)
+![Miao-Yunzai](https://img.shields.io/badge/Miao_Yunzai-V4-green)
 ![TRSS-Yunzai](https://img.shields.io/badge/TRSS_Yunzai-V3-blue)
 
 [![star](https://gitee.com/DenFengLai/DF-Plugin/badge/star.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/stargazers)
@@ -17,18 +18,32 @@
 
 适用于Miao-Yunzai和TRSS-Yunzai的拓展插件，打算继承[Yenai-Plugin](https://yenai.trss.me)文件结构（CV），基于此结构进行二创、修改。
 
-## 💡 安装教程
+## 💡 V3安装教程
 
 - 使用Gitee
 ```sh
 git clone -b master --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
 ```
 
-- 使用Githhb
+- 使用Githb
 ```sh
 git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
 ```
 
+## 🔮 V4安装教程
+
+> 只做了简单测试，不排除存在其他问题
+> 项目主更新V3版本，V4版本可能更新不及时
+
+- 使用Gitee
+```sh
+git clone -b v4 --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
+```
+
+- 使用Githb
+```sh
+git clone -b v4 --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
+```
 ## 🤗 已实现的功能
 
 <details><summary>随机图片</summary>
