@@ -8,7 +8,7 @@ export class DFupdate extends plugin {
       priority: 1000,
       rule: [
         {
-          reg: /^#*DF(插件)?(强制)?更新$/i,
+          reg: /^#(DF|大粪)(插件)?(强制)?更新$/i,
           fnc: "update"
         }
       ]

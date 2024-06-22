@@ -6,6 +6,7 @@ import { sendMasterMsg } from "../model/index.js"
 
 const key = "DF:contact"
 let Sending = false
+segment.reply ??= id => ({ type: "reply", id })
 
 export class SendMasterMsgs extends plugin {
   constructor() {

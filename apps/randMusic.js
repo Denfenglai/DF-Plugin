@@ -1,12 +1,11 @@
 import fetch from "node-fetch"
-// import common from "../../../lib/common/common.js"
 
 //  初次编写时间：2024.1.19  5:11 AM
 
 export class RandomMusics extends plugin {
   constructor() {
     super({
-      name: "随机歌曲",
+      name: "DF:随机歌曲",
       dsc: "随机网易云音乐",
       event: "message",
       priority: 400,

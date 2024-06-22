@@ -5,7 +5,7 @@ const ys = {}
 export class genshin extends plugin {
   constructor() {
     super({
-      name: "懒得喷",
+      name: "DF:原神关键词发图",
       dsc: "本来聊得好好的，突然有人聊起了原神，搞得大家都不高兴",
       event: "message.group",
       priority: 5001,
