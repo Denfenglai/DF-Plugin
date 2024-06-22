@@ -3,7 +3,7 @@ import fetch from "node-fetch"
 export class api extends plugin {
   constructor() {
     super({
-      name: "给我图",
+      name: "DF:给我图",
       dsc: "API返回图片",
       event: "message",
       priority: 500,
