@@ -1,8 +1,9 @@
 let Update
+const PLUGIN_NAME = "DF-Plugin"
 
 try {
   Update = (await import("../../other/update.js")).update
-} catch (err) {
+} catch {
   try {
     Update = (await import("../../system/apps/update.ts")).update
   } catch (err) {
@@ -18,18 +19,29 @@ export class DFupdate extends plugin {
       priority: 1000,
       rule: [
         {
-          reg: "#(DF|大粪)(插件)?(强制)?更新$",
+          reg: "^#(DF|大粪)(插件)?(强制)?更新$",
           fnc: "update"
+        },
+        {
+          reg: "^#(DF|大粪)(插件)?更新日志$",
+          fnc: "updateLog"
         }
       ]
     })
   }
 
   async update(e = this.e) {
-    const forced = e.msg.includes("强制") ? "强制" : ""
-    e.msg = `#${forced}更新DF-Plugin`
+    const Type = e.msg.includes("强制") ? "#强制更新" : "#更新"
+    e.msg = Type + PLUGIN_NAME
     const up = new Update(e)
     up.e = e
     return up.update()
+  }
+
+  async updateLog(e = this.e) {
+    e.msg = "#更新日志" + PLUGIN_NAME
+    const up = new Update(e)
+    up.e = e
+    return up.updateLog()
   }
 }
