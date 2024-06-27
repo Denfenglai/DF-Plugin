@@ -31,11 +31,12 @@ class Config {
     }
   }
 
-  /** 主人QQ */
+  /** 主人列表 */
   get masterQQ() {
     return cfg.masterQQ
   }
 
+  /** TRSS的主人列表 */
   get master() {
     return cfg.master
   }
@@ -45,6 +46,7 @@ class Config {
     return this.getDefOrConfig("sendMaster")
   }
 
+  /** 其他配置 */
   get other() {
     return this.getDefOrConfig("other")
   }

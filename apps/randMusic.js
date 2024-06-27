@@ -32,7 +32,10 @@ export class RandomMusics extends plugin {
       const removeUrlMatch = data.match(/播放链接[^*]+/g)
       const removedImgText = removeImgMatch ? data.replace(removeImgMatch, "") : data
       const removedUrlText = removeUrlMatch ? removedImgText.replace(removeUrlMatch, "") : removedImgText
-      const msg = [ segment.image(`${img}`), removedUrlText, `歌曲直链：\n${url}` ]
+      const msg = [
+        segment.image(`${img}`),
+        removedUrlText, `歌曲直链：\n${url}`
+      ]
       /** 处理API错误 */
       if (!url) return e.reply("获取音乐地址失败，请重试！")
       /** 发送消息 */
