@@ -17,7 +17,7 @@ export class api extends plugin {
           fnc: "hs"
         },
         {
-          reg: "^#?(来张)?(C|c)(O|o)(S|s)$",
+          reg: "^#?(来张)(C|c)(O|o)(S|s)$",
           fnc: "cos"
         },
         {
@@ -40,9 +40,12 @@ export class api extends plugin {
   }
 
   async cos(e) {
+    const response = await fetch("https://api.suyanw.cn/api/cos.php?type=json")
+    const data = await response.json()
+    const links = data.text.replace(/\\/g, "/")
     return e.reply([
       "cos来咯~",
-      segment.image("https://api.suyanw.cn/api/cos.php")
+      segment.image(links)
     ])
   }
 
