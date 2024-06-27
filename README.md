@@ -7,10 +7,10 @@
 [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.dev)
 [![license](https://img.shields.io/github/license/Denfenglai/DF-Plugin.svg?style=flat&logo=gnu)](https://github.com/Denfenglai/DF-Plugin/blob/master/LICENSE)
 
-![Yunzai-Bot](https://img.shields.io/badge/Yunzai_Bot-V3-red)(https://gitee.com/Le-niao/Yunzai-Bot)
-![Miao-Yunzai V3](https://img.shields.io/badge/Miao_Yunzai-V3-yellow)(https://github.com/yoimiya-kokomi/Miao-Yunzai)
-![Miao-Yunzai V4](https://img.shields.io/badge/Miao_Yunzai-V4-green)(https://github.com/yunzai-org/yunzaijs)
-![TRSS-Yunzai](https://img.shields.io/badge/TRSS_Yunzai-V3-blue)(https://github.com/TimeRainStarSky/Yunzai)
+[![Yunzai-Bot](https://img.shields.io/badge/Yunzai_Bot-V3-red)](https://gitee.com/Le-niao/Yunzai-Bot)
+[![Miao-Yunzai V3](https://img.shields.io/badge/Miao_Yunzai-V3-yellow)](https://github.com/yoimiya-kokomi/Miao-Yunzai)
+[![Miao-Yunzai V4](https://img.shields.io/badge/Miao_Yunzai-V4-green)](https://github.com/yunzai-org/yunzaijs)
+[![TRSS-Yunzai](https://img.shields.io/badge/TRSS_Yunzai-V3-blue)](https://github.com/TimeRainStarSky/Yunzai)
 
 [![star](https://gitee.com/DenFengLai/DF-Plugin/badge/star.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/stargazers)
 [![fork](https://gitee.com/DenFengLai/DF-Plugin/badge/fork.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/members)
