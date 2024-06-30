@@ -81,7 +81,7 @@ export class SendMasterMsgs extends plugin {
         : (Config.masterQQ[0] == "stdin"
             ? (Config.masterQQ[1] ? Config.masterQQ[1] : Config.masterQQ[0])
             : Config.masterQQ[0])
-      if (BotId == 0) BotId = e.bot.uin
+      if (BotId == 0) BotId = e.bot?.uin ?? Bot.uin
       await sendMasterMsg(msg, BotId)
         .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${this.masterQQ}`))
         .then(() => redis.set(key, "1", { EX: cd }))
@@ -129,7 +129,7 @@ export class SendMasterMsgs extends plugin {
       message.unshift(`主人(${e.user_id})回复：\n`)
       message.unshift(segment.reply(message_id))
 
-      this.Bot = Bot[bot] ?? e.bot
+      this.Bot = Bot[bot] ?? e.bot ?? Bot
 
       if (group) {
         await this.Bot.pickGroup(group).sendMsg(message)
@@ -140,7 +140,7 @@ export class SendMasterMsgs extends plugin {
       return e.reply("✅ 消息已送达")
     } catch (err) {
       e.reply("❎ 发生错误，请查看控制台日志")
-      logger.error("回复发生错误：", err)
+      logger.error("[DF-Plugin]回复消息时发生错误：", err)
       return false
     }
   }
@@ -158,7 +158,7 @@ export class SendMasterMsgs extends plugin {
       if (msgElement.type === "text") {
         if (Reg) msgElement.text = msgElement.text.replace(Reg, "").trim()
 
-        if (e.hasAlias) {
+        if (e.hasAlias && e.isGroup) {
           let groupCfg = cfg.getGroup(e.group_id)
           let alias = groupCfg.botAlias
 
