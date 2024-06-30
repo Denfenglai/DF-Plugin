@@ -100,45 +100,49 @@ export class SendMasterMsgs extends plugin {
 
   /**
    * 回复消息
-   * @param e
+   * @param {object} e - 消息事件
    */
   async Replys(e) {
     if (!e.isMaster) return false
 
-    let source
-    if (e.getReply) {
-      source = await e.getReply()
-    } else if (e.source) {
-      source = (await e.friend.getChatHistory(e.source.time, 1)).pop()
+    try {
+      let source
+      if (e.getReply) {
+        source = await e.getReply()
+      } else if (e.source) {
+        source = (await e.friend.getChatHistory(e.source.time, 1)).pop()
+      }
+
+      if (!source || !(/联系主人消息/.test(source.raw_message))) return false
+
+      const sourceMsg = source.raw_message.split("\n")[0]
+      const regex = /\(([^)]+)\)/
+      const match = sourceMsg.match(regex)
+      if (!match) return false
+
+      const MsgID = match[1]
+      const data = await redis.get(`${key}:${MsgID}`)
+      if (!data) return e.reply("消息太久远了，下次来早点吧~")
+
+      const { bot, group, id, message_id } = JSON.parse(data)
+      let message = await this.Replace(e, /#?回复/g)
+      message.unshift(`主人(${e.user_id})回复：\n`)
+      message.unshift(segment.reply(message_id))
+
+      this.Bot = Bot[bot] ?? e.bot
+
+      if (group) {
+        await this.Bot.pickGroup(group).sendMsg(message)
+      } else {
+        await this.Bot.pickFriend(id).sendMsg(message)
+      }
+
+      return e.reply("✅ 消息已送达")
+    } catch (err) {
+      e.reply("❎ 发生错误，请查看控制台日志")
+      logger.error("回复发生错误：", err)
+      return false
     }
-
-    if (!source) return false
-    if (!(/联系主人消息/.test(source.raw_message))) return false
-
-    const sourceMsg = source.raw_message.split("\n")[0]
-    const regex = /\(([^)]+)\)/
-    const match = sourceMsg.match(regex)
-    if (!match) return false
-
-    const MsgID = match[1]
-    const data = await redis.get(`${key}:${MsgID}`)
-    if (!data) return e.reply("消息太久远了，下次来早点吧~")
-
-    const { bot, group, id, message_id } = JSON.parse(data)
-
-    let message = await this.Replace(e, /#?回复/g)
-    message.unshift(`主人(${e.user_id})回复：\n`)
-    message.unshift(segment.reply(message_id))
-
-    this.Bot = Bot[bot] ?? e.bot
-
-    if (group) {
-      this.Bot.pickGroup(group)?.sendMsg(message)
-    } else {
-      this.Bot.pickFriend(id)?.sendMsg(message)
-    }
-
-    return e.reply("✅ 消息已送达")
   }
 
   /**
