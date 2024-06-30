@@ -1,4 +1,4 @@
-import _ from "lodash"
+// import _ from "lodash"
 import cfg from "../../../lib/config/config.js"
 import moment from "moment"
 import { Config } from "../components/index.js"
@@ -41,27 +41,10 @@ export class SendMasterMsgs extends plugin {
       if (await redis.get(key) && !e.isMaster) return e.reply("❎ 操作频繁，请稍后再试！")
 
       Sending = true
-      e.message = e.message.filter(item => item.type !== "at")
-      for (let msgElement of e.message) {
-        if (msgElement.type === "text") {
-          msgElement.text = msgElement.text.replace("#联系主人", "").trim()
-          if (e.isGroup) {
-            let groupCfg = cfg.getGroup(e.self_id, e.group_id) || cfg.getGroup(e.group_id)
-            let alias = groupCfg.botAlias
-            if (!Array.isArray(alias)) {
-              alias = [ alias ]
-            }
-            for (let name of alias) {
-              if (msgElement.text.startsWith(name)) {
-                msgElement.text = _.trimStart(msgElement.text, name).trim()
-                e.hasAlias = true
-                break
-              }
-            }
-          }
-        }
-      }
-      if (e.message.length === 0) return e.reply("❎ 消息不能为空")
+
+      let message = await this.Replace(e, /#联系主人/)
+
+      if (message.length === 0) return e.reply("❎ 消息不能为空")
 
       const type = e.bot?.version?.id || e?.adapter_id || "QQ"
       const img = e.member?.getAvatarUrl() || e.friend.getAvatarUrl()
@@ -80,7 +63,7 @@ export class SendMasterMsgs extends plugin {
         `时间: ${time}\n`,
         "消息内容:\n"
       ]
-      msg.push(...e.message)
+      msg.push(...message)
       msg.push(
         "\n-------------\n",
         "引用该消息：#回复 <内容>"
@@ -143,16 +126,49 @@ export class SendMasterMsgs extends plugin {
 
     const { bot, group, id, message_id } = JSON.parse(data)
 
-    e.message[0].text = e.message[0].text.replace(/#?回复/g, "").trim()
-    e.message.unshift(`主人(${e.user_id})回复：\n`)
-    e.message.unshift(segment.reply(message_id))
+    let message = await this.Replace(e, /#?回复/g)
+    message.unshift(`主人(${e.user_id})回复：\n`)
+    message.unshift(segment.reply(message_id))
+
+    this.Bot = Bot[bot] ?? e.bot
 
     if (group) {
-      Bot[bot].pickGroup(group).sendMsg(e.message)
+      this.Bot.pickGroup(group)?.sendMsg(message)
     } else {
-      Bot[bot].pickFriend(id).sendMsg(e.message)
+      this.Bot.pickFriend(id)?.sendMsg(message)
     }
 
     return e.reply("✅ 消息已送达")
+  }
+
+  /**
+   * 处理消息内容
+   * @param {object} e - 消息事件
+   * @param {RegExp} Reg - 正则表达式
+   * @returns {object} message - 处理后的消息内容数组
+   */
+  async Replace(e = this.e, Reg = null) {
+    let message = e.at ? e.message.filter(item => item.type !== "at") : e.message
+
+    for (let msgElement of message) {
+      if (msgElement.type === "text") {
+        if (Reg) msgElement.text = msgElement.text.replace(Reg, "").trim()
+
+        if (e.hasAlias) {
+          let groupCfg = cfg.getGroup(e.group_id)
+          let alias = groupCfg.botAlias
+
+          if (!Array.isArray(alias)) alias = [ alias ]
+
+          for (let name of alias) {
+            if (msgElement.text.startsWith(name)) {
+              msgElement.text = msgElement.text.slice(name.length).trim()
+              break
+            }
+          }
+        }
+      }
+    }
+    return message
   }
 }
