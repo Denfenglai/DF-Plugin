@@ -12,29 +12,16 @@ export function supportGuoba() {
       name: "DF-Plugin",
       title: "DF-Plugin",
       description: "提供Yunzai-Bot拓展功能",
-      author: [
-        "@等风来",
-        "@DF"
-      ],
-      authorLink: [
-        "https://gitee.com/DengFengLai-F",
-        "https://gitee.com/DenFengLai"
-      ],
-      // 仓库地址
+      author: "@等风来",
+      authorLink: "https://gitee.com/DengFengLai-F",
       link: "https://gitee.com/DenFengLai/DF-Plugin",
       isV3: true,
       isV2: false,
       showInMenu: "auto",
-      // 显示图标，此为个性化配置
-      // 图标可在 https://icon-sets.iconify.design 这里进行搜索
       icon: "svg-spinners:blocks-wave",
-      // 图标颜色，例：#FF0000 或 rgb(255, 0, 0)
       iconColor: "#d19f56"
-      // 如果想要显示成图片，也可以填写图标路径（绝对路径）
-      // iconPath: path.join(_paths.pluginRoot, 'resources/images/icon.png'),
     },
     configInfo: {
-      // 配置项 schemas
       schemas: [
         {
           component: "Divider",
@@ -95,7 +82,7 @@ export function supportGuoba() {
         {
           field: "other.chuoType",
           label: "戳一戳图片类型",
-          bottomHelpMessage: "自定义图片自行放在resources/chuo/default中",
+          bottomHelpMessage: "自定义图片需在resources/chuo/default中添加",
           component: "RadioGroup",
           required: true,
           componentProps: {
@@ -126,7 +113,7 @@ export function supportGuoba() {
           sendMaster: Config.sendMaster
         }
       },
-      // 设置配置的方法（前端点确定后调用的方法）
+
       setConfigData(data, { Result }) {
         for (let key in data) {
           Config.modify(...key.split("."), data[key])
