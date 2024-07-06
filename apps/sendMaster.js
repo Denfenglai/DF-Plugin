@@ -168,7 +168,7 @@ export class SendMasterMsgs extends plugin {
     if (config.Master !== 1 && config.Master !== 0) {
       return config.Master
     }
-    return config.masterQQ[0] === "stdin" ? (config.masterQQ[1] || config.masterQQ[0]) : config.masterQQ[0]
+    return Config.masterQQ[0] === "stdin" ? (Config.masterQQ[1] || Config.masterQQ[0]) : Config.masterQQ[0]
   }
 
   /**
