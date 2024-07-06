@@ -20,7 +20,12 @@
   "author": "DengFengLai",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "^3.3.2"
+    "chokidar": "^3.6.0",
+    "fs": "0.0.1-security",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1",
+    "node-fetch": "^3.3.2",
+    "yaml": "^2.4.5"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
