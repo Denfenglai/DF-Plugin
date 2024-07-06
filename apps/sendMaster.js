@@ -1,4 +1,3 @@
-// import _ from "lodash"
 import cfg from "../../../lib/config/config.js"
 import moment from "moment"
 import { Config } from "../components/index.js"
@@ -6,7 +5,8 @@ import { sendMasterMsg } from "../model/index.js"
 
 const key = "DF:contact"
 let Sending = false
-segment.reply ??= id => ({ type: "reply", id })
+
+segment.reply ??= (id) => ({ type: "reply", id })
 
 export class SendMasterMsgs extends plugin {
   constructor() {
@@ -31,19 +31,19 @@ export class SendMasterMsgs extends plugin {
 
   /**
    * 联系主人
-   * @param e
+   * @param {object} e - 消息事件
    */
   async contact(e) {
+    if (Sending) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
+
+    const { open, cd, BotId, sendAvatar } = Config.sendMaster
+    if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦")
+    if (await redis.get(key) && !e.isMaster) return e.reply("❎ 操作频繁，请稍后再试！")
+
+    Sending = true
+
     try {
-      if (Sending) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
-      let { open, cd, BotId, sendAvatar } = Config.sendMaster
-      if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦")
-      if (await redis.get(key) && !e.isMaster) return e.reply("❎ 操作频繁，请稍后再试！")
-
-      Sending = true
-
-      let message = await this.Replace(e, /#联系主人/)
-
+      const message = await this.Replace(e, /#联系主人/)
       if (message.length === 0) return e.reply("❎ 消息不能为空")
 
       const type = e.bot?.version?.id || e?.adapter_id || "QQ"
@@ -61,13 +61,11 @@ export class SendMasterMsgs extends plugin {
         `来自: ${group}\n`,
         `BOT: ${bot}\n`,
         `时间: ${time}\n`,
-        "消息内容:\n"
-      ]
-      msg.push(...message)
-      msg.push(
+        "消息内容:\n",
+        ...message,
         "\n-------------\n",
         "引用该消息：#回复 <内容>"
-      )
+      ]
 
       const info = {
         bot: e.bot.uin,
@@ -76,24 +74,19 @@ export class SendMasterMsgs extends plugin {
         message_id: e.message_id
       }
 
-      this.masterQQ = Config.sendMaster.Master !== 1 && Config.sendMaster.Master !== 0
-        ? Config.sendMaster.Master
-        : (Config.masterQQ[0] == "stdin"
-            ? (Config.masterQQ[1] ? Config.masterQQ[1] : Config.masterQQ[0])
-            : Config.masterQQ[0])
-      if (BotId == 0) BotId = e.bot?.uin ?? Bot.uin
-      await sendMasterMsg(msg, BotId)
-        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${this.masterQQ}`))
+      const masterQQ = this.getMasterQQ(Config.sendMaster)
+      await sendMasterMsg(msg, BotId || e.bot?.uin)
+        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${masterQQ}`))
         .then(() => redis.set(key, "1", { EX: cd }))
         .then(() => redis.set(`${key}:${e.seq}`, JSON.stringify(info), { EX: 86400 }))
-        .catch(err => {
-          e.reply(`❎ 消息发送失败，请尝试自行联系：${this.masterQQ}\n错误信息：${err}`)
+        .catch((err) => {
+          e.reply(`❎ 消息发送失败，请尝试自行联系：${masterQQ}\n错误信息：${err}`)
           logger.error(err)
         })
-      Sending = false
     } catch (error) {
       e.reply("❎ 出错误辣，稍后重试吧")
       logger.error(error)
+    } finally {
       Sending = false
     }
   }
@@ -106,28 +99,18 @@ export class SendMasterMsgs extends plugin {
     if (!e.isMaster) return false
 
     try {
-      let source
-      if (e.getReply) {
-        source = await e.getReply()
-      } else if (e.source) {
-        source = (await e.friend.getChatHistory(e.source.time, 1)).pop()
-      }
-
+      const source = await this.getSourceMessage(e)
       if (!source || !(/联系主人消息/.test(source.raw_message))) return false
 
-      const sourceMsg = source.raw_message.split("\n")[0]
-      const regex = /\(([^)]+)\)/
-      const match = sourceMsg.match(regex)
-      if (!match) return false
+      const MsgID = this.extractMessageId(source.raw_message)
+      if (!MsgID) return false
 
-      const MsgID = match[1]
       const data = await redis.get(`${key}:${MsgID}`)
       if (!data) return e.reply("消息太久远了，下次来早点吧~")
 
       const { bot, group, id, message_id } = JSON.parse(data)
-      let message = await this.Replace(e, /#?回复/g)
-      message.unshift(`主人(${e.user_id})回复：\n`)
-      message.unshift(segment.reply(message_id))
+      const message = await this.Replace(e, /#?回复/g)
+      message.unshift(`主人(${e.user_id})回复：\n`, segment.reply(message_id))
 
       this.Bot = Bot[bot] ?? e.bot ?? Bot
 
@@ -152,7 +135,7 @@ export class SendMasterMsgs extends plugin {
    * @returns {object} message - 处理后的消息内容数组
    */
   async Replace(e = this.e, Reg = null) {
-    let message = e.at ? e.message.filter(item => item.type !== "at") : e.message
+    const message = e.at ? e.message.filter((item) => item.type !== "at") : e.message
 
     for (let msgElement of message) {
       if (msgElement.type === "text") {
@@ -174,5 +157,42 @@ export class SendMasterMsgs extends plugin {
       }
     }
     return message
+  }
+
+  /**
+   * 获取主人QQ
+   * @param {object} config - 配置
+   * @returns {string} 主人QQ
+   */
+  getMasterQQ(config) {
+    if (config.Master !== 1 && config.Master !== 0) {
+      return config.Master
+    }
+    return config.masterQQ[0] === "stdin" ? (config.masterQQ[1] || config.masterQQ[0]) : config.masterQQ[0]
+  }
+
+  /**
+   * 获取源消息
+   * @param {object} e - 消息事件
+   * @returns {object} 源消息
+   */
+  async getSourceMessage(e) {
+    if (e.getReply) {
+      return await e.getReply()
+    } else if (e.source) {
+      return (await e.friend.getChatHistory(e.source.time, 1)).pop()
+    }
+    return null
+  }
+
+  /**
+   * 提取消息ID
+   * @param {string} rawMessage - 原始消息
+   * @returns {string} 消息ID
+   */
+  extractMessageId(rawMessage) {
+    const regex = /\(([^)]+)\)/
+    const match = rawMessage.match(regex)
+    return match ? match[1] : null
   }
 }
