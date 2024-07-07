@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="{{pluResPath}}/CodeUpdate/CodeUpdate.css" />
+  <link rel="shortcut icon" href="#" />
+</head>
+<style type="text/css">
+  .head_box {
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+  }
+</style>
+
+<body>
+  <div class="container" id="container">
+    <div class="head_box">
+      <div class="id_text">Git仓库更新实时监测</div>
+    </div>
+
+    <div class="data_box">
+      <div class="list">
+        {{each lifeData item}}
+        <div class="item">
+          <div class="title">
+            <div class="text">{{item.name}}</div>
+            <div class="dec">{{item.time}}</div>
+            <div class="desc">{{item.text}}</div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="logo">Created By DF-Plugin</div>
+  </div>
+</body>
+
+</html>
