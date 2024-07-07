@@ -1,0 +1,18 @@
+# 自动检查仓库更新开关
+Auto: false
+# 推送的群聊列表
+Gruop: []
+
+# 关注的仓库路径
+# 格式: 用户名/仓库名
+# 如: github.con/DenFengLai/DF-Plugin 
+# 则填 DenFengLai/DF-Plugin
+# 优先检查github，如果未找到则检查gitee
+GitList:
+  - yoimiya-kokomi/miao-plugin
+  - DenFengLai/DF-Plugin
+
+# 仓库更新检查Cron表达式
+# 不懂的自行百度
+# 默认十分钟推送一次
+Cron: "0 */10 * * * *"

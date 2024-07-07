@@ -51,6 +51,11 @@ class Config {
     return this.getDefOrConfig("other")
   }
 
+  /** Git推送 */
+  get CodeUpdate() {
+    return this.getDefOrConfig("CodeUpdate")
+  }
+
   /**
    * 默认配置和用户配置
    * @param name

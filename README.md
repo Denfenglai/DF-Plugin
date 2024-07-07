@@ -66,6 +66,15 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 </details>
 
+<details><summary>Git仓库更新推送</summary>
+
+> 在[配置文件](/config/default_config/CodeUpdate.yaml)配置完成填写群号后即可使用。   
+> 推荐使用[锅巴插件](https://gitee.com/guoba-yunzai/guoba-plugin.git)进行配置
+
+- 使用`#检查仓库更新`可以手动进行一次推送
+
+</details>
+
 ## 📄 计划工程 
 
 - [x] 能跑

@@ -98,6 +98,46 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
+          label: "Git仓库监听"
+        },
+        {
+          field: "CodeUpdate.Auto",
+          label: "自动检查开关",
+          component: "Switch"
+        },
+        {
+          field: "CodeUpdate.Gruop",
+          helpMessage: "检测到仓库更新后推送的群列表",
+          label: "推送群",
+          componentProps: {
+            placeholder: "点击选择要推送的群"
+          },
+          component: "GSelectGroup"
+        },
+        {
+          field: "CodeUpdate.GitList",
+          label: "关注的Git仓库路径",
+          bottomHelpMessage: "格式：用户名/仓库名\n如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin",
+          component: "GTags",
+          required: true,
+          componentProps: {
+            allowAdd: true,
+            allowDel: true
+          }
+        },
+        {
+          field: "CodeUpdate.Cron",
+          label: "Cron表达式",
+          helpMessage: "修改后重启生效",
+          bottomHelpMessage: "定时检查时间，如果想改成5分钟一次用后面的表达式 */5 * * * *",
+          component: "Input",
+          required: true,
+          componentProps: {
+            placeholder: "默认每10分钟推送一次 */10 * * * *"
+          }
+        },
+        {
+          component: "Divider",
           label: "其他"
         },
         {
@@ -110,7 +150,8 @@ export function supportGuoba() {
       getConfigData() {
         return {
           other: Config.other,
-          sendMaster: Config.sendMaster
+          sendMaster: Config.sendMaster,
+          CodeUpdate: Config.CodeUpdate
         }
       },
 
