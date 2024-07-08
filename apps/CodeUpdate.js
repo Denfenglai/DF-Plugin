@@ -15,7 +15,7 @@ export class CodeUpdate extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: "^#?检查仓库更新$",
+          reg: "^#检查仓库更新$",
           fnc: "cupdate"
         }
       ]
@@ -70,7 +70,7 @@ export class CodeUpdate extends plugin {
       }
 
       content.push({ "name": `${is_wm}${title}`, time, "text": data[0].commit.message })
-      await common.sleep(5000)
+      await common.sleep(3000)
     }
 
     if (content.length > 0) {
@@ -96,6 +96,23 @@ export class CodeUpdate extends plugin {
       console.error(`访问失败: ${url}`, e)
       return false
     }
+  }
+
+  /**
+   * 获取Git仓库更新数据（优先GitHub，其次Gitee）
+   * @param {string} key - 仓库路径（用户名/仓库名）
+   * @param {string} title - 仓库名称
+   * @returns {Promise<object | null>} 返回提交数据或null（未找到）
+   */
+  async getPluginUpdateData(key, title) {
+    let data = await this.getGitHubData(key, title)
+    if (data === false || data.message === "Not Found") {
+      data = await this.getGiteeData(key, title)
+      if (data === false || data.message === "Not Found Project") {
+        return null
+      }
+    }
+    return data
   }
 
   /**
@@ -129,23 +146,6 @@ export class CodeUpdate extends plugin {
   }
 
   /**
-   * 获取Git仓库更新数据（优先GitHub，其次Gitee）
-   * @param {string} key - 仓库路径（用户名/仓库名）
-   * @param {string} title - 仓库名称
-   * @returns {Promise<object | null>} 返回提交数据或null（未找到）
-   */
-  async getPluginUpdateData(key, title) {
-    let data = await this.getGitHubData(key, title)
-    if (data === false || data.message === "Not Found") {
-      data = await this.getGiteeData(key, title)
-      if (data === false || data.message === "Not Found Project") {
-        return null
-      }
-    }
-    return data
-  }
-
-  /**
    * 生成截图
    * @param {object} content
    * @param {string} saveId
@@ -171,7 +171,7 @@ export class CodeUpdate extends plugin {
       if (content.length !== 0 && data) {
         Bot.pickGroup(key).sendMsg(data)
       }
-      await common.sleep(10000) // 每隔十秒发送一个群
+      await common.sleep(5000)
     }
   }
 }
