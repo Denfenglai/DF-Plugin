@@ -135,7 +135,7 @@ export class SendMasterMsgs extends plugin {
    * @returns {object} message - 处理后的消息内容数组
    */
   async Replace(e = this.e, Reg = null) {
-    const message = e.at ? e.message.filter((item) => item.type !== "at") : e.message
+    const message = e.message.filter((item) => item.type != "at")
 
     for (let msgElement of message) {
       if (msgElement.type === "text") {
