@@ -5,7 +5,6 @@ import { sendMasterMsg } from "../model/index.js"
 
 const key = "DF:contact"
 let Sending = false
-
 segment.reply ??= (id) => ({ type: "reply", id })
 
 export class SendMasterMsgs extends plugin {
@@ -36,11 +35,14 @@ export class SendMasterMsgs extends plugin {
   async contact(e) {
     if (Sending) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
 
-    const { open, cd, BotId, sendAvatar } = Config.sendMaster
-    if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦")
-    if (await redis.get(key) && !e.isMaster) return e.reply("❎ 操作频繁，请稍后再试！")
+    const { open, cd, BotId, sendAvatar, banWords, banUser, banGroup } = Config.sendMaster
+    if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦", true)
+    if (await redis.get(key) && !e.isMaster) return e.reply("❎ 操作频繁，请稍后再试", true)
+    if (banWords.some(item => e.msg.includes(item))) return e.reply("❎ 消息包含违禁词，请检查后重试", true)
+    if (banUser.includes(e.user_id)) return e.reply("❎ 对不起，您不可用", true)
+    if (e.isGroup && banGroup.includes(e.group_id)) return e.reply("❎ 该群暂不可用该功能", true)
 
-    Sending = true
+    Sending = true // 防止重复触发
 
     try {
       const message = await this.Replace(e, /#联系主人/)
@@ -76,7 +78,7 @@ export class SendMasterMsgs extends plugin {
 
       const masterQQ = this.getMasterQQ(Config.sendMaster)
       await sendMasterMsg(msg, BotId || e.bot?.uin)
-        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${masterQQ}`))
+        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${masterQQ}`, true))
         .then(() => redis.set(key, "1", { EX: cd }))
         .then(() => redis.set(`${key}:${e.seq}`, JSON.stringify(info), { EX: 86400 }))
         .catch((err) => {
@@ -112,7 +114,7 @@ export class SendMasterMsgs extends plugin {
       const message = await this.Replace(e, /#?回复/g)
       message.unshift(`主人(${e.user_id})回复：\n`, segment.reply(message_id))
 
-      this.Bot = Bot[bot] ?? e.bot ?? Bot
+      this.Bot = Bot[bot] ?? Bot
 
       if (group) {
         await this.Bot.pickGroup(group).sendMsg(message)
