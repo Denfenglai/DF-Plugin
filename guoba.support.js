@@ -137,6 +137,16 @@ export function supportGuoba() {
           component: "Switch"
         },
         {
+          field: "CodeUpdate.Cron",
+          label: "自动检查定时表达式",
+          helpMessage: "修改后重启生效",
+          bottomHelpMessage: "自动检查Cron表达式",
+          component: "EasyCron",
+          componentProps: {
+            placeholder: "请输入Cron表达式"
+          }
+        },
+        {
           field: "CodeUpdate.Gruop",
           helpMessage: "检测到仓库更新后推送的群列表",
           label: "推送群",
@@ -154,16 +164,6 @@ export function supportGuoba() {
           componentProps: {
             allowAdd: true,
             allowDel: true
-          }
-        },
-        {
-          field: "CodeUpdate.Cron",
-          label: "Cron表达式",
-          helpMessage: "修改后重启生效",
-          bottomHelpMessage: "自动定时表达式",
-          component: "EasyCron",
-          componentProps: {
-            placeholder: "请输入定时表达式"
           }
         },
         {
