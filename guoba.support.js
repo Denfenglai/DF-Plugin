@@ -160,11 +160,10 @@ export function supportGuoba() {
           field: "CodeUpdate.Cron",
           label: "Cron表达式",
           helpMessage: "修改后重启生效",
-          bottomHelpMessage: "定时检查时间，如果想改成5分钟一次用后面的表达式 */5 * * * *",
-          component: "Input",
-          required: true,
+          bottomHelpMessage: "自动定时表达式",
+          component: "EasyCron",
           componentProps: {
-            placeholder: "默认每10分钟推送一次 */10 * * * *"
+            placeholder: "请输入定时表达式"
           }
         },
         {
