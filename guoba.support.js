@@ -36,10 +36,12 @@ export function supportGuoba() {
         {
           field: "sendMaster.cd",
           label: "触发冷却",
-          bottomHelpMessage: "单位：秒，主人不受限制",
-          component: "Input",
+          helpMessage: "主人不受限制",
+          bottomHelpMessage: "单位：秒",
+          component: "InputNumber",
           required: true,
           componentProps: {
+            min: 1,
             placeholder: "请输入冷却时间"
           }
         },
@@ -67,8 +69,37 @@ export function supportGuoba() {
         {
           field: "sendMaster.sendAvatar",
           label: "消息附带触发者头像",
-          bottomHelpMessage: "微信Bot请关闭此项，否则可能报错",
+          bottomHelpMessage: "微信Bot如果遇到报错请关闭此项。",
           component: "Switch"
+        },
+        {
+          field: "sendMaster.banWords",
+          label: "违禁词",
+          bottomHelpMessage: "当消息包含下列内容时将不会发送给主人",
+          component: "GTags",
+          componentProps: {
+            allowAdd: true,
+            allowDel: true
+          }
+        },
+        {
+          field: "sendMaster.banUser",
+          label: "禁用用户",
+          bottomHelpMessage: "不允许该用户联系主人",
+          component: "GTags",
+          componentProps: {
+            allowAdd: true,
+            allowDel: true
+          }
+        },
+        {
+          field: "sendMaster.banGroup",
+          label: "禁用群",
+          helpMessage: "不允许通过该群联系主人的群聊",
+          componentProps: {
+            placeholder: "点击选择要禁用的群"
+          },
+          component: "GSelectGroup"
         },
         {
           component: "Divider",
@@ -147,6 +178,7 @@ export function supportGuoba() {
           component: "Switch"
         }
       ],
+
       getConfigData() {
         return {
           other: Config.other,
