@@ -51,26 +51,32 @@ export class CodeUpdate extends plugin {
   async checkUpdates(isAuto = false, e = null) {
     const { GitList } = Config.CodeUpdate
     let content = []
+
     for (let key of GitList) {
-      let title = key.split("/").pop()
-      let data = await this.getPluginUpdateData(key, title)
-      if (!data) continue
+      try {
+        let title = key.split("/").pop()
+        let data = await this.getPluginUpdateData(key, title)
 
-      let time = moment(data[0].commit.author.date).format("YYYY-MM-DD HH:mm:ss")
-      let sha = data[0].sha
-      let is_wm = data.message !== "Not Found" ? "Github：" : "Gitee："
+        if (!data) continue
 
-      if (isAuto) {
-        let redisdata = await redis.get(`DF:CodeUpdate:${title}`)
-        if (redisdata && JSON.parse(redisdata)[0].shacode === sha) {
-          Bot.logger.mark(`${title}暂无更新`)
-          continue
+        let time = moment(data[0].commit.author.date).format("YYYY-MM-DD HH:mm:ss")
+        let sha = data[0].sha
+        let source = data.message !== "Not Found" ? "Github：" : "Gitee："
+
+        if (isAuto) {
+          let redisdata = await redis.get(`DF:CodeUpdate:${title}`)
+          if (redisdata && JSON.parse(redisdata)[0].shacode === sha) {
+            Bot.logger.mark(`${title}暂无更新`)
+            continue
+          }
+          redis.set(`DF:CodeUpdate:${title}`, JSON.stringify([ { shacode: sha } ]))
         }
-        redis.set(`DF:CodeUpdate:${title}`, JSON.stringify([ { shacode: sha } ]))
-      }
 
-      content.push({ "name": `${is_wm}${title}`, time, "text": data[0].commit.message })
-      await common.sleep(3000)
+        content.push({ name: `${source}${title}`, time, text: data[0].commit.message })
+        await common.sleep(3000)
+      } catch (error) {
+        Bot.logger.error(`获取${key}数据出错:`, error)
+      }
     }
 
     if (content.length > 0) {
@@ -92,8 +98,8 @@ export class CodeUpdate extends plugin {
       let response = await fetch(url, { method: "get", headers })
       let data = await response.json()
       return data
-    } catch (e) {
-      console.error(`访问失败: ${url}`, e)
+    } catch (error) {
+      console.error(`访问失败: ${url}`, error)
       return false
     }
   }
