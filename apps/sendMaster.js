@@ -1,4 +1,3 @@
-import cfg from "../../../lib/config/config.js"
 import moment from "moment"
 import { Config } from "../components/index.js"
 import { sendMasterMsg } from "../model/index.js"
@@ -36,11 +35,13 @@ export class SendMasterMsgs extends plugin {
     if (Sending) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
 
     const { open, cd, BotId, sendAvatar, banWords, banUser, banGroup } = Config.sendMaster
-    if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦", true)
-    if (await redis.get(key) && !e.isMaster) return e.reply("❎ 操作频繁，请稍后再试", true)
-    if (banWords.some(item => e.msg.includes(item)) && !e.isMaster) return e.reply("❎ 消息包含违禁词，请检查后重试", true)
-    if (banUser.includes(e.user_id)) return e.reply("❎ 对不起，您不可用", true)
-    if (e.isGroup && banGroup.includes(e.group_id)) return e.reply("❎ 该群暂不可用该功能", true)
+    if (!e.isMaster) {
+      if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦", true)
+      if (await redis.get(key)) return e.reply("❎ 操作频繁，请稍后再试", true)
+      if (banWords.some(item => e.msg.includes(item)) && !e.isMaster) return e.reply("❎ 消息包含违禁词，请检查后重试", true)
+      if (banUser.includes(e.user_id)) return e.reply("❎ 对不起，您不可用", true)
+      if (e.isGroup && banGroup.includes(e.group_id)) return e.reply("❎ 该群暂不可用该功能", true)
+    }
 
     Sending = true // 防止重复触发
 
@@ -144,7 +145,7 @@ export class SendMasterMsgs extends plugin {
         if (Reg) msgElement.text = msgElement.text.replace(Reg, "").trim()
 
         if (e.hasAlias && e.isGroup) {
-          let groupCfg = cfg.getGroup(e.group_id)
+          let groupCfg = Config.getGroup(e.group_id, e.self_id)
           let alias = groupCfg.botAlias
 
           if (!Array.isArray(alias)) alias = [ alias ]
