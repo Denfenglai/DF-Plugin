@@ -1,14 +1,9 @@
 let Update
 const PLUGIN_NAME = "DF-Plugin"
-
 try {
   Update = (await import("../../other/update.js")).update
 } catch {
-  try {
-    Update = (await import("../../system/apps/update.ts")).update
-  } catch (err) {
-    logger.warn("[DF-Plugin] 导入本体更新模块失败，将无法使用 #DF更新 命令")
-  }
+  logger.warn("[DF-Plugin] 导入本体更新模块失败，将无法使用 #DF更新 命令")
 }
 
 export class DFupdate extends plugin {
