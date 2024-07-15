@@ -57,6 +57,24 @@ class Config {
   }
 
   /**
+   * 群配置
+   * @param group_id
+   * @param bot_id
+   */
+  getGroup(group_id = "", bot_id = "") {
+    const config = {
+      ...cfg.getdefSet("group"),
+      ...cfg.getConfig("group")
+    }
+    return {
+      ...config.default,
+      ...config[`${bot_id}:default`],
+      ...config[group_id],
+      ...config[`${bot_id}:${group_id}`]
+    }
+  }
+
+  /**
    * 默认配置和用户配置
    * @param name
    */
