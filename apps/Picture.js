@@ -1,10 +1,12 @@
 import fetch from "node-fetch"
+import { randomFile } from "../model/index.js"
+import { Plugin_Path } from "../components/index.js"
 
 export class api extends plugin {
   constructor() {
     super({
-      name: "DF:随机图片API",
-      dsc: "API返回图片",
+      name: "DF:随机图片",
+      dsc: "随机返回一张图片",
       event: "message",
       priority: 500,
       rule: [
@@ -23,6 +25,10 @@ export class api extends plugin {
         {
           reg: "^#?(看看|来张)腿子?$",
           fnc: "kkt"
+        },
+        {
+          reg: "^#?(随机|来张)(丛雨|幼刀|村雨|绫|粽子精)$",
+          fnc: "Murasame"
         }
       ]
     })
@@ -57,5 +63,11 @@ export class api extends plugin {
       "看吧涩批！",
       segment.image(`${links}`)
     ], true)
+  }
+
+  async Murasame(e) {
+    const file = await randomFile(`${Plugin_Path}/resources/chuo/丛雨`)
+    if (!file) return false
+    this.e.reply(segment.image(file))
   }
 }
