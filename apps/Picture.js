@@ -29,6 +29,10 @@ export class api extends plugin {
         {
           reg: "^#?(随机|来张)(丛雨|幼刀|村雨|绫|粽子精)$",
           fnc: "Murasame"
+        },
+        {
+          reg: "^#?(随机|来张)((待兼)?诗歌剧|诗宝)$",
+          fnc: "Matik"
         }
       ]
     })
@@ -68,6 +72,12 @@ export class api extends plugin {
   async Murasame(e) {
     const file = await randomFile(`${Plugin_Path}/resources/chuo/丛雨`)
     if (!file) return false
-    this.e.reply(segment.image(file))
+    return e.reply(segment.image(file))
+  }
+
+  async Matik(e) {
+    const file = await randomFile(`${Plugin_Path}/resources/chuo/诗歌剧`)
+    if (!file) return false
+    return e.reply(segment.image(file))
   }
 }
