@@ -36,17 +36,17 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 <details><summary>随机图片</summary>
 
-- #来张JK / 黑丝 / cos / 腿子
+- #来张JK / 黑丝 / cos / 腿子 / 丛雨 /诗歌剧
 
-- 从API获取一张图片
+> 随机发送一张图片
 
 </details>
 
 <details><summary>给主人带话</summary>
 
- - #联系主人 + `消息内容`  
+- #联系主人 + `消息内容`  
 
-- 详细配置请见[config/sendMaster.yaml](/config/default_config/sendMaster.yaml)
+> 详细配置请见[config/sendMaster.yaml](/config/default_config/sendMaster.yaml)
 
 </details>
 
@@ -54,15 +54,14 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 - #来首歌
 
-- 从API获取一首网易云歌曲
+> 从API获取一首网易云歌曲
 
 </details>
 
 <details><summary>随机表情戳一戳</summary>
 
-戳一戳返回随机表情包  
-
-配置项请看[config/other.yaml](/config/default_config/other.yaml)
+> 戳一戳返回随机表情包  
+> 配置项请看[config/other.yaml](/config/default_config/other.yaml)
 
 </details>
 
