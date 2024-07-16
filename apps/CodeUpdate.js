@@ -2,9 +2,7 @@ import fetch from "node-fetch"
 import moment from "moment"
 import common from "../../../lib/common/common.js"
 import puppeteer from "../../../lib/puppeteer/puppeteer.js"
-import { Config } from "../components/index.js"
-
-const Plugin_Path = `${process.cwd()}/plugins/DF-Plugin`
+import { Config, Plugin_Path } from "../components/index.js"
 
 export class CodeUpdate extends plugin {
   constructor() {
