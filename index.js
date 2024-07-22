@@ -10,7 +10,6 @@ let loadedFilesCounterr = 0
 let apps
 
 const startTime = Date.now()
-logger.info(`[${AppName}] 开始加载插件`)
 const { apps: loadedApps, loadedFilesCount: count, loadedFilesCounterr: counterr } = await appsOut({ AppsName: "apps" })
 const endTime = Date.now()
 apps = loadedApps
