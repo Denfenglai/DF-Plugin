@@ -18,10 +18,12 @@ export class CodeUpdate extends plugin {
         }
       ]
     })
-    this.task = {
-      cron: Config.CodeUpdate.Cron,
-      name: "[DF-Plugin]定时检查指定Git库是否更新",
-      fnc: () => this.cupdateauto()
+    if (Config.CodeUpdate.Auto) {
+      this.task = {
+        cron: Config.CodeUpdate.Cron,
+        name: "[DF-Plugin]Git仓库更新检查",
+        fnc: () => this.cupdateauto()
+      }
     }
   }
 
@@ -37,7 +39,6 @@ export class CodeUpdate extends plugin {
    * 自动检查更新
    */
   async cupdateauto() {
-    if (!Config.CodeUpdate.Auto) return false
     await this.checkUpdates(true)
   }
 
@@ -67,7 +68,7 @@ export class CodeUpdate extends plugin {
             Bot.logger.mark(`${title}暂无更新`)
             continue
           }
-          redis.set(`DF:CodeUpdate:${title}`, JSON.stringify([ { shacode: sha } ]))
+          redis.set(`DF:CodeUpdate:${title}`, JSON.stringify([{ shacode: sha }]))
         }
 
         content.push({ name: `${source}${title}`, time, text: data[0].commit.message })
