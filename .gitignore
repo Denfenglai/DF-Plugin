@@ -6,3 +6,6 @@ test.*
 .vscode/
 temp/
 *.css.map
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
