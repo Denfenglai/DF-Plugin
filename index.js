@@ -3,27 +3,21 @@ import chalk from "chalk"
 import fs from "fs/promises"
 
 let AppName = "DF-Plugin"
-const logger = global.logger || console
+const logger = global.logger ?? console
 const moduleCache = new Map()
 let loadedFilesCount = 0
 let loadedFilesCounterr = 0
 let apps
-global.ReplyError = class ReplyError extends Error {
-  constructor(message) {
-    super(message)
-    this.name = "ReplyError"
-  }
-}
 
 const startTime = Date.now()
-logger.info("[DF-Plugin] 开始加载插件")
+logger.info(`[${AppName}] 开始加载插件`)
 const { apps: loadedApps, loadedFilesCount: count, loadedFilesCounterr: counterr } = await appsOut({ AppsName: "apps" })
 const endTime = Date.now()
 apps = loadedApps
 loadedFilesCount = count
 loadedFilesCounterr = counterr
 logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
-logger.info(chalk.rgb(82, 242, 255)("DF-Plugin 载入成功！"))
+logger.info(chalk.rgb(82, 242, 255)(`${AppName} 载入成功！`))
 logger.info(chalk.rgb(82, 242, 255)("作者：等风来"))
 logger.info(chalk.rgb(82, 242, 255)(`共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`))
 logger.info(chalk.rgb(82, 242, 255)(`耗时 ${endTime - startTime} 毫秒`))
@@ -49,13 +43,13 @@ async function appsOut({ AppsName }) {
               apps[key] = allExport[key]
               loadedFilesCount++
             } else {
-              logger.info(`[DF-Plugin] 已存在 class ${key} 同名导出: ${item}`)
+              logger.info(`[${AppName}] 已存在 class ${key} 同名导出: ${item}`)
               loadedFilesCounterr++
             }
           }
         }
       } catch (error) {
-        logger.error(`[DF-Plugin] 载入插件错误 ${logger.red(item)}`)
+        logger.error(`[${AppName}n] 载入插件错误 ${logger.red(item)}`)
         logger.error(error)
         loadedFilesCounterr++
       }
