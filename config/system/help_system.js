@@ -29,18 +29,20 @@ export const helpList = [
         "title": "#来首歌",
         "desc": "随机网易云音乐"
       },
-      { "icon": 2,
+      {
+        "icon": 2,
         "title": "戳一戳机器人",
         "desc": "戳一戳机器人发送随机表情包"
       },
-      { "icon": 4,
+      {
+        "icon": 4,
         "title": "拾取关键词原神",
-        "desc": "本来聊得好好的，突然有人聊起了原神，搞得大家都不高兴" 
+        "desc": "本来聊得好好的，突然有人聊起了原神，搞得大家都不高兴"
       }
     ]
   },
   {
-  "group": "随机图片类",
+    "group": "随机图片类",
     "list": [
       {
         "icon": 35,
@@ -71,7 +73,7 @@ export const helpList = [
         "icon": 33,
         "title": "随机诗歌剧",
         "desc": "随机诗歌剧图片"
-      },
+      }
     ]
   },
   {
@@ -79,18 +81,20 @@ export const helpList = [
     "auth": "master",
     "list": [
       {
-        "icon":13,
+        "icon": 13,
         "title": "联系主人",
-        "desc": "给主人发消息"  
-     },
-     {  "icon": 14,
+        "desc": "给主人发消息"
+      },
+      {
+        "icon": 14,
         "title": "回复",
-        "desc": "回复群友给你发的消息" 
-    },
-    {  "icon": 15,
+        "desc": "回复群友给你发的消息"
+      },
+      {
+        "icon": 15,
         "title": "DF(强制)更新",
         "desc": "使用Git更新插件"
-    }
+      }
     ]
 
   }

@@ -9,4 +9,4 @@ const Path = process.cwd()
 const Plugin_Name = "DF-Plugin"
 const Plugin_Path = `${Path}/plugins/${Plugin_Name}`
 
-export { Config, Data, Path, Plugin_Name, Plugin_Path, YamlReader, render ,Version ,Common }
+export { Config, Data, Path, Plugin_Name, Plugin_Path, YamlReader, render, Version, Common }

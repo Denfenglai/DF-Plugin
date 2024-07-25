@@ -1,10 +1,11 @@
 import fs from "fs"
 import lodash from "lodash"
+import { Data } from "./index.js"
 const Plugin_Path = `${process.cwd()}/plugins/DF-Plugin`
 const README_path = `${Plugin_Path}/README.md`
 const CHANGELOG_path = `${Plugin_Path}/CHANGELOG.md`
 let packageJson = JSON.parse(fs.readFileSync(`${process.cwd()}/package.json`, "utf8"))
-let yunzai_ver = packageJson.version
+// let yunzai_ver = packageJson.version
 
 let logs = {}
 let changelogs = []
@@ -21,8 +22,7 @@ const getLine = function(line) {
   return line
 }
 
-
-const readLogFile = function (root, versionCount = 4) {
+const readLogFile = function(root, versionCount = 4) {
   root = Data.getRoot(root)
   let logPath = `${root}/CHANGELOG.md`
   let logs = {}
@@ -31,8 +31,8 @@ const readLogFile = function (root, versionCount = 4) {
 
   try {
     if (fs.existsSync(logPath)) {
-      logs = fs.readFileSync(logPath, 'utf8') || ''
-      logs = logs.split('\n')
+      logs = fs.readFileSync(logPath, "utf8") || ""
+      logs = logs.split("\n")
 
       let temp = {}
       let lastLine = {}
@@ -146,46 +146,43 @@ try {
 } catch (err) {}
 
 const yunzaiVersion = packageJson.version
-const isV3 = yunzaiVersion[0] === '3' || yunzaiVersion[0] === '4'
+const isV3 = yunzaiVersion[0] === "3" || yunzaiVersion[0] === "4"
 let isMiao = false
-let name = 'Yunzai-Bot'
+let name = "Yunzai-Bot"
 let isAlemonjs = false
-if (packageJson.name === 'miao-yunzai') {
+if (packageJson.name === "miao-yunzai") {
   isMiao = true
-  name = 'Miao-Yunzai'
-} else if (packageJson.name === 'trss-yunzai') {
+  name = "Miao-Yunzai"
+} else if (packageJson.name === "trss-yunzai") {
   isMiao = true
-  name = 'TRSS-Yunzai'
-} 
-else if (packageJson.name === 'a-yunzai') {
+  name = "TRSS-Yunzai"
+} else if (packageJson.name === "a-yunzai") {
   isMiao = true
-  name = 'A-Yunzai'
+  name = "A-Yunzai"
   isAlemonjs = true
 }
-
 
 let Version = {
   isV3,
   isMiao,
   name,
   isAlemonjs,
-  get version () {
+  get version() {
     return currentVersion
   },
-  get yunzai () {
+  get yunzai() {
     return yunzaiVersion
   },
-  get changelogs () {
+  get changelogs() {
     return changelogs
   },
   get ver() {
     return currentVersion
   },
-  runtime () {
-    console.log(`未能找到e.runtime，请升级至最新版${isV3 ? 'V3' : 'V2'}-Yunzai以使用miao-plugin`)
+  runtime() {
+    console.log(`未能找到e.runtime，请升级至最新版${isV3 ? "V3" : "V2"}-Yunzai以使用miao-plugin`)
   },
   readLogFile
 }
 
 export default Version
-
