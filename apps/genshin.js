@@ -1,4 +1,4 @@
-import { Config } from "../components/index.js"
+import { Config, Plugin_Path } from "../components/index.js"
 
 const ys = {}
 
@@ -20,7 +20,7 @@ export class genshin extends plugin {
 
   async ys() {
     if (ys[this.e.group_id] || !Config.other.ys) return false
-    this.reply(segment.image(`${process.cwd()}/plugins/DF-Plugin/resources/img/ys.png`))
+    this.reply(segment.image(`${Plugin_Path}/resources/img/ys.png`))
     ys[this.e.group_id] = true
     return false
   }

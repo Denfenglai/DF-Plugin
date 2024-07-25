@@ -68,7 +68,7 @@ export class CodeUpdate extends plugin {
             Bot.logger.mark(`${title}暂无更新`)
             continue
           }
-          redis.set(`DF:CodeUpdate:${title}`, JSON.stringify([{ shacode: sha }]))
+          redis.set(`DF:CodeUpdate:${title}`, JSON.stringify([ { shacode: sha } ]))
         }
 
         content.push({ name: `${source}${title}`, time, text: data[0].commit.message })
