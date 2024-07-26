@@ -2,8 +2,8 @@ import Data from "./Data.js"
 import Config from "./Config.js"
 import YamlReader from "./YamlReader.js"
 import Version from "./Version.js"
-import Common from "./Common.js"
-import render from "./common-lib/render.js"
+import Common from "../lib/common/common.js"
+import render from "../lib//puppeteer/render.js"
 
 const Path = process.cwd()
 const Plugin_Name = "DF-Plugin"
