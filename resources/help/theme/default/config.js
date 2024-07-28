@@ -14,7 +14,7 @@ export const style = {
   contBgColor: "rgba(6, 21, 31, 0)",
 
   // 面板底图毛玻璃效果，数字越大越模糊，0-10 ，可为小数
-  contBgBlur: 1,
+  contBgBlur: 1.9,
 
   // 板块标题栏底色
   headerBgColor: "rgba(172, 229, 209, .4)",
