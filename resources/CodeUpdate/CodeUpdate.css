@@ -20,6 +20,7 @@ body {
   transform: scale(1.5);
   transform-origin: 0 0;
   background-color: #f0f4f7;
+  transform: scale(2.5)
 }
 
 .container {
