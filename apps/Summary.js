@@ -16,7 +16,7 @@ export class Summary extends plugin {
           fnc: "SetSum"
         },
         {
-          reg: "^#?(开启|关闭)外显$",
+          reg: "^#?(开启|关闭)(图片)?外显$",
           fnc: "on"
         }
       ]
@@ -33,6 +33,7 @@ export class Summary extends plugin {
 
   async on(e) {
     const type = /开启/.test(e.msg)
+    if ((type && Config.summary.sum) || (!type && !Config.summary.sum)) return e.reply(`❎ 图片外显已处于${type ? "开启" : "关闭"}状态`)
     Config.modify("summary", "sum", type)
     Sum.Switch(type)
     e.reply(`✅ 已${type ? "开启" : "关闭"}图片外显`)
