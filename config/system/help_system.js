@@ -83,7 +83,6 @@ export const helpList = [
   },
   {
     "group": "给主人带话",
-    // "auth": "master",
     "list": [
       {
         "icon": 13,
@@ -94,6 +93,27 @@ export const helpList = [
         "icon": 14,
         "title": "回复",
         "desc": "主人回复群友的消息"
+      }
+    ]
+  },
+  {
+    "group": "图片外显",
+    "auth": "master",
+    "list": [
+      {
+        "icon": 7,
+        "title": "#开启/关闭图片外显",
+        "desc": "开关外显功能"
+      },
+      {
+        "icon": 4,
+        "title": "#设置外显+文字",
+        "desc": "设置自定义外显文本"
+      },
+      {
+        "icon": 6,
+        "title": "#切换外显模式",
+        "desc": "切换一言/文本模式"
       }
     ]
   },

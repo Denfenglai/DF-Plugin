@@ -65,12 +65,24 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 <details><summary>Git仓库更新推送</summary>
 
-> 在[配置文件](/config/default_config/CodeUpdate.yaml)配置完成填写群号后即可使用。
+> 在[配置文件](/config/default_config/CodeUpdate.yaml)配置完成填写群号后即可使用。  
 > 推荐使用[锅巴插件](https://gitee.com/guoba-yunzai/guoba-plugin.git)进行配置
 
 - 使用`#检查仓库更新`可以手动进行一次推送
 
 </details>
+
+<details><summary>图片外显</summary>
+
+> 配置请看[summary.yaml](./config/default_config/summary.yaml)  
+> 推荐使用[锅巴插件](https://gitee.com/guoba-yunzai/guoba-plugin.git)进行配置
+
+- #开启/关闭图片外显
+- #设置图片外显 + 文字
+
+</details>
+
+- 更多功能请使用 `#DF帮助`
 
 ## 📄 计划工程
 
