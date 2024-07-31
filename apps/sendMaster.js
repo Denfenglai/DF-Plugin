@@ -38,7 +38,7 @@ export class SendMasterMsgs extends plugin {
     if (!e.isMaster) {
       if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦", true)
       if (await redis.get(key)) return e.reply("❎ 操作频繁，请稍后再试", true)
-      if (banWords.some(item => e.msg.includes(item)) && !e.isMaster) return e.reply("❎ 消息包含违禁词，请检查后重试", true)
+      if (banWords.some(item => e.msg.includes(item))) return e.reply("❎ 消息包含违禁词，请检查后重试", true)
       if (banUser.includes(e.user_id)) return e.reply("❎ 对不起，您不可用", true)
       if (e.isGroup && banGroup.includes(e.group_id)) return e.reply("❎ 该群暂不可用该功能", true)
     }

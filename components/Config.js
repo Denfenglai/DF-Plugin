@@ -56,6 +56,11 @@ class Config {
     return this.getDefOrConfig("CodeUpdate")
   }
 
+  /** 图片外显 */
+  get summary() {
+    return this.getDefOrConfig("summary")
+  }
+
   /**
    * 群配置
    * @param group_id

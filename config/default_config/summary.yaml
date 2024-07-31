@@ -1,0 +1,8 @@
+# 图片外显开关
+sum: false
+# 外显模式 (1: 自定义外显 2： 一言接口)
+type: 2
+# 自定义外显
+text: "Ciallo～(∠・ω< )⌒☆"
+# 一言接口
+api: "https://v1.hitokoto.cn/?encode=text"
