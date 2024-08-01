@@ -9,8 +9,6 @@
 .font('NZBZ', 'NZBZ');
 .font('YS', 'HYWH-65W');
 
-@import "base.less";
-
 * {
   margin: 0;
   padding: 0;
@@ -166,10 +164,6 @@ body {
 @elems: hydro, anemo, cryo, electro, geo, pyro, dendro;
 
 each(@elems, {
-  .elem-@{value} .talent-icon {
-    background-image: url("./bg/talent-@{value}.png");
-  }
-
   .elem-@{value} .elem-bg,
   .@{value}-bg {
     background-image: url("./bg/bg-@{value}.jpg");
@@ -338,16 +332,6 @@ ul.cont-msg, .cont-footer ul {
       margin: 8%;
     }
   }
-
-  @stars: 1, 2, 3, 4, 5;
-  each(@stars, {
-    &.star@{value} {
-      background-image: url("../common/item/bg@{value}.png");
-    }
-    &.opacity-bg.star@{value} {
-      background-image: url("../common/item/bg@{value}-o.png");
-    }
-  })
 }
 
 .item-list {
