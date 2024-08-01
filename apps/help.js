@@ -1,4 +1,3 @@
-import plugin from "../../../lib/plugins/plugin.js"
 import lodash from "lodash"
 import { Common, Data } from "../components/index.js"
 import Theme from "./help/theme.js"
