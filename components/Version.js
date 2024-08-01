@@ -10,7 +10,7 @@ let packageJson = JSON.parse(fs.readFileSync(`${process.cwd()}/package.json`, "u
 let logs = {}
 let changelogs = []
 let currentVersion
-let versionCount = 10
+let versionCount = 3
 
 const getLine = function(line) {
   line = line.replace(/(^\s*\*|\r)/g, "")
@@ -173,7 +173,7 @@ let Version = {
   get yunzai() {
     return yunzaiVersion
   },
-  get changelogs() {
+  get logs() {
     return changelogs
   },
   get ver() {
