@@ -17,10 +17,8 @@
 }
 
 body {
-  transform: scale(1);
   width: 830px;
   background: url("../common/theme/bg-01.jpg");
-  transform: scale(1.6);
 }
 
 .container {
