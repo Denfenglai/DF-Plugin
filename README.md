@@ -84,6 +84,10 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 - 更多功能请使用 `#DF帮助`
 
+## ⚙️ 插件配置
+
+本插件已全面兼容[锅巴插件](https://gitee.com/guoba-yunzai/guoba-plugin.git)，推荐使用锅巴插件进行配置。
+
 ## 📄 计划工程
 
 - [x] 能跑
@@ -92,7 +96,6 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 - [x] 添加帮助信息和版本信息 [@kesally](https://gitee.com/kesally)
 - [ ] 丰富功能
 - [ ] 持续完善
-- [ ] .......
 - [ ] ~~删库跑路~~
 
 ## ✨ 贡献者
@@ -138,3 +141,18 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 ## 🎨 参与贡献
 
 如果您对本项目有兴趣，欢迎对本项目进行[Pull Requests](https://github.com/DenFengLai/DF-Plugin/pulls)
+
+## 💝 友情链接
+
+- [TRSS.me](https://TRSS.me)
+- [Yenai-Plugin](https://Yenai.TRSS.me)
+- [Fanji-plugin](http://gitee.com/adrae/Fanji-plugin)
+- [Yunzai-Bot 相关内容索引](https://gitee.com/yhArcadia/Yunzai-Bot-plugins-index)
+
+## 📍 特别鸣谢
+
+- [Yunzai-Bot](https://gitee.com/Le-niao/Yunzai-Bot)
+- [Miao-Yunzai](https://gitee.com/yoimiya-kokomi/Miao-Yunzai)
+- [TRSS-Yunzai](https://gitee.com/TimeRainStarSky/Yunzai)
+- [椰羊](https://github.com/yeyang52)
+- [时雨🌌星空](https://github.com/TimeRainStarSky)
