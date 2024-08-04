@@ -125,6 +125,11 @@ export const helpList = [
         "icon": 12,
         "title": "#DF(强制)?更新",
         "desc": "拉取Git更新"
+      },
+      {
+        "icon": 2,
+        "title": "#DF更新图库",
+        "desc": "更新戳一戳图库"
       }
     ]
   }

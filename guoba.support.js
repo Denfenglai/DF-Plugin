@@ -113,7 +113,7 @@ export function supportGuoba() {
         {
           field: "other.chuoType",
           label: "戳一戳图片类型",
-          bottomHelpMessage: "自定义图片需在resources/chuo/default中添加",
+          bottomHelpMessage: "自定义图片需在resources/poke/default中添加",
           component: "RadioGroup",
           required: true,
           componentProps: {
