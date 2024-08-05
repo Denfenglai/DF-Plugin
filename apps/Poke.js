@@ -29,6 +29,7 @@ export class Poke extends plugin {
     }
     if (this.e.target_id != this.e.self_id) return false
     const file = randomFile(path)
+    if (!file) return false
     return this.e.reply(segment.image(file))
   }
 }
