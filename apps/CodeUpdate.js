@@ -54,27 +54,27 @@ export class CodeUpdate extends plugin {
     for (let key of GitList) {
       try {
         let title = key.split("/").pop()
-        let data = await this.getPluginUpdateData(key, title)
+        let data = await this.getPluginUpdateData(key)
 
         if (!data) continue
 
         let time = moment(data[0].commit.author.date).format("YYYY-MM-DD HH:mm:ss")
-        let sha = data[0].sha
-        let source = data.message !== "Not Found" ? "Github：" : "Gitee："
+        let { sha } = data[0]
+        let source = data.GitName + ": "
 
         if (isAuto) {
           let redisdata = await redis.get(`DF:CodeUpdate:${title}`)
           if (redisdata && JSON.parse(redisdata)[0].shacode === sha) {
-            Bot.logger.mark(`${title}暂无更新`)
+            logger.mark(`${title}暂无更新`)
             continue
           }
           redis.set(`DF:CodeUpdate:${title}`, JSON.stringify([ { shacode: sha } ]))
         }
 
-        content.push({ name: `${source}${title}`, time, text: data[0].commit.message })
+        content.push({ name: `${source}${key}`, time, text: data[0].commit.message })
         await common.sleep(3000)
       } catch (error) {
-        Bot.logger.error(`获取${key}数据出错:`, error)
+        logger.error(`[DF-Plugin]获取 ${key} 数据出错: ${error}`)
       }
     }
 
@@ -82,7 +82,7 @@ export class CodeUpdate extends plugin {
       let base64 = await this.generateScreenshot(content, isAuto ? "Gayhub" : e.user_id)
       await this.sendMessageToGroups(base64, content)
     } else {
-      Bot.logger.mark("未检测到仓库更新")
+      logger.mark("[DF-Plugin]未检测到仓库更新")
     }
   }
 
@@ -98,7 +98,7 @@ export class CodeUpdate extends plugin {
       let data = await response.json()
       return data
     } catch (error) {
-      console.error(`访问失败: ${url}`, error)
+      logger.error(`访问失败: ${url}\n${error}`)
       return false
     }
   }
@@ -106,27 +106,27 @@ export class CodeUpdate extends plugin {
   /**
    * 获取Git仓库更新数据（优先GitHub，其次Gitee）
    * @param {string} key - 仓库路径（用户名/仓库名）
-   * @param {string} title - 仓库名称
    * @returns {Promise<object | null>} 返回提交数据或null（未找到）
    */
-  async getPluginUpdateData(key, title) {
-    let data = await this.getGitHubData(key, title)
+  async getPluginUpdateData(key) {
+    let data = await this.getGitHubData(key)
+    let Git = "Github"
     if (data === false || data.message === "Not Found") {
-      data = await this.getGiteeData(key, title)
+      data = await this.getGiteeData(key)
+      Git = "Gitee"
       if (data === false || data.message === "Not Found Project") {
         return null
       }
     }
-    return data
+    return { ...data, GitName: Git }
   }
 
   /**
    * 获取GitHub库的最新提交数据
    * @param {string} key - GitHub仓库路径（用户名/仓库名）
-   * @param {string} title - 仓库名称
    * @returns {Promise<object | boolean>} 返回提交数据或false（请求失败）
    */
-  async getGitHubData(key, title) {
+  async getGitHubData(key) {
     const url = `https://api.github.com/repos/${key}/commits?per_page=1`
     const headers = {
       "User-Agent": "request",
@@ -138,10 +138,9 @@ export class CodeUpdate extends plugin {
   /**
    * 获取Gitee库的最新提交数据
    * @param {string} key - Gitee仓库路径（用户名/仓库名）
-   * @param {string} title - 仓库名称
    * @returns {Promise<object | boolean>} 返回提交数据或false（请求失败）
    */
-  async getGiteeData(key, title) {
+  async getGiteeData(key) {
     const url = `https://gitee.com/api/v5/repos/${key}/commits?per_page=1`
     const headers = {
       "User-Agent": "request",
