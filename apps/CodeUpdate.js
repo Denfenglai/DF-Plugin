@@ -80,7 +80,7 @@ export class CodeUpdate extends plugin {
 
     if (content.length > 0) {
       let base64 = await this.generateScreenshot(content, isAuto ? "Gayhub" : e.user_id)
-      await this.sendMessageToGroups(base64, content)
+      await this.sendMessageToGroups(base64, content, isAuto, e)
     } else {
       logger.mark("[DF-Plugin]未检测到仓库更新")
     }
@@ -168,9 +168,12 @@ export class CodeUpdate extends plugin {
    * 向群聊推送更新内容
    * @param {string} data - 要发送的截图的base64编码
    * @param {object[]} content - 消息内容
+   * @param {boolean} isAuto - 是否自动
+   * @param {object} e - 消息事件
    */
-  async sendMessageToGroups(data, content) {
+  async sendMessageToGroups(data, content, isAuto, e) {
     const { Gruop } = Config.CodeUpdate
+    if (!isAuto) return e.reply(data)
     for (let key of Gruop) {
       if (content.length !== 0 && data) {
         Bot.pickGroup(key).sendMsg(data)
