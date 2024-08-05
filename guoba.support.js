@@ -123,6 +123,14 @@ export function supportGuoba() {
               { label: "诗歌剧表情包", value: 3 },
               { label: "千恋万花表情包", value: 4 },
               { label: "小南梁表情包", value: 5 },
+              { label: "小鲨鱼古拉", value: 6 },
+              { label: "甘城猫猫表情", value: 7 },
+              { label: "龙图", value: 8 },
+              { label: "满穗表情包", value: 9 },
+              { label: "猫猫虫表情", value: 10 },
+              { label: "纳西妲表情包", value: 11 },
+              { label: "心海表情包", value: 12 },
+              { label: "fufu表情包", value: 13 },
               { label: "自定义图片", value: 0 }
             ]
           }
