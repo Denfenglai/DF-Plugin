@@ -1,7 +1,5 @@
 import fetch from "node-fetch"
 
-//  初次编写时间：2024.1.19  5:11 AM
-
 export class RandomMusics extends plugin {
   constructor() {
     super({
