@@ -1,6 +1,5 @@
 import fetch from "node-fetch"
-import { randomFile } from "../model/index.js"
-import { Plugin_Path } from "../components/index.js"
+import { imagePoke } from "../model/index.js"
 
 export class api extends plugin {
   constructor() {
@@ -33,6 +32,10 @@ export class api extends plugin {
         {
           reg: "^#?(随机|来张)((待兼)?诗歌剧|诗宝)$",
           fnc: "Matik"
+        },
+        {
+          reg: "^#?随机小?(男娘|南梁)$",
+          fnc: "xnn"
         }
       ]
     })
@@ -70,13 +73,19 @@ export class api extends plugin {
   }
 
   async Murasame(e) {
-    const file = await randomFile(`${Plugin_Path}/resources/chuo/丛雨`)
+    const file = imagePoke("丛雨")
     if (!file) return false
     return e.reply(segment.image(file))
   }
 
   async Matik(e) {
-    const file = await randomFile(`${Plugin_Path}/resources/chuo/诗歌剧`)
+    const file = imagePoke("诗歌剧")
+    if (!file) return false
+    return e.reply(segment.image(file))
+  }
+
+  async xnn(e) {
+    const file = imagePoke("小南梁")
     if (!file) return false
     return e.reply(segment.image(file))
   }
