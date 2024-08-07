@@ -59,7 +59,9 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 <details><summary>随机表情戳一戳</summary>
 
 > 戳一戳返回随机表情包  
-> 配置项请看[config/other.yaml](/config/default_config/other.yaml)
+> 配置项请看[config/other.yaml](/config/default_config/other.yaml)  
+> 使用 #DF安装图库 可安装图库到本地使用  
+> 未安装图库将调用[XY-Api](https://api.yugan.love/)
 
 </details>
 
@@ -148,11 +150,11 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 - [Yenai-Plugin](https://Yenai.TRSS.me)
 - [Fanji-plugin](http://gitee.com/adrae/Fanji-plugin)
 - [Yunzai-Bot 相关内容索引](https://gitee.com/yhArcadia/Yunzai-Bot-plugins-index)
-
-## 📍 特别鸣谢
-
 - [Yunzai-Bot](https://gitee.com/Le-niao/Yunzai-Bot)
 - [Miao-Yunzai](https://gitee.com/yoimiya-kokomi/Miao-Yunzai)
 - [TRSS-Yunzai](https://gitee.com/TimeRainStarSky/Yunzai)
-- [椰羊](https://github.com/yeyang52)
-- [时雨🌌星空](https://github.com/TimeRainStarSky)
+
+## 🎁 特别鸣谢
+
+- [XY-Api](https://api.yugan.love/)：提供戳一戳图片接口服务支持
+- [素颜Api](https://api.suyanw.cn)：提供部分Api服务

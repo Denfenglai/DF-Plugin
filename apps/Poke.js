@@ -1,12 +1,9 @@
 import fs from "node:fs"
 import { exec } from "node:child_process"
-import { randomFile } from "../model/index.js"
-import { Config, Plugin_Path } from "../components/index.js"
+import { imagePoke } from "../model/index.js"
+import { Config, Plugin_Path, Poke_List, Poke_Path } from "../components/index.js"
 
-// 配置请看 config/other.yaml
-const type = [ "default", "柴郡猫", "丛雨", "诗歌剧", "千恋万花", "小南梁", "古拉", "甘城猫猫", "龙图", "满穗", "猫猫虫", "纳西妲", "心海", "fufu" ]
-const Path = `${Plugin_Path}/resources/poke`
-if (!fs.existsSync(Path) && Config.other.chuo) logger.warn("[DF-Plugin] 检测到未安装戳一戳图库 请发送 #DF安装图库")
+if (!fs.existsSync(Poke_Path) && Config.other.chuo) logger.warn("[DF-Plugin] 检测到未安装戳一戳图库 将调用XY-Api")
 
 export class Poke extends plugin {
   constructor() {
@@ -14,21 +11,17 @@ export class Poke extends plugin {
       name: "DF:戳一戳",
       dsc: "戳一戳机器人发送随机表情包",
       event: "notice.group.poke",
-      priority: 114,
+      priority: -114,
       rule: [ { fnc: "poke" } ]
     })
   }
 
   async poke() {
     const { chuo, chuoType } = Config.other
-    const path = `${Path}/${type[chuoType]}`
     if (!chuo) return false
-    if (!fs.existsSync(path)) {
-      logger.warn("[DF-Plugin] 未检测戳一戳图库 请发送 #DF更新图库")
-      return false
-    }
     if (this.e.target_id != this.e.self_id) return false
-    const file = randomFile(path)
+    const name = Poke_List[chuoType]
+    const file = imagePoke(name)
     if (!file) return false
     return this.e.reply(segment.image(file))
   }
@@ -56,9 +49,9 @@ export class updateImg extends plugin {
    */
   async up_img(e) {
     if (!e.isMaster) return false
-    if (fs.existsSync(Path)) {
+    if (fs.existsSync(Poke_Path)) {
       e.reply("正在更新，请主人稍安勿躁~")
-      exec("git pull", { cwd: Path }, (error, stdout) => {
+      exec("git pull", { cwd: Poke_Path }, (error, stdout) => {
         if (/Already up to date/.test(stdout) || stdout.includes("最新")) return e.reply("目前所有图片都已经是最新了~")
         let numRet = /(\d*) files changed,/.exec(stdout)
         if (numRet && numRet[1]) e.reply(`更新成功，共更新了${numRet[1]}张图片~`)
