@@ -146,7 +146,8 @@ try {
 } catch (err) {}
 
 const yunzaiVersion = packageJson.version
-const isV3 = yunzaiVersion[0] === "3" || yunzaiVersion[0] === "4"
+const isV3 = yunzaiVersion[0] === "3"
+const isV4 = yunzaiVersion[0] === "4"
 let isMiao = false
 let name = "Yunzai-Bot"
 let isAlemonjs = false
@@ -164,6 +165,7 @@ if (packageJson.name === "miao-yunzai") {
 
 let Version = {
   isV3,
+  isV4,
   isMiao,
   name,
   isAlemonjs,
@@ -178,9 +180,6 @@ let Version = {
   },
   get ver() {
     return currentVersion
-  },
-  runtime() {
-    console.log(`未能找到e.runtime，请升级至最新版${isV3 ? "V3" : "V2"}-Yunzai以使用miao-plugin`)
   },
   readLogFile
 }

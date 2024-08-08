@@ -1,6 +1,7 @@
 import path from "path"
 import chalk from "chalk"
 import fs from "fs/promises"
+import Version from "./components/Version.js"
 
 let AppName = "DF-Plugin"
 const logger = global.logger ?? console
@@ -9,6 +10,13 @@ let loadedFilesCount = 0
 let loadedFilesCounterr = 0
 let apps
 
+if (Version.isV4 || Version.isAlemonjs) {
+  logger.error("-------------------------")
+  logger.error(`${AppName} 载入失败！`)
+  logger.error("错误：不支持该版本")
+  logger.error("-------------------------")
+  process.exit(1)
+}
 const startTime = Date.now()
 const { apps: loadedApps, loadedFilesCount: count, loadedFilesCounterr: counterr } = await appsOut({ AppsName: "apps" })
 const endTime = Date.now()
@@ -21,6 +29,7 @@ logger.info(chalk.rgb(82, 242, 255)("作者：等风来"))
 logger.info(chalk.rgb(82, 242, 255)(`共加载了 ${loadedFilesCount} 个插件文件 ${loadedFilesCounterr} 个失败`))
 logger.info(chalk.rgb(82, 242, 255)(`耗时 ${endTime - startTime} 毫秒`))
 export { apps }
+
 async function appsOut({ AppsName }) {
   const firstName = path.join("plugins", AppName)
   const filepath = path.resolve(firstName, AppsName)
