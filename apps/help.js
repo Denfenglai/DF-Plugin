@@ -18,7 +18,6 @@ export class fyhelp extends plugin {
     })
   }
 
-  
   async help(e) {
     let custom = {}
     let help = {}
@@ -59,4 +58,3 @@ export class fyhelp extends plugin {
     }, { e, scale: 1.6 })
   }
 }
-
