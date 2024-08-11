@@ -1,10 +1,5 @@
-let Update
-const PLUGIN_NAME = "DF-Plugin"
-try {
-  Update = (await import("../../other/update.js")).update
-} catch {
-  logger.warn("[DF-Plugin] 导入本体更新模块失败，将无法使用 #DF更新 命令")
-}
+import { Plugin_Name } from "../components/index.js"
+import { update as Update } from "../../other/update.js"
 
 export class DFupdate extends plugin {
   constructor() {
@@ -27,14 +22,14 @@ export class DFupdate extends plugin {
 
   async update(e = this.e) {
     const Type = e.msg.includes("强制") ? "#强制更新" : "#更新"
-    e.msg = Type + PLUGIN_NAME
+    e.msg = Type + Plugin_Name
     const up = new Update(e)
     up.e = e
     return up.update()
   }
 
   async updateLog(e = this.e) {
-    e.msg = "#更新日志" + PLUGIN_NAME
+    e.msg = "#更新日志" + Plugin_Name
     const up = new Update(e)
     up.e = e
     return up.updateLog()

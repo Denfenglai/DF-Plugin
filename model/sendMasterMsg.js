@@ -37,4 +37,41 @@ async function sendMasterMsg(msg, botUin = Bot.uin) {
   }
 }
 
-export { sendMasterMsg }
+/**
+ * 获取主人QQ
+ * @param {object} config - 配置
+ * @returns {string} 主人QQ
+ */
+function getMasterQQ(config) {
+  if (config.Master !== 1 && config.Master !== 0) {
+    return config.Master
+  }
+  return Config.masterQQ[0] === "stdin" ? (Config.masterQQ[1] || Config.masterQQ[0]) : Config.masterQQ[0]
+}
+
+/**
+ * 获取源消息
+ * @param {object} e - 消息事件
+ * @returns {object} 源消息
+ */
+async function getSourceMessage(e) {
+  if (e.getReply) {
+    return await e.getReply()
+  } else if (e.source) {
+    return (await e.friend.getChatHistory(e.source.time, 1)).pop()
+  }
+  return null
+}
+
+/**
+ * 提取消息ID
+ * @param {string} rawMessage - 原始消息
+ * @returns {string} 消息ID
+ */
+function extractMessageId(rawMessage) {
+  const regex = /\(([^)]+)\)/
+  const match = rawMessage.match(regex)
+  return match ? match[1] : null
+}
+
+export { sendMasterMsg, extractMessageId, getSourceMessage, getMasterQQ }

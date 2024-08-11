@@ -1,7 +1,7 @@
 import fetch from "node-fetch"
 import { imagePoke } from "../model/index.js"
 
-export class api extends plugin {
+export class PICTURE extends plugin {
   constructor() {
     super({
       name: "DF:随机图片",

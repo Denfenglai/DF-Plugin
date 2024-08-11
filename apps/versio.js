@@ -1,6 +1,6 @@
 import { Version, Common } from "../components/index.js"
 
-export class NewVersion extends plugin {
+export class VERSION extends plugin {
   constructor() {
     super({
       name: "DF:版本信息",

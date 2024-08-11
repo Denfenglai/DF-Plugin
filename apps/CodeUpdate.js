@@ -4,7 +4,7 @@ import common from "../../../lib/common/common.js"
 import puppeteer from "../../../lib/puppeteer/puppeteer.js"
 import { Config, Plugin_Path } from "../components/index.js"
 
-export class CodeUpdate extends plugin {
+export class GIT_UPDATE extends plugin {
   constructor() {
     super({
       name: "DF:仓库更新推送",

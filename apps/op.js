@@ -2,7 +2,7 @@ import { Config, Plugin_Path } from "../components/index.js"
 
 const ys = {}
 
-export class genshin extends plugin {
+export class OP extends plugin {
   constructor() {
     super({
       name: "DF:原神关键词发图",

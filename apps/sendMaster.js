@@ -1,6 +1,7 @@
 import moment from "moment"
+import common from "../lib/common/common.js"
 import { Config } from "../components/index.js"
-import { sendMasterMsg } from "../model/index.js"
+import { sendMasterMsg, extractMessageId, getSourceMessage, getMasterQQ } from "../model/sendMasterMsg.js"
 
 const key = "DF:contact"
 let Sending = false
@@ -43,10 +44,10 @@ export class SendMasterMsgs extends plugin {
       if (e.isGroup && banGroup.includes(e.group_id)) return e.reply("❎ 该群暂不可用该功能", true)
     }
 
-    Sending = true // 防止重复触发
+    Sending = true
 
     try {
-      const message = await this.Replace(e, /#联系主人/)
+      const message = await common.Replace(e, /#联系主人/)
       if (message.length === 0) return e.reply("❎ 消息不能为空")
 
       const type = e.bot?.version?.id || e?.adapter_id || "QQ"
@@ -77,7 +78,7 @@ export class SendMasterMsgs extends plugin {
         message_id: e.message_id
       }
 
-      const masterQQ = this.getMasterQQ(Config.sendMaster)
+      const masterQQ = getMasterQQ(Config.sendMaster)
 
       if (!Bot[BotId]) BotId = e.self_id
 
@@ -105,17 +106,17 @@ export class SendMasterMsgs extends plugin {
     if (!e.isMaster) return false
 
     try {
-      const source = await this.getSourceMessage(e)
+      const source = await getSourceMessage(e)
       if (!source || !(/联系主人消息/.test(source.raw_message))) return false
 
-      const MsgID = this.extractMessageId(source.raw_message)
+      const MsgID = extractMessageId(source.raw_message)
       if (!MsgID) return false
 
       const data = await redis.get(`${key}:${MsgID}`)
       if (!data) return e.reply("消息太久远了，下次来早点吧~")
 
       const { bot, group, id, message_id } = JSON.parse(data)
-      const message = await this.Replace(e, /#?回复/g)
+      const message = await common.Replace(e, /#?回复/g)
       message.unshift(`主人(${e.user_id})回复：\n`, segment.reply(message_id))
 
       this.Bot = Bot[bot] ?? Bot
@@ -132,73 +133,5 @@ export class SendMasterMsgs extends plugin {
       logger.error("[DF-Plugin]回复消息时发生错误：", err)
       return false
     }
-  }
-
-  /**
-   * 处理消息内容
-   * @param {object} e - 消息事件
-   * @param {RegExp} Reg - 正则表达式
-   * @returns {object} message - 处理后的消息内容数组
-   */
-  async Replace(e = this.e, Reg = null) {
-    const message = e.message.filter((item) => item.type != "at")
-
-    for (let msgElement of message) {
-      if (msgElement.type === "text") {
-        if (Reg) msgElement.text = msgElement.text.replace(Reg, "").trim()
-
-        if (e.hasAlias && e.isGroup) {
-          let groupCfg = Config.getGroup(e.group_id, e.self_id)
-          let alias = groupCfg.botAlias
-
-          if (!Array.isArray(alias)) alias = [ alias ]
-
-          for (let name of alias) {
-            if (msgElement.text.startsWith(name)) {
-              msgElement.text = msgElement.text.slice(name.length).trim()
-              break
-            }
-          }
-        }
-      }
-    }
-    return message
-  }
-
-  /**
-   * 获取主人QQ
-   * @param {object} config - 配置
-   * @returns {string} 主人QQ
-   */
-  getMasterQQ(config) {
-    if (config.Master !== 1 && config.Master !== 0) {
-      return config.Master
-    }
-    return Config.masterQQ[0] === "stdin" ? (Config.masterQQ[1] || Config.masterQQ[0]) : Config.masterQQ[0]
-  }
-
-  /**
-   * 获取源消息
-   * @param {object} e - 消息事件
-   * @returns {object} 源消息
-   */
-  async getSourceMessage(e) {
-    if (e.getReply) {
-      return await e.getReply()
-    } else if (e.source) {
-      return (await e.friend.getChatHistory(e.source.time, 1)).pop()
-    }
-    return null
-  }
-
-  /**
-   * 提取消息ID
-   * @param {string} rawMessage - 原始消息
-   * @returns {string} 消息ID
-   */
-  extractMessageId(rawMessage) {
-    const regex = /\(([^)]+)\)/
-    const match = rawMessage.match(regex)
-    return match ? match[1] : null
   }
 }

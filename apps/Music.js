@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
 
-export class RandomMusics extends plugin {
+export class MUSIC extends plugin {
   constructor() {
     super({
       name: "DF:随机歌曲",
