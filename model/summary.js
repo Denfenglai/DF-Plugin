@@ -4,10 +4,13 @@ import { segment as Segment } from "oicq"
 
 let Sum
 let lock = false
+let raw
 
 export default new class Summary {
   /** 初始化外显 */
   lint() {
+    raw = Segment.image
+    this.getSummary()
     segment.image = (file, name) => ({
       type: "image",
       file,
@@ -32,8 +35,9 @@ export default new class Summary {
       Sum = await (await fetch(Config.summary.api)).text()
     } catch (err) {
       logger.error(`获取一言接口时发生错误：${err}`)
+    } finally {
+      lock = false
     }
-    lock = false
   }
 
   /**
@@ -44,7 +48,7 @@ export default new class Summary {
     if (value) {
       this.lint()
     } else {
-      segment.image = Segment.image
+      segment.image = raw
     }
   }
 }()

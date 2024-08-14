@@ -149,16 +149,16 @@ const yunzaiVersion = packageJson.version
 const isV3 = yunzaiVersion[0] === "3"
 const isV4 = yunzaiVersion[0] === "4"
 let isMiao = false
-let name = "Yunzai-Bot"
+let isTRSS = false
 let isAlemonjs = false
+let name = "Yunzai-Bot"
 if (packageJson.name === "miao-yunzai") {
   isMiao = true
   name = "Miao-Yunzai"
 } else if (packageJson.name === "trss-yunzai") {
-  isMiao = true
+  isTRSS = true
   name = "TRSS-Yunzai"
 } else if (packageJson.name === "a-yunzai") {
-  isMiao = true
   name = "A-Yunzai"
   isAlemonjs = true
 }
@@ -167,6 +167,7 @@ let Version = {
   isV3,
   isV4,
   isMiao,
+  isTRSS,
   name,
   isAlemonjs,
   get version() {
