@@ -48,30 +48,81 @@ export class GIT_UPDATE extends plugin {
    * @param {object} [e] - 消息事件对象
    */
   async checkUpdates(isAuto = false, e = null) {
-    const { GitList } = Config.CodeUpdate
+    const { GithubList, GiteeList, GithubToken, GiteeToken } = Config.CodeUpdate
     let content = []
-
-    for (let key of GitList) {
+    for (let key of GithubList) {
       try {
-        let title = key.split("/").pop()
-        let data = await this.getPluginUpdateData(key)
+        let data
+        logger.mark("请求Github："+key)
+        if (!GithubToken) {
+          data = await this.getGitHubData(key)
+        } else {
+          data = await this.getGitHubDataByToken(key, GithubToken)
+        }
 
         if (!data) continue
 
-        let time = moment(data[0].commit.author.date).format("YYYY-MM-DD HH:mm:ss")
-        let { sha } = data[0]
-        let source = data.GitName + ": "
+        let source = "GitHub: "
+        let time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+        if (JSON.stringify(data).includes("API rate limit exceeded")) {
+          content.push({ name: `${source}${key}`, time, text: "请求超出速率限制，请稍后再试，或者添加访问token" })
+        } else {
+          if (data === false || data.message === "Not Found") {
+            content.push({name: `${source}${key}`, time, text: "未找到仓库，请核实仓库信息"})
+          } else {
+            let {sha} = data[0]
+            time = moment(data[0].commit.author.date).format("YYYY-MM-DD HH:mm:ss")
+            if (isAuto) {
+              let redisdata = await redis.get(`DF:CodeUpdate:GitHub:${key}`)
+              if (redisdata && JSON.parse(redisdata)[0].shacode === sha) {
+                logger.mark(`${key}暂无更新`)
+                continue
+              }
+              redis.set(`DF:CodeUpdate:GitHub:${key}`, JSON.stringify([{shacode: sha}]))
+            }
 
-        if (isAuto) {
-          let redisdata = await redis.get(`DF:CodeUpdate:${title}`)
-          if (redisdata && JSON.parse(redisdata)[0].shacode === sha) {
-            logger.mark(`${title}暂无更新`)
-            continue
+            content.push({name: `${source}${key}`, time, text: data[0].commit.message})
           }
-          redis.set(`DF:CodeUpdate:${title}`, JSON.stringify([ { shacode: sha } ]))
         }
+        await common.sleep(3000)
+      } catch (error) {
+        logger.error(`[DF-Plugin]获取 ${key} 数据出错: ${error}`)
+      }
+    }
+    for (let key of GiteeList) {
+      try {
+        let data
+        logger.mark("请求Gitee："+key)
+        if (!GiteeToken) {
+          data = await this.getGiteeData(key)
+        } else {
+          data = await this.getGiteeDataByToken(key,GiteeToken)
+        }
+        if (!data) continue
 
-        content.push({ name: `${source}${key}`, time, text: data[0].commit.message })
+        let source = "Gitee: "
+        let time = moment(new Date()).format("YYYY-MM-DD HH:mm:ss")
+        if (JSON.stringify(data).includes("403 Forbidden (Rate Limit Exceeded)")) {
+          content.push({ name: `${source}${key}`, time, text: "请求超出速率限制，请稍后再试，或者添加访问token" })
+        } else {
+          if (data === false || data.message === "Not Found Project") {
+            content.push({name: `${source}${key}`, time, text: "未找到仓库，请核实仓库信息"})
+          } else {
+
+            let {sha} = data[0]
+            time = moment(data[0].commit.author.date).format("YYYY-MM-DD HH:mm:ss")
+            if (isAuto) {
+              let redisdata = await redis.get(`DF:CodeUpdate:Gitee:${key}`)
+              if (redisdata && JSON.parse(redisdata)[0].shacode === sha) {
+                logger.mark(`${key}暂无更新`)
+                continue
+              }
+              redis.set(`DF:CodeUpdate:Gitee:${key}`, JSON.stringify([{shacode: sha}]))
+            }
+
+            content.push({name: `${source}${key}`, time, text: data[0].commit.message})
+          }
+        }
         await common.sleep(3000)
       } catch (error) {
         logger.error(`[DF-Plugin]获取 ${key} 数据出错: ${error}`)
@@ -106,12 +157,18 @@ export class GIT_UPDATE extends plugin {
   /**
    * 获取Git仓库更新数据（优先GitHub，其次Gitee）
    * @param {string} key - 仓库路径（用户名/仓库名）
+   * @param {string} Token - github Token
    * @returns {Promise<object | null>} 返回提交数据或null（未找到）
    */
-  async getPluginUpdateData(key) {
-    let data = await this.getGitHubData(key)
+  async getPluginUpdateData(key,Token) {
+    let data
+    if (!Token) {
+      data = await this.getGitHubData(key)
+    } else {
+      data = await this.getGitHubDataByToken(key,Token)
+    }
     let Git = "Github"
-    if (data === false || data.message === "Not Found") {
+    if (data === false || data.message === "Not Found" || JSON.stringify(data).includes("API rate limit")) {
       data = await this.getGiteeData(key)
       Git = "Gitee"
       if (data === false || data.message === "Not Found Project") {
@@ -136,12 +193,43 @@ export class GIT_UPDATE extends plugin {
   }
 
   /**
+   * 获取GitHub库的最新提交数据
+   * @param {string} key - GitHub仓库路径（用户名/仓库名）
+   * @param {string} Token - github Token
+   * @returns {Promise<object | boolean>} 返回提交数据或false（请求失败）
+   */
+  async getGitHubDataByToken(key,Token) {
+    const url = `https://api.github.com/repos/${key}/commits?per_page=1`
+    const headers = {
+      "User-Agent": "request",
+      "Accept": "application/vnd.github+json",
+      "Authorization": `Bearer ${Token}`
+    }
+    return await this.fetchData(url, headers)
+  }
+
+  /**
    * 获取Gitee库的最新提交数据
    * @param {string} key - Gitee仓库路径（用户名/仓库名）
    * @returns {Promise<object | boolean>} 返回提交数据或false（请求失败）
    */
   async getGiteeData(key) {
     const url = `https://gitee.com/api/v5/repos/${key}/commits?per_page=1`
+    const headers = {
+      "User-Agent": "request",
+      "Accept": "application/vnd.gitee+json"
+    }
+    return await this.fetchData(url, headers)
+  }
+
+  /**
+   * 获取Gitee库的最新提交数据
+   * @param {string} key - Gitee仓库路径（用户名/仓库名）
+   * @param {string} Token - Gitee Token
+   * @returns {Promise<object | boolean>} 返回提交数据或false（请求失败）
+   */
+  async getGiteeDataByToken(key,Token) {
+    const url = `https://gitee.com/api/v5/repos/${key}/commits?per_page=1&access_token=${Token}`
     const headers = {
       "User-Agent": "request",
       "Accept": "application/vnd.gitee+json"

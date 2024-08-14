@@ -137,7 +137,7 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
-          label: "Git仓库监听设置"
+          label: "Github仓库监听设置"
         },
         {
           field: "CodeUpdate.Auto",
@@ -164,9 +164,38 @@ export function supportGuoba() {
           component: "GSelectGroup"
         },
         {
-          field: "CodeUpdate.GitList",
-          label: "关注的Git仓库路径",
+          field: "CodeUpdate.GithubToken",
+          label: "Github Api Token",
+          helpMessage: "用于请求Github Api",
+          component: "Input",
+          componentProps: {
+            placeholder: "请输入Github Token"
+          }
+        },
+        {
+          field: "CodeUpdate.GithubList",
+          label: "关注的仓库路径",
           bottomHelpMessage: "格式：用户名/仓库名\n如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin",
+          component: "GTags",
+          required: true,
+          componentProps: {
+            allowAdd: true,
+            allowDel: true
+          }
+        },
+        {
+          field: "CodeUpdate.GiteeToken",
+          label: "Gitee Api Token",
+          helpMessage: "用于请求 Gitee Api",
+          component: "Input",
+          componentProps: {
+            placeholder: "请输入Gitee Token"
+          }
+        },
+        {
+          field: "CodeUpdate.GiteeList",
+          label: "关注的仓库路径",
+          bottomHelpMessage: "格式：用户名/仓库名\n如: https://gitee.com/denfenglai/DF-Plugin 则填 denfenglai/DF-Plugin",
           component: "GTags",
           required: true,
           componentProps: {
