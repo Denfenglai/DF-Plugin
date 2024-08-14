@@ -53,7 +53,7 @@ export class GIT_UPDATE extends plugin {
     for (let key of GithubList) {
       try {
         let data
-        logger.mark("请求Github："+key)
+        logger.mark("请求Github：" + key)
         if (!GithubToken) {
           data = await this.getGitHubData(key)
         } else {
@@ -68,9 +68,9 @@ export class GIT_UPDATE extends plugin {
           content.push({ name: `${source}${key}`, time, text: "请求超出速率限制，请稍后再试，或者添加访问token" })
         } else {
           if (data === false || data.message === "Not Found") {
-            content.push({name: `${source}${key}`, time, text: "未找到仓库，请核实仓库信息"})
+            content.push({ name: `${source}${key}`, time, text: "未找到仓库，请核实仓库信息" })
           } else {
-            let {sha} = data[0]
+            let { sha } = data[0]
             time = moment(data[0].commit.author.date).format("YYYY-MM-DD HH:mm:ss")
             if (isAuto) {
               let redisdata = await redis.get(`DF:CodeUpdate:GitHub:${key}`)
@@ -78,10 +78,10 @@ export class GIT_UPDATE extends plugin {
                 logger.mark(`${key}暂无更新`)
                 continue
               }
-              redis.set(`DF:CodeUpdate:GitHub:${key}`, JSON.stringify([{shacode: sha}]))
+              redis.set(`DF:CodeUpdate:GitHub:${key}`, JSON.stringify([ { shacode: sha } ]))
             }
 
-            content.push({name: `${source}${key}`, time, text: data[0].commit.message})
+            content.push({ name: `${source}${key}`, time, text: data[0].commit.message })
           }
         }
         await common.sleep(3000)
@@ -92,11 +92,11 @@ export class GIT_UPDATE extends plugin {
     for (let key of GiteeList) {
       try {
         let data
-        logger.mark("请求Gitee："+key)
+        logger.mark("请求Gitee：" + key)
         if (!GiteeToken) {
           data = await this.getGiteeData(key)
         } else {
-          data = await this.getGiteeDataByToken(key,GiteeToken)
+          data = await this.getGiteeDataByToken(key, GiteeToken)
         }
         if (!data) continue
 
@@ -106,10 +106,9 @@ export class GIT_UPDATE extends plugin {
           content.push({ name: `${source}${key}`, time, text: "请求超出速率限制，请稍后再试，或者添加访问token" })
         } else {
           if (data === false || data.message === "Not Found Project") {
-            content.push({name: `${source}${key}`, time, text: "未找到仓库，请核实仓库信息"})
+            content.push({ name: `${source}${key}`, time, text: "未找到仓库，请核实仓库信息" })
           } else {
-
-            let {sha} = data[0]
+            let { sha } = data[0]
             time = moment(data[0].commit.author.date).format("YYYY-MM-DD HH:mm:ss")
             if (isAuto) {
               let redisdata = await redis.get(`DF:CodeUpdate:Gitee:${key}`)
@@ -117,10 +116,10 @@ export class GIT_UPDATE extends plugin {
                 logger.mark(`${key}暂无更新`)
                 continue
               }
-              redis.set(`DF:CodeUpdate:Gitee:${key}`, JSON.stringify([{shacode: sha}]))
+              redis.set(`DF:CodeUpdate:Gitee:${key}`, JSON.stringify([ { shacode: sha } ]))
             }
 
-            content.push({name: `${source}${key}`, time, text: data[0].commit.message})
+            content.push({ name: `${source}${key}`, time, text: data[0].commit.message })
           }
         }
         await common.sleep(3000)
@@ -160,12 +159,12 @@ export class GIT_UPDATE extends plugin {
    * @param {string} Token - github Token
    * @returns {Promise<object | null>} 返回提交数据或null（未找到）
    */
-  async getPluginUpdateData(key,Token) {
+  async getPluginUpdateData(key, Token) {
     let data
     if (!Token) {
       data = await this.getGitHubData(key)
     } else {
-      data = await this.getGitHubDataByToken(key,Token)
+      data = await this.getGitHubDataByToken(key, Token)
     }
     let Git = "Github"
     if (data === false || data.message === "Not Found" || JSON.stringify(data).includes("API rate limit")) {
@@ -198,7 +197,7 @@ export class GIT_UPDATE extends plugin {
    * @param {string} Token - github Token
    * @returns {Promise<object | boolean>} 返回提交数据或false（请求失败）
    */
-  async getGitHubDataByToken(key,Token) {
+  async getGitHubDataByToken(key, Token) {
     const url = `https://api.github.com/repos/${key}/commits?per_page=1`
     const headers = {
       "User-Agent": "request",
@@ -228,7 +227,7 @@ export class GIT_UPDATE extends plugin {
    * @param {string} Token - Gitee Token
    * @returns {Promise<object | boolean>} 返回提交数据或false（请求失败）
    */
-  async getGiteeDataByToken(key,Token) {
+  async getGiteeDataByToken(key, Token) {
     const url = `https://gitee.com/api/v5/repos/${key}/commits?per_page=1&access_token=${Token}`
     const headers = {
       "User-Agent": "request",
