@@ -5,6 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
     "lint": "lint-staged --allow-empty",
     "commit": "gitmoji -c"
   },
@@ -20,6 +22,7 @@
   "author": "DengFengLai",
   "license": "MIT",
   "dependencies": {
+    "all-contributors-cli": "^6.26.1",
     "chokidar": "^3.6.0",
     "fs": "0.0.1-security",
     "lodash": "^4.17.21",
