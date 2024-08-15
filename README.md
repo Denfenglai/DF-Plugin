@@ -142,7 +142,11 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 ## 🎨 参与贡献
 
-如果您对本项目有兴趣，欢迎对本项目进行[Pull Requests](https://github.com/DenFengLai/DF-Plugin/pulls)
+如果您有兴趣对本项目做出贡献，请阅读[贡献指南](./CONTRIBUTING.md)。
+
+## ⭐ 支持本项目
+
+如果你觉得本项目对你有帮助，请给本项目点点stars，你是鼓励是我们前进的动力。
 
 ## 💝 友情链接
 
