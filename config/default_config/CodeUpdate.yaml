@@ -23,6 +23,5 @@ GithubList:
 # 关注的Gitee仓库路径
 # 格式: 用户名/仓库名
 # 如: gitee.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
-GiteeList:
-  - DenFengLai/DF-Plugin
-  - yoimiya-kokomi/miao-plugin
+GiteeList: 
+ - DenFengLai/poke
