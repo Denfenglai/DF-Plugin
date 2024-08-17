@@ -3,7 +3,7 @@ import { exec } from "node:child_process"
 import { imagePoke } from "../model/index.js"
 import { Config, Plugin_Path, Poke_List, Poke_Path } from "../components/index.js"
 
-if (!fs.existsSync(Poke_Path) && Config.other.chuo) logger.warn("[DF-Plugin] 检测到未安装戳一戳图库 将调用XY-Api返回图片")
+if (!fs.existsSync(Poke_Path) && Config.other.chuo) logger.mark("[DF-Plugin] 检测到未安装戳一戳图库 将调用XY-Api返回图片")
 
 export class POKE extends plugin {
   constructor() {

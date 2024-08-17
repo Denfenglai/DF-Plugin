@@ -11,8 +11,10 @@
 [![Miao-Yunzai V3](https://img.shields.io/badge/Miao_Yunzai-V3-yellow)](https://github.com/yoimiya-kokomi/Miao-Yunzai)
 [![TRSS-Yunzai](https://img.shields.io/badge/TRSS_Yunzai-V3-blue)](https://github.com/TimeRainStarSky/Yunzai)
 
-[![star](https://gitee.com/DenFengLai/DF-Plugin/badge/star.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/stargazers)
-[![fork](https://gitee.com/DenFengLai/DF-Plugin/badge/fork.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/members)
+[![Gitee stars](https://gitee.com/DenFengLai/DF-Plugin/badge/star.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/stargazers)
+[![Gitee forks](https://gitee.com/DenFengLai/DF-Plugin/badge/fork.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/members)
+[![GitHub stars](https://img.shields.io/github/stars/DenFengLai/DF-Plugin)](https://github.com/DenFengLai/DF-Plugin/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/DenFengLai/DF-Plugin)](https://github.com/DenFengLai/DF-Plugin/network)
 
 [![Fork me on Gitee](https://gitee.com/DenFengLai/DF-Plugin/widgets/widget_6.svg)](https://gitee.com/DenFengLai/DF-Plugin)
 
@@ -147,7 +149,7 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 
 ## ⭐ 支持本项目
 
-如果你觉得本项目对你有帮助，请给本项目点点stars，你是鼓励是我们前进的动力。
+如果你觉得本项目对你有帮助，请给本项目点点star，你是鼓励是我们前进的动力。
 
 ## 💝 友情链接
 
