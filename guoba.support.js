@@ -174,10 +174,9 @@ export function supportGuoba() {
         },
         {
           field: "CodeUpdate.GithubList",
-          label: "关注的仓库路径",
+          label: "关注的Github仓库路径",
           bottomHelpMessage: "格式：用户名/仓库名\n如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin",
           component: "GTags",
-          required: true,
           componentProps: {
             allowAdd: true,
             allowDel: true
@@ -194,10 +193,9 @@ export function supportGuoba() {
         },
         {
           field: "CodeUpdate.GiteeList",
-          label: "关注的仓库路径",
+          label: "关注的Gitee仓库路径",
           bottomHelpMessage: "格式：用户名/仓库名\n如: https://gitee.com/denfenglai/DF-Plugin 则填 denfenglai/DF-Plugin",
           component: "GTags",
-          required: true,
           componentProps: {
             allowAdd: true,
             allowDel: true
