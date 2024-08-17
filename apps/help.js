@@ -11,7 +11,7 @@ export class HELP extends plugin {
       priority: 2000,
       rule: [
         {
-          reg: "^#?DF(插件)?帮助$",
+          reg: "^#?[Dd][Ff](插件)?帮助$",
           fnc: "help"
         }
       ]
