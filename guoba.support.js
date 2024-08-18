@@ -247,6 +247,20 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
+          label: "随机图片设置"
+        },
+        {
+          field: "Picture.open",
+          label: "随机图片开关",
+          component: "Switch"
+        },
+        {
+          field: "Picture.Direct",
+          label: "是否去除 #来张/随机 前缀",
+          component: "Switch"
+        },
+        {
+          component: "Divider",
           label: "其他"
         },
         {
@@ -262,7 +276,8 @@ export function supportGuoba() {
           other: Config.other,
           sendMaster: Config.sendMaster,
           CodeUpdate: Config.CodeUpdate,
-          summary: Config.summary
+          summary: Config.summary,
+          Picture: Config.Picture
         }
       },
 

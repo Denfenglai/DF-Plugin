@@ -156,10 +156,7 @@ git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plug
 - [TRSS.me](https://TRSS.me)
 - [Yenai-Plugin](https://Yenai.TRSS.me)
 - [Fanji-plugin](http://gitee.com/adrae/Fanji-plugin)
-- [Yunzai-Bot 相关内容索引](https://gitee.com/yhArcadia/Yunzai-Bot-plugins-index)
-- [Yunzai-Bot](https://gitee.com/Le-niao/Yunzai-Bot)
-- [Miao-Yunzai](https://gitee.com/yoimiya-kokomi/Miao-Yunzai)
-- [TRSS-Yunzai](https://gitee.com/TimeRainStarSky/Yunzai)
+- [DF戳一戳图库](https://gitee.com/DenFengLai/poke)
 
 ## 🎁 特别鸣谢
 

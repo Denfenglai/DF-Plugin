@@ -1,0 +1,4 @@
+# 随机图片开关
+open: true
+# 是否去除 #来张/随机 前缀
+Direct: false

@@ -61,6 +61,11 @@ class Config {
     return this.getDefOrConfig("summary")
   }
 
+  /** 随机图片配置 */
+  get Picture() {
+    return this.getDefOrConfig("Picture")
+  }
+
   /**
    * 群配置
    * @param group_id

@@ -1,7 +1,8 @@
 import fetch from "node-fetch"
-import { imagePoke } from "../model/index.js"
+import { imagePoke as RandomFace } from "../model/index.js"
+import { Config, Poke_List as Face_List } from "../components/index.js"
 
-export class PICTURE extends plugin {
+export class Random_Picturs extends plugin {
   constructor() {
     super({
       name: "DF:随机图片",
@@ -26,26 +27,24 @@ export class PICTURE extends plugin {
           fnc: "kkt"
         },
         {
-          reg: "^#?(随机|来张)(丛雨|幼刀|村雨|绫|粽子精)$",
-          fnc: "Murasame"
-        },
-        {
-          reg: "^#?(随机|来张)((待兼)?诗歌剧|诗宝)$",
-          fnc: "Matik"
-        },
-        {
-          reg: "^#?随机小?(男娘|南梁)$",
-          fnc: "xnn"
+          reg: `^#?(随机|来张)?(${Face_List.join("|")})$`,
+          fnc: "Face"
         }
       ]
     })
   }
 
+  get open() {
+    return Config.Picture.open
+  }
+
   async jk(e) {
+    if (!this.open) return false
     return e.reply(segment.image("https://api.suyanw.cn/api/jk.php"), true)
   }
 
   async hs(e) {
+    if (!this.open) return false
     return e.reply([
       "唉嗨害，黑丝来咯",
       segment.image("https://api.suyanw.cn/api/hs.php")
@@ -53,6 +52,7 @@ export class PICTURE extends plugin {
   }
 
   async cos(e) {
+    if (!this.open) return false
     const resp = await fetch("https://api.suyanw.cn/api/cos.php?type=json")
     const data = await resp.json()
     const links = data.text.replace(/\\/g, "/")
@@ -63,6 +63,7 @@ export class PICTURE extends plugin {
   }
 
   async kkt(e) {
+    if (!this.open) return false
     const resp = await fetch("https://api.suyanw.cn/api/meitui.php")
     const data = await resp.text()
     const links = data.match(/https?:\/\/[^ ]+/g)
@@ -72,20 +73,11 @@ export class PICTURE extends plugin {
     ], true)
   }
 
-  async Murasame(e) {
-    const file = imagePoke("丛雨")
-    if (!file) return false
-    return e.reply(segment.image(file))
-  }
-
-  async Matik(e) {
-    const file = imagePoke("诗歌剧")
-    if (!file) return false
-    return e.reply(segment.image(file))
-  }
-
-  async xnn(e) {
-    const file = imagePoke("小南梁")
+  async Face(e) {
+    if (!this.open) return false
+    if (!(e.msg.includes("随机") || e.msg.includes("来张") || Config.Picture.Direct)) return false
+    const name = e.msg.replace(/#|(随机|来张)/g, "")
+    const file = RandomFace(name)
     if (!file) return false
     return e.reply(segment.image(file))
   }
