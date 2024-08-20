@@ -178,12 +178,12 @@ export class CodeUpdate extends plugin {
    * @param {object} e - 消息事件
    */
   async sendMessageToGroups(data, content, isAuto, e) {
-    let { Group } = Config.CodeUpdate
+    let { Gruop } = Config.CodeUpdate
     if (!isAuto) return e.reply(data)
-    if (!Array.isArray(Group)) {
-      Group = [ Group ]
+    if (!Array.isArray(Gruop)) {
+      Gruop = [ Gruop ]
     }
-    for (const group of Group) {
+    for (const group of Gruop) {
       if (content.length > 0 && data) {
         Bot.pickGroup(group).sendMsg(data)
       }
