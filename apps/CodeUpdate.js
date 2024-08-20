@@ -4,7 +4,7 @@ import common from "../../../lib/common/common.js"
 import puppeteer from "../../../lib/puppeteer/puppeteer.js"
 import { Config, Plugin_Path } from "../components/index.js"
 
-export class GIT_UPDATE extends plugin {
+export class CodeUpdate extends plugin {
   constructor() {
     super({
       name: "DF:仓库更新推送",
@@ -178,8 +178,11 @@ export class GIT_UPDATE extends plugin {
    * @param {object} e - 消息事件
    */
   async sendMessageToGroups(data, content, isAuto, e) {
-    const { Group } = Config.CodeUpdate
+    let { Group } = Config.CodeUpdate
     if (!isAuto) return e.reply(data)
+    if (!Array.isArray(Group)) {
+      Group = [ Group ]
+    }
     for (const group of Group) {
       if (content.length > 0 && data) {
         Bot.pickGroup(group).sendMsg(data)
