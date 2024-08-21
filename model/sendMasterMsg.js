@@ -17,7 +17,7 @@ async function sendMasterMsg(msg, botUin = Bot.uin) {
     else botUin = undefined
   }
   /** 发送全部主人 */
-  if (Master === 1) {
+  if (Master == 1) {
     /** TRSS发全部主人函数 */
     if (Bot?.sendMasterMsg) {
       await Bot.sendMasterMsg(msg, Bot.uin, 2000)
@@ -29,7 +29,7 @@ async function sendMasterMsg(msg, botUin = Bot.uin) {
       }
     }
     /** 发送首位主人 */
-  } else if (Master === 0) {
+  } else if (Master == 0) {
     await common.relpyPrivate(masterQQ[0], msg, botUin)
     /** 发送指定主人 */
   } else {
@@ -43,7 +43,7 @@ async function sendMasterMsg(msg, botUin = Bot.uin) {
  * @returns {string} 主人QQ
  */
 function getMasterQQ(config) {
-  if (config.Master !== 1 && config.Master !== 0) {
+  if (config.Master != 1 && config.Master != 0) {
     return config.Master
   }
   return Config.masterQQ[0] === "stdin" ? (Config.masterQQ[1] || Config.masterQQ[0]) : Config.masterQQ[0]
