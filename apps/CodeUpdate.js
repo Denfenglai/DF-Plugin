@@ -76,8 +76,9 @@ export class CodeUpdate extends plugin {
       try {
         logger.mark(`请求${source}：${repo}`)
         const data = await this.getRepositoryData(repo, source, token)
+        if (!data) continue
         if (!data[0]?.commit) {
-          logger.error(`请求异常：${(data?.message === "Not Found Projec" || data?.message === "Not Found") ? "未找到对应仓库" : data?.message}`)
+          logger.error(`请求异常：${(data?.message === "Not Found Projec" || data?.message === "Not Found") ? "未找到对应仓库" : (data?.message ? data.message : data)}`)
           continue
         }
 
@@ -150,7 +151,7 @@ export class CodeUpdate extends plugin {
       const response = await fetch(url, { method: "get", headers })
       return await response.json()
     } catch (error) {
-      logger.error(`访问失败: ${url}\n${error}`)
+      logger.error(`请求失败: ${url}`)
       return null
     }
   }
@@ -162,8 +163,8 @@ export class CodeUpdate extends plugin {
    * @returns {Promise<string>} 返回生成的截图的base64编码
    */
   async generateScreenshot(content, saveId) {
-    return await puppeteer.screenshot("CodeUpdate", {
-      tplFile: `${Plugin_Path}/resources/CodeUpdate/CodeUpdate.html`,
+    return await puppeteer.screenshot("CodeUpdate/index", {
+      tplFile: `${Plugin_Path}/resources/CodeUpdate/index.html`,
       saveId,
       lifeData: content,
       pluResPath: `${Plugin_Path}/resources/`
@@ -180,7 +181,7 @@ export class CodeUpdate extends plugin {
   async sendMessageToGroups(data, content, isAuto, e) {
     let { Gruop } = Config.CodeUpdate
     if (!isAuto) return e.reply(data)
-    if (!Array.isArray(Gruop)) {
+    if (!Array.isArray(Gruop) && Gruop) {
       Gruop = [ Gruop ]
     }
     for (const group of Gruop) {
