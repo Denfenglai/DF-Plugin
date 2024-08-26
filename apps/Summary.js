@@ -3,7 +3,7 @@ import Sum from "../model/summary.js"
 
 if (Config.summary.sum) Sum.lint()
 
-export class SUMMARY extends plugin {
+export class Summary extends plugin {
   constructor() {
     super({
       name: "DF:图片外显",

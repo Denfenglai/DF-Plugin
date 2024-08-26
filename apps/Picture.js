@@ -76,7 +76,7 @@ export class Random_Picturs extends plugin {
   async Face(e) {
     if (!this.open) return false
     if (!(e.msg.includes("随机") || e.msg.includes("来张") || Config.Picture.Direct)) return false
-    const name = e.msg.replace(/#|(随机|来张)/g, "")
+    const name = e.msg.replace(/#|随机|来张/g, "")
     const file = RandomFace(name)
     if (!file) return false
     return e.reply(segment.image(file))

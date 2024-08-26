@@ -2,7 +2,7 @@ import lodash from "lodash"
 import { Common, Data } from "../components/index.js"
 import Theme from "./help/theme.js"
 
-export class HELP extends plugin {
+export class help extends plugin {
   constructor() {
     super({
       name: "DF:帮助",
