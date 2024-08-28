@@ -1,4 +1,5 @@
 import fs from "node:fs"
+import _ from "lodash"
 import { exec } from "node:child_process"
 import { imagePoke } from "../model/index.js"
 import { Config, Plugin_Path, Poke_List, Poke_Path } from "../components/index.js"
@@ -20,7 +21,12 @@ export class Poke extends plugin {
     const { chuo, chuoType } = Config.other
     if (!chuo) return false
     if (this.e.target_id != this.e.self_id) return false
-    const name = Poke_List[chuoType]
+    let name
+    if (chuoType === "all") {
+      name = _.sample(Poke_List)
+    } else {
+      name = Poke_List[chuoType]
+    }
     const file = imagePoke(name)
     if (!file) return false
     return this.e.reply(segment.image(file))

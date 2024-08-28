@@ -18,6 +18,7 @@ chuo: true
 # 14: ATRI表情包
 # 15: 绫地宁宁表情包
 # 0：自定义图片（自行在resources/poke/default中添加）
+# all: 随机类型
 chuoType: 1
 
 # 原神关键词发图

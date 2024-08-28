@@ -118,6 +118,7 @@ export function supportGuoba() {
           required: true,
           componentProps: {
             options: [
+              { label: "随机", value: "all" },
               { label: "柴郡表情包", value: 1 },
               { label: "丛雨表情包", value: 2 },
               { label: "诗歌剧表情包", value: 3 },
