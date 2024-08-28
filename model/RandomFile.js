@@ -2,6 +2,7 @@ import fs from "fs"
 import _ from "lodash"
 import path from "path"
 import { Poke_Path } from "../components/index.js"
+
 /**
  * 随机获取一个文件
  * @param {string} dirPath - 文件夹路径
@@ -28,7 +29,7 @@ function randomFile(dirPath) {
  * @returns {string|null} 文件路径或api地址
  */
 function imagePoke(name) {
-  const Path = Poke_Path + name
+  const Path = Poke_Path + "/" + name
   if (!fs.existsSync(Path)) return `https://yugan.love/?name=${name}`
   return randomFile(Path)
 }
