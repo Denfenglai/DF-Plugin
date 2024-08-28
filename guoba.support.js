@@ -121,7 +121,7 @@ export function supportGuoba() {
               { label: "柴郡表情包", value: 1 },
               { label: "丛雨表情包", value: 2 },
               { label: "诗歌剧表情包", value: 3 },
-              { label: "千恋万花表情包", value: 4 },
+              { label: "柚子厨表情包", value: 4 },
               { label: "小南梁表情包", value: 5 },
               { label: "小鲨鱼古拉", value: 6 },
               { label: "甘城猫猫表情", value: 7 },
@@ -132,6 +132,7 @@ export function supportGuoba() {
               { label: "心海表情包", value: 12 },
               { label: "fufu表情包", value: 13 },
               { label: "亚托莉表情包", value: 14 },
+              { label: "绫地宁宁表情包", value: 15 },
               { label: "自定义图片", value: 0 }
             ]
           }

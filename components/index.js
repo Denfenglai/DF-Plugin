@@ -15,7 +15,7 @@ const Poke_List = [
   "柴郡猫",
   "丛雨",
   "诗歌剧",
-  "千恋万花",
+  "柚子厨",
   "小南梁",
   "古拉",
   "甘城猫猫",
@@ -25,7 +25,8 @@ const Poke_List = [
   "纳西妲",
   "心海",
   "fufu",
-  "ATRI"
+  "ATRI",
+  "绫地宁宁"
 ]
 
 export { Config, Data, Path, Plugin_Name, Plugin_Path, YamlReader, render, Version, Common, Poke_List, Poke_Path }
