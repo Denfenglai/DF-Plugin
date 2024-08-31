@@ -78,13 +78,13 @@ body {
 
 .list .item .title .dec {
   font-size: 14px;
-  color: #666;
+  color: #787878;
   margin-top: 5px;
 }
 
 .list .item .title .desc {
   font-size: 14px;
-  color: #666;
+  color: #353535;
   margin-top: 5px;
   white-space: pre-wrap; /* 允许换行符换行 */
 }

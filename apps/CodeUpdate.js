@@ -82,7 +82,8 @@ export class CodeUpdate extends plugin {
           continue
         }
 
-        const time = moment(data[0].commit.author.date).format("YYYY-MM-DD HH:mm:ss")
+        const time = this.timeAgo(moment(data[0].commit.author.date))
+        const name = data[0].commit.author.name
         const sha = data[0].sha
 
         if (isAuto) {
@@ -94,7 +95,7 @@ export class CodeUpdate extends plugin {
           redis.set(`${redisKeyPrefix}:${repo}`, JSON.stringify([ { shacode: sha } ]))
         }
 
-        content.push({ name: `${source}: ${repo}`, time, text: data[0].commit.message })
+        content.push({ name: `${source}: ${repo}`, time: `${name} 提交于 ${time}`, text: data[0].commit.message })
         await common.sleep(3000)
       } catch (error) {
         this.logError(repo, source, error)
@@ -200,5 +201,36 @@ export class CodeUpdate extends plugin {
    */
   logError(repo, source, error) {
     logger.error(`[DF-Plugin]获取 ${source} 仓库 ${repo} 数据出错: ${error}`)
+  }
+
+  /**
+   * 处理时间
+   * @param {string} date 时间戳
+   * @returns {string} 多久前
+   */
+  timeAgo(date) {
+    const now = moment()
+    const duration = moment.duration(now.diff(date))
+    const years = duration.years()
+    const months = duration.months()
+    const days = duration.days()
+    const hours = duration.hours()
+    const minutes = duration.minutes()
+
+    if (years >= 2) {
+      return "两年以前"
+    } else if (years >= 1) {
+      return "1年前"
+    } else if (months >= 1) {
+      return `${months}个月前`
+    } else if (days >= 1) {
+      return `${days}天前`
+    } else if (hours >= 1) {
+      return `${hours}小时前`
+    } else if (minutes >= 1) {
+      return `${minutes}分钟前`
+    } else {
+      return "刚刚"
+    }
   }
 }
