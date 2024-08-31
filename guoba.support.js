@@ -1,9 +1,9 @@
 import { Config } from "./components/index.js"
 
 /**
- *  支持锅巴
- *  锅巴插件：https://gitee.com/guoba-yunzai/guoba-plugin.git
- *  组件类型，可参考 https://antdv.com/components/overview-cn/
+ * 支持锅巴
+ * 锅巴插件：https://gitee.com/guoba-yunzai/guoba-plugin.git
+ * 组件类型，可参考 https://antdv.com/components/overview-cn/
  */
 
 export function supportGuoba() {
