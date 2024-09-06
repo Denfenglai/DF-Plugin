@@ -21,5 +21,9 @@ chuo: true
 # all: 随机类型
 chuoType: 1
 
+# 戳一戳随机类型黑名单
+Black:
+  - default
+
 # 原神关键词发图
 ys: true

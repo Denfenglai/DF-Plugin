@@ -118,7 +118,7 @@ export function supportGuoba() {
           required: true,
           componentProps: {
             options: [
-              { label: "随机", value: "all" },
+              { label: "随机类型", value: "all" },
               { label: "柴郡表情包", value: 1 },
               { label: "丛雨表情包", value: 2 },
               { label: "诗歌剧表情包", value: 3 },
@@ -136,6 +136,16 @@ export function supportGuoba() {
               { label: "绫地宁宁表情包", value: 15 },
               { label: "自定义图片", value: 0 }
             ]
+          }
+        },
+        {
+          field: "other.Black",
+          label: "随机类型排除列表",
+          bottomHelpMessage: "设置戳一戳类型为随机时将不会随机到以下类型",
+          component: "GTags",
+          componentProps: {
+            allowAdd: true,
+            allowDel: true
           }
         },
         {
