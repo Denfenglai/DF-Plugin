@@ -38,7 +38,7 @@ export class SendMasterMsgs extends plugin {
     let { open, cd, BotId, sendAvatar, banWords, banUser, banGroup } = Config.sendMaster
     if (!e.isMaster) {
       if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦", true)
-      if (await redis.get(key)) return e.reply("❎ 操作频繁，请稍后再试", true)
+      if (cd != 0 && await redis.get(key)) return e.reply("❎ 操作频繁，请稍后再试", true)
       if (banWords.some(item => e.msg.includes(item))) return e.reply("❎ 消息包含违禁词，请检查后重试", true)
       if (banUser.includes(e.user_id)) return e.reply("❎ 对不起，您不可用", true)
       if (e.isGroup && banGroup.includes(e.group_id)) return e.reply("❎ 该群暂不可用该功能", true)
@@ -72,7 +72,7 @@ export class SendMasterMsgs extends plugin {
       ]
 
       const info = {
-        bot: e.bot.uin,
+        bot: e.bot.uin || Bot.uin,
         group: e.isGroup ? e.group_id : false,
         id: e.user_id,
         message_id: e.message_id
@@ -82,17 +82,18 @@ export class SendMasterMsgs extends plugin {
 
       if (!Bot[BotId]) BotId = e.self_id
 
-      await sendMasterMsg(msg, BotId)
-        .then(() => e.reply(`✅ 消息已送达\n主人的QQ：${masterQQ}`, true))
-        .then(() => redis.set(key, "1", { EX: cd }))
-        .then(() => redis.set(`${key}:${e.seq}`, JSON.stringify(info), { EX: 86400 }))
-        .catch((err) => {
-          e.reply(`❎ 消息发送失败，请尝试自行联系：${masterQQ}\n错误信息：${err}`)
-          logger.error(err)
-        })
-    } catch (error) {
+      try {
+        await sendMasterMsg(msg, BotId)
+        await e.reply(`✅ 消息已送达\n主人的QQ：${masterQQ}`, true)
+        if (cd) redis.set(key, "1", { EX: cd })
+        redis.set(`${key}:${e.seq}`, JSON.stringify(info), { EX: 86400 })
+      } catch (err) {
+        await e.reply(`❎ 消息发送失败，请尝试自行联系：${masterQQ}\n错误信息：${err}`)
+        logger.error(err)
+      }
+    } catch (err) {
       e.reply("❎ 出错误辣，稍后重试吧")
-      logger.error(error)
+      logger.error(err)
     } finally {
       Sending = false
     }
