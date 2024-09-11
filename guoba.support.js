@@ -134,6 +134,7 @@ export function supportGuoba() {
               { label: "fufu表情包", value: 13 },
               { label: "亚托莉表情包", value: 14 },
               { label: "绫地宁宁表情包", value: 15 },
+              { label: "永雏塔菲表情包", value: 16 },
               { label: "自定义图片", value: 0 }
             ]
           }

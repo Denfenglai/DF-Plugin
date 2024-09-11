@@ -26,7 +26,8 @@ const Poke_List = [
   "心海",
   "fufu",
   "ATRI",
-  "绫地宁宁"
+  "绫地宁宁",
+  "永雏塔菲"
 ]
 
 export { Config, Data, Path, Plugin_Name, Plugin_Path, YamlReader, render, Version, Common, Poke_List, Poke_Path }

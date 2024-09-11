@@ -19,7 +19,7 @@ export class DFupdate extends plugin {
           fnc: "updateLog"
         },
         {
-          reg: "^[Dd][Ff](安装|更新)(戳一戳)?图库$",
+          reg: "^#?[Dd][Ff](安装|更新)(戳一戳)?图库$",
           fnc: "up_img"
         }
       ]
