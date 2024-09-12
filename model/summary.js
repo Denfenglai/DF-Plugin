@@ -32,7 +32,7 @@ export default new class Summary {
     if (lock) return
     lock = true
     try {
-      Sum = await (await fetch(Config.summary.api)).text()
+      Sum = await (await fetch(Config.summary.api)).text() || Sum
     } catch (err) {
       logger.error(`获取一言接口时发生错误：${err}`)
     } finally {
