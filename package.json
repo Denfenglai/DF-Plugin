@@ -1,0 +1,49 @@
+{
+  "name": "df-plugin",
+  "version": "1.0.0",
+  "description": "Yunzai-Bot扩展插件",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
+    "lint": "lint-staged --allow-empty",
+    "commit": "gitmoji -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/DenFengLai/DF-Plugin.git"
+  },
+  "keywords": [
+    "Miao-Yunzai",
+    "TRSS-Yunzai",
+    "DF-Plugin"
+  ],
+  "author": "DengFengLai",
+  "license": "MIT",
+  "dependencies": {
+    "all-contributors-cli": "^6.26.1",
+    "chokidar": "^3.6.0",
+    "fs": "0.0.1-security",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1",
+    "node-fetch": "^3.3.2",
+    "string-similarity": "^4.0.4",
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsdoc": "^48.11.0",
+    "eslint-plugin-promise": "^6.6.0",
+    "gitmoji-cli": "^9.4.0",
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.8"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix"
+    ]
+  }
+}

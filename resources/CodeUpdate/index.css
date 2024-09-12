@@ -1,0 +1,98 @@
+@font-face {
+  font-family: "tttgbnumber";
+  src: url("../../font/tttgbnumber.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  width: 530px;
+  color: #1e1f20;
+  transform: scale(1.5);
+  transform-origin: 0 0;
+  background-color: #f0f4f7;
+  transform: scale(2.5)
+}
+
+.container {
+  width: 660px;
+  padding: 20px 15px 10px 15px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.head_box {
+  background: linear-gradient(to right, #4facfe, #00f2fe);
+  border-radius: 15px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.head_box .id_text {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.data_box {
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.list .item {
+  display: flex;
+  align-items: center;
+  background: #e3f2fd;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.list .item .title {
+  font-size: 16px;
+  color: #333;
+}
+
+.list .item .title .text {
+  font-weight: bold;
+}
+
+.list .item .title .dec {
+  font-size: 14px;
+  color: #787878;
+  margin-top: 5px;
+}
+
+.list .item .title .desc {
+  font-size: 14px;
+  color: #353535;
+  margin-top: 5px;
+  white-space: pre-wrap; /* 允许换行符换行 */
+}
+
+.logo {
+  font-size: 14px;
+  font-family: "tttgbnumber";
+  text-align: center;
+  color: #7994a7;
+  margin-top: 20px;
+}
