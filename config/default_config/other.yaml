@@ -18,6 +18,8 @@ chuo: true
 # 14: ATRI表情包
 # 15: 绫地宁宁表情包
 # 16: 永雏塔菲表情包
+# 17：miku表情包
+# 18：特蕾西娅表情包
 # 0：自定义图片（自行在resources/poke/default中添加）
 # all: 随机类型
 chuoType: 1
