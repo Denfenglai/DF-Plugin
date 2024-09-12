@@ -135,6 +135,8 @@ export function supportGuoba() {
               { label: "亚托莉表情包", value: 14 },
               { label: "绫地宁宁表情包", value: 15 },
               { label: "永雏塔菲表情包", value: 16 },
+              { label: "miku表情包", value: 17 },
+              { label: "特蕾西娅表情包", value: 18 },
               { label: "自定义图片", value: 0 }
             ]
           }
