@@ -228,15 +228,26 @@ export function supportGuoba() {
         },
         {
           field: "summary.type",
-          label: "外显类型",
+          label: "外显模式",
           bottomHelpMessage: "可选自定义文本或使用一言接口",
           component: "RadioGroup",
           required: true,
           componentProps: {
             options: [
               { label: "自定义文字", value: 1 },
-              { label: "使用一言接口", value: 2 }
+              { label: "使用一言接口", value: 2 },
+              { label: "使用自定义列表", value: 3 }
             ]
+          }
+        },
+        {
+          field: "summary.list",
+          label: "外显随机文字列表",
+          bottomHelpMessage: "外显模式设置成3后将随机返回列表里的随机一项",
+          component: "GTags",
+          componentProps: {
+            allowAdd: true,
+            allowDel: true
           }
         },
         {

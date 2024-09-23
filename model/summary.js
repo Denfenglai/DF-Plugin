@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
 import { Config } from "../components/index.js"
-import { segment as Segment } from "oicq"
+import _ from "lodash"
 
 let Sum
 let lock = false
@@ -9,7 +9,7 @@ let raw
 export default new class Summary {
   /** 初始化外显 */
   lint() {
-    raw = Segment.image
+    raw = segment.image
     this.getSummary()
     segment.image = (file, name) => ({
       type: "image",
@@ -21,10 +21,12 @@ export default new class Summary {
 
   /** 获取外显 */
   getSummary() {
-    if (Config.summary.type !== 2) return Config.summary.text
-    const data = Sum
-    this.getSummaryApi()
-    return data
+    if (Config.summary.type === 1) return Config.summary.text
+    else if (Config.summary.type === 2) {
+      const data = Sum
+      this.getSummaryApi()
+      return data
+    } else if (Config.summary.type === 3) return _.sample(Config.summary.list)
   }
 
   /** 更新一言外显 */
