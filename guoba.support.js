@@ -1,4 +1,4 @@
-import { Config } from "./components/index.js"
+import { Config, Poke_List } from "./components/index.js"
 
 /**
  * 支持锅巴
@@ -14,7 +14,7 @@ export function supportGuoba() {
       description: "提供Yunzai-Bot拓展功能",
       author: "@等风来",
       authorLink: "https://gitee.com/DengFengLai-F",
-      link: "https://gitee.com/DenFengLai/DF-Plugin",
+      link: "https://github.com/DenFengLai/DF-Plugin",
       isV3: true,
       isV2: false,
       showInMenu: "auto",
@@ -119,25 +119,7 @@ export function supportGuoba() {
           componentProps: {
             options: [
               { label: "随机类型", value: "all" },
-              { label: "柴郡表情包", value: 1 },
-              { label: "丛雨表情包", value: 2 },
-              { label: "诗歌剧表情包", value: 3 },
-              { label: "柚子厨表情包", value: 4 },
-              { label: "小南梁表情包", value: 5 },
-              { label: "小鲨鱼古拉", value: 6 },
-              { label: "甘城猫猫表情", value: 7 },
-              { label: "龙图", value: 8 },
-              { label: "满穗表情包", value: 9 },
-              { label: "猫猫虫表情", value: 10 },
-              { label: "纳西妲表情包", value: 11 },
-              { label: "心海表情包", value: 12 },
-              { label: "fufu表情包", value: 13 },
-              { label: "亚托莉表情包", value: 14 },
-              { label: "绫地宁宁表情包", value: 15 },
-              { label: "永雏塔菲表情包", value: 16 },
-              { label: "miku表情包", value: 17 },
-              { label: "特蕾西娅表情包", value: 18 },
-              { label: "自定义图片", value: 0 }
+              ...Poke_List.map((name, id) => ({ label: name, value: id }))
             ]
           }
         },
@@ -145,10 +127,11 @@ export function supportGuoba() {
           field: "other.Black",
           label: "随机类型排除列表",
           bottomHelpMessage: "设置戳一戳类型为随机时将不会随机到以下类型",
-          component: "GTags",
+          component: "Select",
           componentProps: {
-            allowAdd: true,
-            allowDel: true
+            allowClear: true,
+            mode: "tags",
+            options: Poke_List.map((name) => ({ value: name }))
           }
         },
         {
