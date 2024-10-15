@@ -1,10 +1,3 @@
-@font-face {
-  font-family: "tttgbnumber";
-  src: url("../../font/tttgbnumber.ttf");
-  font-weight: normal;
-  font-style: normal;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -24,31 +17,33 @@ body {
 }
 
 .container {
-  width: 660px;
+  width: 630px;
   padding: 20px 15px 10px 15px;
-  background-color: #ffffff;
+  background-color: #0d1017;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 
 .head_box {
-  background: linear-gradient(to right, #4facfe, #00f2fe);
-  border-radius: 15px;
-  padding: 20px;
+  /* background: linear-gradient(to right, #232424, #4f5151); */
+  /* border-radius: 15px; */
+  padding: 15px;
   color: white;
   text-align: center;
 }
 
 .head_box .id_text {
-  font-size: 28px;
+  font-size: 27px;
+  font-weight: bold;
+  text-align: left; 
   font-weight: bold;
 }
 
 .data_box {
   border-radius: 10px;
-  margin-top: 20px;
-  padding: 20px;
-  background: #ffffff;
+  margin-top: -5px;
+  padding: 6px;
+  /* background: #ffffff; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -61,15 +56,16 @@ body {
 .list .item {
   display: flex;
   align-items: center;
-  background: #e3f2fd;
+  background: #141b23;
+  border: 2px solid #4f4f4f;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .list .item .title {
   font-size: 16px;
-  color: #333;
+  color: #f1f6fe;
 }
 
 .list .item .title .text {
@@ -78,21 +74,21 @@ body {
 
 .list .item .title .dec {
   font-size: 14px;
-  color: #787878;
+  color: #bababa;
   margin-top: 5px;
 }
 
 .list .item .title .desc {
   font-size: 14px;
-  color: #353535;
+  color: #ffffff;
   margin-top: 5px;
-  white-space: pre-wrap; /* 允许换行符换行 */
+  white-space: pre-wrap;
 }
 
 .logo {
   font-size: 14px;
   font-family: "tttgbnumber";
   text-align: center;
-  color: #7994a7;
-  margin-top: 20px;
+  color: #c3c4c4;
+  margin-top: 10px;
 }
