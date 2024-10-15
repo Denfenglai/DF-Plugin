@@ -83,8 +83,10 @@ export class CodeUpdate extends plugin {
         }
 
         const time = this.timeAgo(moment(data[0].commit.author.date))
-        const name = data[0].commit.author.name
+        const author_name = data[0].commit.author.name
+        const committer_name = data[0].commit.committer.name
         const sha = data[0].sha
+        const time_info = author_name === committer_name ? `${author_name} 提交于 ${time}` : `${author_name} 编写，并由 ${committer_name} 提交于 ${time}`
 
         if (isAuto) {
           const redisData = await redis.get(`${redisKeyPrefix}:${repo}`)
@@ -95,7 +97,7 @@ export class CodeUpdate extends plugin {
           redis.set(`${redisKeyPrefix}:${repo}`, JSON.stringify([ { shacode: sha } ]))
         }
 
-        content.push({ name: `${source}: ${repo}`, time: `${name} 提交于 ${time}`, text: data[0].commit.message })
+        content.push({ name: `${source}: ${repo}`, time_info, text: data[0].commit.message })
         await common.sleep(3000)
       } catch (error) {
         this.logError(repo, source, error)
