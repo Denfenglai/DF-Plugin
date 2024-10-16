@@ -97,7 +97,7 @@ export class CodeUpdate extends plugin {
           redis.set(`${redisKeyPrefix}:${repo}`, JSON.stringify([ { shacode: sha } ]))
         }
 
-        content.push({ name: `${source}: ${repo}`, time_info, text: data[0].commit.message })
+        content.push({ source, name: repo, time_info, text: data[0].commit.message })
         await common.sleep(3000)
       } catch (error) {
         this.logError(repo, source, error)

@@ -10,10 +10,9 @@ body {
   font-size: 16px;
   width: 530px;
   color: #1e1f20;
-  transform: scale(1.5);
+  transform: scale(2.5);
   transform-origin: 0 0;
   background-color: #f0f4f7;
-  transform: scale(2.5)
 }
 
 .container {
@@ -25,8 +24,6 @@ body {
 }
 
 .head_box {
-  /* background: linear-gradient(to right, #232424, #4f5151); */
-  /* border-radius: 15px; */
   padding: 15px;
   color: white;
   text-align: center;
@@ -35,15 +32,13 @@ body {
 .head_box .id_text {
   font-size: 27px;
   font-weight: bold;
-  text-align: left; 
-  font-weight: bold;
+  text-align: left;
 }
 
 .data_box {
   border-radius: 10px;
   margin-top: -5px;
   padding: 6px;
-  /* background: #ffffff; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -63,26 +58,53 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.list .item .title {
+.list .item .Gitee, 
+.list .item .GitHub {
   font-size: 16px;
   color: #f1f6fe;
 }
 
-.list .item .title .text {
+.list .item .text {
   font-weight: bold;
+  display: inline-flex;
+  align-items: center;
 }
 
-.list .item .title .dec {
+.list .item .text::before {
+  content: '';
+  display: inline-block;
+  margin-right: 8px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.list .item .GitHub .text::before {
+  width: 22px;
+  height: 22px;
+  background-image: url("data:image/svg+xml;base64,GitHub图标");
+}
+
+.list .item .Gitee .text::before {
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml;base64,Gitee图标");
+}
+
+.list .item .desc {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.list .item .Gitee .desc, 
+.list .item .GitHub .desc {
+  color: #ffffff;
+}
+
+.list .item .Gitee .dec, 
+.list .item .GitHub .dec {
   font-size: 14px;
   color: #bababa;
-  margin-top: 5px;
-}
-
-.list .item .title .desc {
-  font-size: 14px;
-  color: #ffffff;
-  margin-top: 5px;
-  white-space: pre-wrap;
 }
 
 .logo {
