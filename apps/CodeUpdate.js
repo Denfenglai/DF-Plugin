@@ -108,9 +108,13 @@ export class CodeUpdate extends plugin {
         }
         const { author, committer } = data[0]
         const avatar = {
-          is: author.avatar_url != committer.avatar_url,
-          author: author.avatar_url,
+          is: author?.avatar_url != committer.avatar_url,
+          author: author?.avatar_url,
           committer: committer.avatar_url
+        }
+        if (!author) {
+          avatar.is = false
+          avatar.author = committer.avatar_url
         }
         content.push({ avatar, name: { source, repo }, time_info, text: handleMsg(data[0].commit.message) })
         await common.sleep(3000)

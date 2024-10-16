@@ -10,29 +10,27 @@
 body {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
-  color: #1e1f20;
-  transform: scale(1.5);
+  color: #FAF8FC;
   transform-origin: 0 0;
-  background-color: #f0f4f7;
+  background-color: #050505;
   transform: scale(2.5);
 }
 
 .container {
   max-width: 630px;
-  min-width: 530px;
+  min-width: 430px;
   width: -moz-max-content;
   width: max-content;
   padding: 20px 15px 10px 15px;
-  background-color: #EFF0F5;
+  background-color: #050505;
 }
 
 .head_box {
-  padding: 15px;
-  color: rgb(0, 0, 0);
+  padding: 10px;
   text-align: center;
 }
 .head_box .id_text {
-  font-size: 27px;
+  font-size: 25px;
   font-weight: bold;
   text-align: left;
   font-weight: bold;
@@ -52,14 +50,13 @@ body {
 .list .item {
   display: flex;
   align-items: center;
-  background: #ffffff;
+  background: #17181C;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0px 1px 1px 1px rgba(182, 181, 181, 0.5490196078);
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.5490196078);
 }
 .list .item .title {
   font-size: 16px;
-  color: #000000;
 }
 .list .item .title .text {
   font-weight: bold;
@@ -73,13 +70,13 @@ body {
 }
 .list .item .title .dec {
   font-size: 13px;
-  color: #6F6D76;
-  margin-top: 7px;
+  color: #909195;
+  margin-top: 10px;
   display: flex;
   align-items: center;
 }
 .list .item .title .dec span {
-  color: #000;
+  color: #FAF8FC;
 }
 .list .item .title .dec .avatar {
   display: flex;
@@ -96,12 +93,13 @@ body {
 }
 .list .item .title .desc {
   font-size: 12px;
-  color: #000000;
-  margin-top: 7px;
+  color: #C4C3C8;
+  margin-top: 10px;
   white-space: pre-wrap;
 }
 .list .item .title .desc .head {
   font-size: 14px;
+  color: #FAF8FC;
 }
 
 .logo {
