@@ -5,6 +5,22 @@ Gruop: []
 # 仓库更新检查Cron表达式
 Cron: "0 */10 * * * *"
 
+# 自动获取已安装的插件地址并监听
+AutoPath: false
+
+# 自定义关注的Github仓库路径
+# 格式: 用户名/仓库名
+# 如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
+GithubList:
+  - yoimiya-kokomi/miao-plugin
+  - DenFengLai/DF-Plugin
+
+# 自定义关注的Gitee仓库路径
+# 格式: 用户名/仓库名
+# 如: gitee.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
+GiteeList: 
+ - DenFengLai/poke
+ 
 # Gitee个人token
 # 获取方式：https://gitee.com/profile/personal_access_tokens
 GiteeToken: ""
@@ -12,16 +28,3 @@ GiteeToken: ""
 # Github个人token
 # 获取方式：https://github.com/settings/tokens
 GithubToken: ""
-
-# 关注的Github仓库路径
-# 格式: 用户名/仓库名
-# 如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
-GithubList:
-  - yoimiya-kokomi/miao-plugin
-  - DenFengLai/DF-Plugin
-
-# 关注的Gitee仓库路径
-# 格式: 用户名/仓库名
-# 如: gitee.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
-GiteeList: 
- - DenFengLai/poke

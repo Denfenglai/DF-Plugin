@@ -163,6 +163,11 @@ export function supportGuoba() {
           component: "GSelectGroup"
         },
         {
+          field: "CodeUpdate.AutoPath",
+          label: "自动监听已安装的插件",
+          component: "Switch"
+        },
+        {
           field: "CodeUpdate.GithubToken",
           label: "Github Api Token",
           helpMessage: "用于请求Github Api",

@@ -20,9 +20,9 @@ try {
   apps = loadedApps
   loadedFilesCount = count
   loadedFilesCounterr = counterr
-  logSuccess(`${AppName} 载入成功！`, "作者：等风来", `共加载了 ${loadedFilesCount} 个插件文件，${loadedFilesCounterr} 个失败`)
+  logSuccess(`${AppName} ${Version.ver} 载入成功！`, "作者：等风来", `共加载了 ${loadedFilesCount} 个插件文件，${loadedFilesCounterr} 个失败`)
 } catch (error) {
-  logger.error("应用加载失败:", error)
+  logger.error("插件加载失败:", error)
 }
 
 export { apps }

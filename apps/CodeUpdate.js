@@ -3,6 +3,7 @@ import moment from "moment"
 import common from "../../../lib/common/common.js"
 import puppeteer from "../../../lib/puppeteer/puppeteer.js"
 import { Config, Plugin_Path } from "../components/index.js"
+import { PluginDirs } from "../model/index.js"
 
 export class CodeUpdate extends plugin {
   constructor() {
@@ -49,14 +50,21 @@ export class CodeUpdate extends plugin {
    * @param {object} [e] - 消息事件对象
    */
   async checkUpdates(isAuto = false, e = null) {
-    const { GithubList, GiteeList, GithubToken, GiteeToken } = Config.CodeUpdate
+    const { GithubList, GiteeList, GithubToken, GiteeToken, AutoPath } = Config.CodeUpdate
+    if (AutoPath) {
+      const PluginPath = await PluginDirs()
+      GithubList.push(...PluginPath.github)
+      GiteeList.push(...PluginPath.gitee)
+    }
     logger.mark("开始检查仓库更新")
-    const content = await this.fetchUpdates(GithubList, "GitHub", GithubToken, "DF:CodeUpdate:GitHub", isAuto)
-    content.push(...await this.fetchUpdates(GiteeList, "Gitee", GiteeToken, "DF:CodeUpdate:Gitee", isAuto))
+    const content = [
+      ...await this.fetchUpdates(GithubList, "GitHub", GithubToken, "DF:CodeUpdate:GitHub", isAuto),
+      ...await this.fetchUpdates(GiteeList, "Gitee", GiteeToken, "DF:CodeUpdate:Gitee", isAuto)
+    ]
 
     if (content.length > 0) {
       logger.mark(`共检测到${content.length}个仓库更新`)
-      const base64 = await this.generateScreenshot(content, isAuto ? "Gayhub" : e.user_id)
+      const base64 = await this.generateScreenshot(content, isAuto ? "Auto" : e.user_id)
       await this.sendMessageToGroups(base64, content, isAuto, e)
     } else {
       logger.mark("[DF-Plugin]未检测到仓库更新")
@@ -99,6 +107,7 @@ export class CodeUpdate extends plugin {
           }
           logger.mark(`${repo} 检测到更新`)
           redis.set(`${redisKeyPrefix}:${repo}`, JSON.stringify([ { shacode: sha } ]))
+          if (!redisData) continue
         }
         /**
          * 处理消息
@@ -112,13 +121,13 @@ export class CodeUpdate extends plugin {
 
         const { author, committer } = data[0]
         const avatar = {
-          is: author?.avatar_url != committer.avatar_url,
+          is: author?.avatar_url != committer?.avatar_url,
           author: author?.avatar_url,
-          committer: committer.avatar_url
+          committer: committer?.avatar_url
         }
         if (!author) {
           avatar.is = false
-          avatar.author = committer.avatar_url
+          avatar.author = committer?.avatar_url
         }
         content.push({ avatar, name: { source, repo }, time_info, text: handleMsg(data[0].commit.message) })
         await common.sleep(3000)
