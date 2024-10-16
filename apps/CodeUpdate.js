@@ -50,10 +50,12 @@ export class CodeUpdate extends plugin {
    */
   async checkUpdates(isAuto = false, e = null) {
     const { GithubList, GiteeList, GithubToken, GiteeToken } = Config.CodeUpdate
+    logger.mark("开始检查仓库更新")
     const content = await this.fetchUpdates(GithubList, "GitHub", GithubToken, "DF:CodeUpdate:GitHub", isAuto)
     content.push(...await this.fetchUpdates(GiteeList, "Gitee", GiteeToken, "DF:CodeUpdate:Gitee", isAuto))
 
     if (content.length > 0) {
+      logger.mark(`共检测到${content.length}个仓库更新`)
       const base64 = await this.generateScreenshot(content, isAuto ? "Gayhub" : e.user_id)
       await this.sendMessageToGroups(base64, content, isAuto, e)
     } else {
@@ -74,7 +76,7 @@ export class CodeUpdate extends plugin {
     const content = []
     for (const repo of repoList) {
       try {
-        logger.mark(`请求${source}：${repo}`)
+        logger.debug(`请求${source}：${repo}`)
         const data = await this.getRepositoryData(repo, source, token)
 
         if (!data) continue
@@ -92,13 +94,14 @@ export class CodeUpdate extends plugin {
         if (isAuto) {
           const redisData = await redis.get(`${redisKeyPrefix}:${repo}`)
           if (redisData && JSON.parse(redisData)[0].shacode === sha) {
-            logger.mark(`${repo}暂无更新`)
+            logger.debug(`${repo} 暂无更新`)
             continue
           }
+          logger.mark(`${repo} 检测到更新`)
           redis.set(`${redisKeyPrefix}:${repo}`, JSON.stringify([ { shacode: sha } ]))
         }
         /**
-         *
+         * 处理消息
          * @param {string} msg
          */
         function handleMsg(msg) {
@@ -106,6 +109,7 @@ export class CodeUpdate extends plugin {
           msgMap[0] = "<span class='head'>" + msgMap[0] + "</span>"
           return msgMap.join("\n")
         }
+
         const { author, committer } = data[0]
         const avatar = {
           is: author?.avatar_url != committer.avatar_url,
