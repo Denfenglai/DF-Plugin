@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    // width: 530px;
+    color: #1e1f20;
+    transform: scale(1.5);
+    transform-origin: 0 0;
+    background-color: #f0f4f7;
+    transform: scale(2.5);
+}
+
+.container {
+    max-width: 630px;
+    min-width: 530px;
+    width: max-content;
+    padding: 20px 15px 10px 15px;
+    background-color: #EFF0F5;
+}
+
+.head_box {
+    padding: 15px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+
+    .id_text {
+        font-size: 27px;
+        font-weight: bold;
+        text-align: left;
+        font-weight: bold;
+    }
+}
+
+.data_box {
+    border-radius: 10px;
+    margin-top: -5px;
+    padding: 6px;
+    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .item {
+        display: flex;
+        align-items: center;
+        background: #ffffff;
+        // border: 2px solid #4f4f4f;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0px 1px 1px 1px #b6b5b58c;
+
+
+        .title {
+            font-size: 16px;
+            color: #000000;
+
+            .text {
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+
+                .icon {
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 5px;
+                }
+            }
+
+            .dec {
+                font-size: 13px;
+                color: #6F6D76;
+                margin-top: 7px;
+                display: flex;
+                align-items: center;
+
+                span {
+                    color: #000
+                }
+
+                .avatar {
+                    display: flex;
+                    align-items: center;
+                    margin-right: 5px;
+
+                    img {
+                        width: 13px;
+                        height: 13px;
+                        border-radius: 50%;
+
+                        &:first-child {
+                            z-index: 1;
+                        }
+                    }
+                }
+
+
+            }
+
+            .desc {
+                font-size: 12px;
+                color: #000000;
+                margin-top: 7px;
+                white-space: pre-wrap;
+
+                .head {
+                    font-size: 14px;
+                    // font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+.logo {
+    font-size: 14px;
+    font-family: "tttgbnumber";
+    text-align: center;
+    color: #c3c4c4;
+    margin-top: 10px;
+}

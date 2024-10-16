@@ -76,15 +76,16 @@ export class CodeUpdate extends plugin {
       try {
         logger.mark(`请求${source}：${repo}`)
         const data = await this.getRepositoryData(repo, source, token)
+
         if (!data) continue
         if (!data[0]?.commit) {
           logger.error(`请求异常：${(data?.message === "Not Found Projec" || data?.message === "Not Found") ? "未找到对应仓库" : (data?.message ? data.message : data)}`)
           continue
         }
 
-        const time = this.timeAgo(moment(data[0].commit.author.date))
-        const author_name = data[0].commit.author.name
-        const committer_name = data[0].commit.committer.name
+        const time = "<span>" + this.timeAgo(moment(data[0].commit.author.date)) + "</span>"
+        const author_name = "<span>" + data[0].commit.author.name + "</span>"
+        const committer_name = "<span>" + data[0].commit.committer.name + "</span>"
         const sha = data[0].sha
         const time_info = author_name === committer_name ? `${author_name} 提交于 ${time}` : `${author_name} 编写，并由 ${committer_name} 提交于 ${time}`
 
@@ -96,8 +97,22 @@ export class CodeUpdate extends plugin {
           }
           redis.set(`${redisKeyPrefix}:${repo}`, JSON.stringify([ { shacode: sha } ]))
         }
-
-        content.push({ name: `${source}: ${repo}`, time_info, text: data[0].commit.message })
+        /**
+         *
+         * @param {string} msg
+         */
+        function handleMsg(msg) {
+          const msgMap = msg.split("\n")
+          msgMap[0] = "<span class='head'>" + msgMap[0] + "</span>"
+          return msgMap.join("\n")
+        }
+        const { author, committer } = data[0]
+        const avatar = {
+          is: author.avatar_url != committer.avatar_url,
+          author: author.avatar_url,
+          committer: committer.avatar_url
+        }
+        content.push({ avatar, name: { source, repo }, time_info, text: handleMsg(data[0].commit.message) })
         await common.sleep(3000)
       } catch (error) {
         this.logError(repo, source, error)

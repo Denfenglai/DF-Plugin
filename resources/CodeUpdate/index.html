@@ -18,9 +18,20 @@
         {{each lifeData item}}
         <div class="item">
           <div class="title">
-            <div class="text">{{item.name}}</div>
-            <div class="dec">{{item.time_info}}</div>
-            <div class="desc">{{item.text}}</div>
+            <div class="text">
+              <img src="{{pluResPath}}CodeUpdate/icon/{{item.name.source}}.png" class="icon">
+              {{item.name.repo}}
+            </div>
+            <div class="dec">
+              <div class="avatar">
+                <img src="{{item.avatar.author}}">
+                {{if item.avatar.is}}
+                <img src="{{item.avatar.committer}}" style="margin-left:-4px;">
+                {{/if}}
+              </div>
+              {{@item.time_info}}
+            </div>
+            <div class="desc">{{@item.text}}</div>
           </div>
         </div>
         {{/each}}
