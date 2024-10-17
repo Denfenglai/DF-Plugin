@@ -1,6 +1,13 @@
+@font-face {
+    font-family: "FZB";
+    src: url("../font/FZB.ttf");
+}
+
+
 * {
     margin: 0;
     padding: 0;
+    font-family: "FZB";
     box-sizing: border-box;
     user-select: none;
 }
@@ -17,7 +24,7 @@ body {
 
 .container {
     max-width: 630px;
-    min-width: 430px;
+    min-width: 500px;
     width: max-content;
     padding: 20px 15px 10px 15px;
     background-color: #050505;
