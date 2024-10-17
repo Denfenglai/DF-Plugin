@@ -73,6 +73,18 @@ body {
   height: 18px;
   margin-right: 5px;
 }
+.list .item .title .branch {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  margin-top: 5px;
+  color: #909195;
+}
+.list .item .title .branch img {
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+}
 .list .item .title .dec {
   font-size: 13px;
   color: #909195;
