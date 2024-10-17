@@ -52,6 +52,7 @@ export class CodeUpdate extends plugin {
   async checkUpdates(isAuto = false, e = null) {
     const { GithubList, GiteeList, GithubToken, GiteeToken, AutoPath } = Config.CodeUpdate
     if (AutoPath) {
+      // 待优化：没必要每次都获取 启动将配置读取在内存中
       const PluginPath = await PluginDirs()
       GithubList.push(...PluginPath.github)
       GiteeList.push(...PluginPath.gitee)
@@ -82,11 +83,13 @@ export class CodeUpdate extends plugin {
    */
   async fetchUpdates(repoList, source, token, redisKeyPrefix, isAuto) {
     const content = []
-    for (const repo of repoList) {
+    for (let repo of repoList) {
       try {
-        logger.debug(`请求${source}：${repo}`)
-        let repos = repo.split(":")
-        const data = await this.getRepositoryData(repos[0], source, token, repos[1])
+        logger.debug(`请求${source}:${repo}`)
+        let _repo = repo.split(":")
+        let branch = _repo[1]
+        repo = _repo[0]
+        const data = await this.getRepositoryData(repo, source, token, branch)
 
         if (!data) continue
         if (!data[0]?.commit) {
@@ -131,7 +134,7 @@ export class CodeUpdate extends plugin {
           avatar.is = false
           avatar.author = committer?.avatar_url
         }
-        content.push({ avatar, name: { source, repo }, time_info, text: handleMsg(data[0].commit.message) })
+        content.push({ avatar, name: { source, repo, branch }, time_info, text: handleMsg(data[0].commit.message) })
         await common.sleep(3000)
       } catch (error) {
         this.logError(repo, source, error)

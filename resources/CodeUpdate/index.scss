@@ -81,6 +81,20 @@ body {
                 }
             }
 
+            .branch {
+                display: flex;
+                align-items: center;
+                font-size: 13px;
+                margin-top: 5px;
+                color: #909195;
+
+                img {
+                    width: 13px;
+                    height: 13px;
+                    margin-right: 5px;
+                }
+            }
+
             .dec {
                 font-size: 13px;
                 color: #909195;
