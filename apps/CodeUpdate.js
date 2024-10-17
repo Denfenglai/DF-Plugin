@@ -85,7 +85,8 @@ export class CodeUpdate extends plugin {
     for (const repo of repoList) {
       try {
         logger.debug(`请求${source}：${repo}`)
-        const data = await this.getRepositoryData(repo, source, token)
+        let repos = repo.split(":")
+        const data = await this.getRepositoryData(repos[0], source, token, repos[1])
 
         if (!data) continue
         if (!data[0]?.commit) {
@@ -93,11 +94,12 @@ export class CodeUpdate extends plugin {
           continue
         }
 
-        const time = "<span>" + this.timeAgo(moment(data[0].commit.author.date)) + "</span>"
+        const authorTime = "<span>" + this.timeAgo(moment(data[0].commit.author.date)) + "</span>"
+        const committerTime = "<span>" + this.timeAgo(moment(data[0].commit.committer.date)) + "</span>"
         const author_name = "<span>" + data[0].commit.author.name + "</span>"
         const committer_name = "<span>" + data[0].commit.committer.name + "</span>"
         const sha = data[0].sha
-        const time_info = author_name === committer_name ? `${author_name} 提交于 ${time}` : `${author_name} 编写，并由 ${committer_name} 提交于 ${time}`
+        const time_info = author_name === committer_name ? `${author_name} 提交于 ${authorTime}` : `${author_name} 编写于 ${authorTime}，并由 ${committer_name} 提交于 ${committerTime}`
 
         if (isAuto) {
           const redisData = await redis.get(`${redisKeyPrefix}:${repo}`)
@@ -143,15 +145,20 @@ export class CodeUpdate extends plugin {
    * @param {string} repo - 仓库路径（用户名/仓库名）
    * @param {string} source - 数据源（GitHub/Gitee）
    * @param {string} token - 访问Token
+   * @param {string} sha - 提交起始的SHA值或者分支名. 默认: 仓库的默认分支
    * @returns {Promise<object[]>} 提交数据或空数组
    */
-  async getRepositoryData(repo, source, token) {
+  async getRepositoryData(repo, source, token, sha) {
     let url, headers
+    let _sha = ""
+    if (sha) {
+      _sha = "&sha=" + sha
+    }
     if (source === "GitHub") {
-      url = `https://api.github.com/repos/${repo}/commits?per_page=1`
+      url = `https://api.github.com/repos/${repo}/commits?per_page=1${_sha}`
       headers = this.getHeaders(token, "GitHub")
     } else {
-      url = `https://gitee.com/api/v5/repos/${repo}/commits?per_page=1`
+      url = `https://gitee.com/api/v5/repos/${repo}/commits?per_page=1${_sha}`
       if (token) url += `&access_token=${token}`
       headers = this.getHeaders(token, "Gitee")
     }

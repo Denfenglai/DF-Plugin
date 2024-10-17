@@ -11,6 +11,7 @@ AutoPath: false
 # 自定义关注的Github仓库路径
 # 格式: 用户名/仓库名
 # 如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
+# 支持分支 DenFengLai/DF-Plugin:dev
 GithubList:
   - yoimiya-kokomi/miao-plugin
   - DenFengLai/DF-Plugin
@@ -18,9 +19,9 @@ GithubList:
 # 自定义关注的Gitee仓库路径
 # 格式: 用户名/仓库名
 # 如: gitee.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
-GiteeList: 
- - DenFengLai/poke
- 
+GiteeList:
+  - DenFengLai/poke
+
 # Gitee个人token
 # 获取方式：https://gitee.com/profile/personal_access_tokens
 GiteeToken: ""
