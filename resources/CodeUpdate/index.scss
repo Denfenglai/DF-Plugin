@@ -80,6 +80,7 @@ body {
                 margin-top: 10px;
                 display: flex;
                 align-items: center;
+                white-space: pre;
 
                 span {
                     color: #FAF8FC
@@ -91,8 +92,8 @@ body {
                     margin-right: 5px;
 
                     img {
-                        width: 13px;
-                        height: 13px;
+                        width: 16px;
+                        height: 16px;
                         border-radius: 50%;
 
                         &:first-child {
