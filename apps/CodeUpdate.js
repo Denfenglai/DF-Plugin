@@ -5,6 +5,8 @@ import puppeteer from "../../../lib/puppeteer/puppeteer.js"
 import { Config, Plugin_Path } from "../components/index.js"
 import { PluginDirs } from "../model/index.js"
 
+const PluginPath = await PluginDirs()
+
 export class CodeUpdate extends plugin {
   constructor() {
     super({
@@ -50,12 +52,10 @@ export class CodeUpdate extends plugin {
    * @param {object} [e] - 消息事件对象
    */
   async checkUpdates(isAuto = false, e = null) {
-    const { GithubList, GiteeList, GithubToken, GiteeToken, AutoPath } = Config.CodeUpdate
+    let { GithubList, GiteeList, GithubToken, GiteeToken, AutoPath } = Config.CodeUpdate
     if (AutoPath) {
-      // 待优化：没必要每次都获取 启动将配置读取在内存中
-      const PluginPath = await PluginDirs()
-      GithubList.push(...PluginPath.github)
-      GiteeList.push(...PluginPath.gitee)
+      GithubList = [ ...new Set([ ...GithubList, ...PluginPath.github ]) ]
+      GiteeList = [ ...new Set([ ...GiteeList, ...PluginPath.gitee ]) ]
     }
     logger.mark("开始检查仓库更新")
     const content = [
