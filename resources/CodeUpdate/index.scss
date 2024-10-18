@@ -36,7 +36,7 @@ body {
     text-align: center;
 
     .id_text {
-        font-size: 25px;
+        font-size: 30px;
         font-weight: bold;
         text-align: left;
         font-weight: bold;
@@ -116,6 +116,20 @@ body {
                         width: 16px;
                         height: 16px;
                         border-radius: 50%;
+                        position: relative;
+
+                        &[src=""]::after {
+                            content: attr(data-nameStart);
+                            position: absolute;
+                            inset: 0;
+                            color: #FAF8FC;
+                            background: #E67E22;
+                            font-family: "Verdana", "Arial";
+                            text-align: center;
+                            line-height: 16px;
+                            font-size: 11px;
+                            // z-index: 1;
+                        }
 
                         &:first-child {
                             z-index: 1;
@@ -143,7 +157,7 @@ body {
 
 .logo {
     font-size: 14px;
-    font-family: "tttgbnumber";
+    // font-family: "tttgbnumber";
     text-align: center;
     color: #c3c4c4;
     margin-top: 10px;

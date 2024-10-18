@@ -96,12 +96,11 @@ export class CodeUpdate extends plugin {
           logger.error(`请求异常：${(data?.message === "Not Found Projec" || data?.message === "Not Found") ? "未找到对应仓库" : (data?.message ? data.message : data)}`)
           continue
         }
-
-        const authorTime = "<span>" + this.timeAgo(moment(data[0].commit.author.date)) + "</span>"
-        const committerTime = "<span>" + this.timeAgo(moment(data[0].commit.committer.date)) + "</span>"
-        const author_name = "<span>" + data[0].commit.author.name + "</span>"
-        const committer_name = "<span>" + data[0].commit.committer.name + "</span>"
-        const sha = data[0].sha
+        const { author, committer, commit, sha } = data[0]
+        const authorTime = "<span>" + this.timeAgo(moment(commit.author.date)) + "</span>"
+        const committerTime = "<span>" + this.timeAgo(moment(commit.committer.date)) + "</span>"
+        const author_name = "<span>" + commit.author.name + "</span>"
+        const committer_name = "<span>" + commit.committer.name + "</span>"
         const time_info = author_name === committer_name ? `${author_name} 提交于 ${authorTime}` : `${author_name} 编写于 ${authorTime}，并由 ${committer_name} 提交于 ${committerTime}`
 
         if (isAuto) {
@@ -124,17 +123,29 @@ export class CodeUpdate extends plugin {
           return msgMap.join("\n")
         }
 
-        const { author, committer } = data[0]
         const avatar = {
           is: author?.avatar_url != committer?.avatar_url,
           author: author?.avatar_url,
           committer: committer?.avatar_url
         }
+        const name = {
+          source,
+          repo,
+          branch,
+          authorStart: commit.author.name?.[0] ?? "?",
+          committerStart: commit.committer.name?.[0] ?? "?"
+        }
         if (!author) {
           avatar.is = false
           avatar.author = committer?.avatar_url
+          name.authorStart = name.committerStart
         }
-        content.push({ avatar, name: { source, repo, branch }, time_info, text: handleMsg(data[0].commit.message) })
+        content.push({
+          avatar,
+          name,
+          time_info,
+          text: handleMsg(commit.message)
+        })
         await common.sleep(3000)
       } catch (error) {
         this.logError(repo, source, error)

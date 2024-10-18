@@ -35,7 +35,7 @@ body {
   text-align: center;
 }
 .head_box .id_text {
-  font-size: 25px;
+  font-size: 30px;
   font-weight: bold;
   text-align: left;
   font-weight: bold;
@@ -105,6 +105,18 @@ body {
   width: 16px;
   height: 16px;
   border-radius: 50%;
+  position: relative;
+}
+.list .item .title .dec .avatar img[src=""]::after {
+  content: attr(data-nameStart);
+  position: absolute;
+  inset: 0;
+  color: #FAF8FC;
+  background: #E67E22;
+  font-family: "Verdana", "Arial";
+  text-align: center;
+  line-height: 16px;
+  font-size: 11px;
 }
 .list .item .title .dec .avatar img:first-child {
   z-index: 1;
@@ -122,7 +134,6 @@ body {
 
 .logo {
   font-size: 14px;
-  font-family: "tttgbnumber";
   text-align: center;
   color: #c3c4c4;
   margin-top: 10px;

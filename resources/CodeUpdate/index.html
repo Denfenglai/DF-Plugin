@@ -29,9 +29,10 @@
             {{/if}}
             <div class="dec">
               <div class="avatar">
-                <img src="{{item.avatar.author}}">
+                <img src="{{item.avatar.author}}" data-nameStart="{{item.name.authorStart}}">
                 {{if item.avatar.is}}
-                <img src="{{item.avatar.committer}}" style="margin-left:-4px;">
+                <img src="{{item.avatar.committer}}" style="margin-left:-4px;"
+                  data-nameStart="{{item.name.committerStart}}">
                 {{/if}}
               </div>
               {{@item.time_info}}
