@@ -189,15 +189,15 @@ export class CodeUpdate extends plugin {
    * 获取指定URL的JSON数据
    * @param {string} url - 请求的URL
    * @param {object} headers - 请求头
-   * @returns {Promise<object | null>} 返回请求的数据或null（请求失败）
+   * @returns {Promise<object | false>} 返回请求的数据或false（请求失败）
    */
   async fetchData(url, headers) {
     try {
       const response = await fetch(url, { method: "get", headers })
       return await response.json()
     } catch (error) {
-      logger.error(`请求失败: ${url}`)
-      return null
+      logger.error(`请求失败: ${url}：${error}`)
+      return false
     }
   }
 
