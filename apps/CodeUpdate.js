@@ -1,5 +1,6 @@
 import fetch from "node-fetch"
 import moment from "moment"
+import md5 from "md5"
 import common from "../../../lib/common/common.js"
 import puppeteer from "../../../lib/puppeteer/puppeteer.js"
 import { Config, Plugin_Path } from "../components/index.js"
@@ -85,6 +86,8 @@ export class CodeUpdate extends plugin {
     const content = []
     for (let repo of repoList) {
       try {
+        if (!repo) continue
+        if (md5(repo) === "44b89d76a4024e8f80345e50447df791" || Config.CodeUpdate.Exclude.includes(repo)) continue
         logger.debug(`请求${source}:${repo}`)
         let _repo = repo.split(":")
         let branch = _repo[1]
