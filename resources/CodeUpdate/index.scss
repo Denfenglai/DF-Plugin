@@ -151,6 +151,17 @@ body {
                     color: #FAF8FC;
                 }
             }
+
+            .stats {
+                background: #17181C;
+                box-shadow: 0px 1px 1px 1px #0000008c;
+                margin-top: 10px;
+                border-radius: 5px;
+                padding: 5px 10px;
+                font-size: 13px;
+                color: #909195;
+                width: max-content;
+            }
         }
     }
 }

@@ -89,14 +89,14 @@ export class CodeUpdate extends plugin {
         let _repo = repo.split(":")
         let branch = _repo[1]
         repo = _repo[0]
-        const data = await this.getRepositoryData(repo, source, token, branch)
-
+        let data = await this.getRepositoryData(repo, source, token, branch)
         if (!data) continue
+        if (branch) data = [ data ]
         if (!data[0]?.commit) {
           logger.error(`请求异常：${(data?.message === "Not Found Projec" || data?.message === "Not Found") ? "未找到对应仓库" : (data?.message ? data.message : data)}`)
           continue
         }
-        const { author, committer, commit, sha } = data[0]
+        const { author, committer, commit, sha, stats, files } = data[0]
         const authorTime = "<span>" + this.timeAgo(moment(commit.author.date)) + "</span>"
         const committerTime = "<span>" + this.timeAgo(moment(commit.committer.date)) + "</span>"
         const author_name = "<span>" + commit.author.name + "</span>"
@@ -135,6 +135,14 @@ export class CodeUpdate extends plugin {
           authorStart: commit.author.name?.[0] ?? "?",
           committerStart: commit.committer.name?.[0] ?? "?"
         }
+        let _stats = false
+        if (stats && files) {
+          _stats = {
+            files: files.length,
+            additions: stats.additions,
+            deletions: stats.deletions
+          }
+        }
         if (!author) {
           avatar.is = false
           avatar.author = committer?.avatar_url
@@ -144,7 +152,8 @@ export class CodeUpdate extends plugin {
           avatar,
           name,
           time_info,
-          text: handleMsg(commit.message)
+          text: handleMsg(commit.message),
+          stats: _stats
         })
         await common.sleep(3000)
       } catch (error) {
@@ -163,19 +172,21 @@ export class CodeUpdate extends plugin {
    * @returns {Promise<object[]>} 提交数据或空数组
    */
   async getRepositoryData(repo, source, token, sha) {
-    let url, headers
-    let _sha = ""
+    let url, headers, path
     if (sha) {
-      _sha = "&sha=" + sha
+      path = `${repo}/commits/${sha}`
+    } else {
+      path = `${repo}/commits?per_page=1`
     }
     if (source === "GitHub") {
-      url = `https://api.github.com/repos/${repo}/commits?per_page=1${_sha}`
+      url = `https://api.github.com/repos/${path}`
       headers = this.getHeaders(token, "GitHub")
     } else {
-      url = `https://gitee.com/api/v5/repos/${repo}/commits?per_page=1${_sha}`
-      if (token) url += `&access_token=${token}`
+      url = `https://gitee.com/api/v5/repos/${path}`
+      if (token) url += `${sha ? "?" : "&"}access_token=${token}`
       headers = this.getHeaders(token, "Gitee")
     }
+
     return await this.fetchData(url, headers)
   }
 
