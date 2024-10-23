@@ -1,4 +1,8 @@
 import { Config, Poke_List } from "./components/index.js"
+import { PluginDirs } from "./model/GitRepo.js"
+
+let PluginPath = await PluginDirs()
+PluginPath = new Set([ ...PluginPath.gitee, ...PluginPath.github ])
 
 /**
  * 支持锅巴
@@ -166,6 +170,16 @@ export function supportGuoba() {
           field: "CodeUpdate.AutoPath",
           label: "自动监听已安装的插件",
           component: "Switch"
+        },
+        {
+          field: "CodeUpdate.Exclude",
+          label: "排除的仓库路径",
+          component: "Select",
+          componentProps: {
+            allowClear: true,
+            mode: "tags",
+            options: Array.from(PluginPath).map((name) => ({ value: name }))
+          }
         },
         {
           field: "CodeUpdate.GithubToken",
