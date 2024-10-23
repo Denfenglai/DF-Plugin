@@ -22,6 +22,10 @@ GithubList:
 GiteeList:
   - DenFengLai/poke
 
+# 排除的仓库路径
+# 用于忽略一些不希望被监听的插件
+Exclude: []
+
 # Gitee个人token
 # 获取方式：https://gitee.com/profile/personal_access_tokens
 GiteeToken: ""
