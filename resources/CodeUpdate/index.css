@@ -132,10 +132,9 @@ body {
   color: #FAF8FC;
 }
 .list .item .title .stats {
-  background: #17181C;
-  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.5490196078);
+  border-top: 1px solid rgba(67, 67, 67, 0.5490196078);
+  border-bottom: 1px solid rgba(67, 67, 67, 0.5490196078);
   margin-top: 10px;
-  border-radius: 5px;
   padding: 5px 10px;
   font-size: 13px;
   color: #909195;

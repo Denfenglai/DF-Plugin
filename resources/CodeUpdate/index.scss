@@ -153,10 +153,9 @@ body {
             }
 
             .stats {
-                background: #17181C;
-                box-shadow: 0px 1px 1px 1px #0000008c;
+                border-top: 1px solid #4343438c;
+                border-bottom: 1px solid #4343438c;
                 margin-top: 10px;
-                border-radius: 5px;
                 padding: 5px 10px;
                 font-size: 13px;
                 color: #909195;
@@ -168,7 +167,6 @@ body {
 
 .logo {
     font-size: 14px;
-    // font-family: "tttgbnumber";
     text-align: center;
     color: #c3c4c4;
     margin-top: 10px;
