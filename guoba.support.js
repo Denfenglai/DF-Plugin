@@ -173,7 +173,7 @@ export function supportGuoba() {
         },
         {
           field: "CodeUpdate.Exclude",
-          label: "排除的仓库路径",
+          label: "排除的插件",
           component: "Select",
           componentProps: {
             allowClear: true,

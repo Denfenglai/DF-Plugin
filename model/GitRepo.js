@@ -74,14 +74,14 @@ function classifyRepo(url, branch, result) {
   if (url.includes("github.com")) {
     const parts = url.split("github.com/")
     if (parts[1]) {
-      const repoPath = parts[1].replace(/\.git$/, "") + `:${branch}`
+      const repoPath = parts[1].replace(/(\/|\.git)$/, "") + `:${branch}`
       result.github.push(repoPath)
     }
   } else if (url.includes("gitee.com")) {
     const parts = url.split("gitee.com/")
     if (parts[1]) {
-      const repoPath = parts[1].replace(/\.git$/, "")
-      result.gitee.push(repoPath + `:${branch}`)
+      const repoPath = parts[1].replace(/(\/|\.git)$/, "") + `:${branch}`
+      result.gitee.push(repoPath)
     }
   }
 }
