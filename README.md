@@ -7,14 +7,17 @@
 [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.dev)
 [![license](https://img.shields.io/github/license/Denfenglai/DF-Plugin.svg?style=flat&logo=gnu)](https://github.com/Denfenglai/DF-Plugin/blob/master/LICENSE)
 
-[![Yunzai-Bot](https://img.shields.io/badge/Yunzai_Bot-V3-red)](https://gitee.com/Le-niao/Yunzai-Bot)
-[![Miao-Yunzai V3](https://img.shields.io/badge/Miao_Yunzai-V3-yellow)](https://github.com/yoimiya-kokomi/Miao-Yunzai)
-[![TRSS-Yunzai](https://img.shields.io/badge/TRSS_Yunzai-V3-blue)](https://github.com/TimeRainStarSky/Yunzai)
+[![DF-Plugin](https://img.shields.io/github/package-json/v/Denfenglai/DF-Plugin?label=DF-Plugin&color=green
+)](https://github.com/DenFengLai/DF-Plugin)
+[![Yunzai-Bot](https://img.shields.io/badge/Yunzai_Bot-v3-red)](https://gitee.com/Le-niao/Yunzai-Bot)
+[![Miao-Yunzai V3](https://img.shields.io/github/package-json/v/yoimiya-kokomi/Miao-Yunzai?label=Miao-Yunzai&color=yellow)](https://github.com/yoimiya-kokomi/Miao-Yunzai)
+[![TRSS-Yunzai](https://img.shields.io/github/package-json/v/TimeRainStarSky/Yunzai?label=TRSS-Yunzai&color=blue)](https://github.com/TimeRainStarSky/Yunzai)
 
 [![Gitee stars](https://gitee.com/DenFengLai/DF-Plugin/badge/star.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/stargazers)
 [![Gitee forks](https://gitee.com/DenFengLai/DF-Plugin/badge/fork.svg?theme=dark)](https://gitee.com/DenFengLai/DF-Plugin/members)
 [![GitHub stars](https://img.shields.io/github/stars/DenFengLai/DF-Plugin)](https://github.com/DenFengLai/DF-Plugin/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/DenFengLai/DF-Plugin)](https://github.com/DenFengLai/DF-Plugin/network)
+![GitHub repo size](https://img.shields.io/github/repo-size/denfenglai/DF-Plugin?label=%E4%BB%93%E5%BA%93%E5%A4%A7%E5%B0%8F)
 
 [![Fork me on Gitee](https://gitee.com/DenFengLai/DF-Plugin/widgets/widget_6.svg)](https://gitee.com/DenFengLai/DF-Plugin)
 
@@ -23,13 +26,13 @@
 - 使用Gitee
 
 ```sh
-git clone -b master --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
+git clone --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
 ```
 
 - 使用Github
 
 ```sh
-git clone -b master --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
+git clone --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
 ```
 
 ## 🤗 已实现的功能
