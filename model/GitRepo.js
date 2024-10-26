@@ -4,34 +4,40 @@ import { exec } from "child_process"
 import { Path } from "../components/index.js"
 
 /**
- * 插件目录路径
- * @type {string}
- */
-const pluginsDir = `${Path}/plugins`
-
-/**
- * 获取本地插件远程地址
+ * 获取所有包含 .git 的目录
  * @returns {Promise<object>} result 插件远程路径，包含 GitHub 和 Gitee 仓库
  */
 export async function PluginDirs() {
-  /**
-   * 存储 GitHub 和 Gitee 仓库路径的对象
-   * @type {object}
-   * @property {string[]} github - 存储 GitHub 仓库路径
-   * @property {string[]} gitee - 存储 Gitee 仓库路径
-   */
   const result = { github: [], gitee: [] }
-
-  const subdirs = fs.readdirSync(pluginsDir)
-  for (const subdir of subdirs) {
-    const subdirPath = path.join(pluginsDir, subdir)
-    if (fs.statSync(subdirPath).isDirectory() && isGitRepo(subdirPath)) {
-      const remoteUrl = await getRemoteUrl(subdirPath)
-      const branch = await getRemoteBranch(subdirPath)
-      if (remoteUrl) classifyRepo(remoteUrl, branch, result)
-    }
-  }
+  await traverseDirectories(Path, result)
   return result
+}
+
+/**
+ * 递归遍历目录以查找包含 .git 的 Git 仓库
+ * @param {string} dir - 当前遍历的目录路径
+ * @param {object} result - 存储 GitHub 和 Gitee 仓库的对象
+ */
+async function traverseDirectories(dir, result) {
+  try {
+    const items = fs.readdirSync(dir)
+    for (const item of items) {
+      if (item === "data" || item === "node_modules") continue // 排除指定目录
+
+      const itemPath = path.join(dir, item)
+      if (fs.statSync(itemPath).isDirectory()) {
+        if (isGitRepo(itemPath)) {
+          const remoteUrl = await getRemoteUrl(itemPath)
+          const branch = await getRemoteBranch(itemPath)
+          if (remoteUrl) classifyRepo(remoteUrl, branch, result)
+        } else {
+          await traverseDirectories(itemPath, result)
+        }
+      }
+    }
+  } catch (err) {
+    console.error(`无法读取目录: ${dir}`, err)
+  }
 }
 
 /**
@@ -50,8 +56,7 @@ function isGitRepo(dir) {
  * @returns {Promise<string>} 仓库的远程 URL
  */
 async function getRemoteUrl(repoPath) {
-  const remoteUrl = await executeCommand("git remote get-url origin", repoPath)
-  return remoteUrl
+  return executeCommand("git remote get-url origin", repoPath)
 }
 
 /**
@@ -60,8 +65,7 @@ async function getRemoteUrl(repoPath) {
  * @returns {Promise<string>} 当前分支名称
  */
 async function getRemoteBranch(repoPath) {
-  const branch = await executeCommand("git rev-parse --abbrev-ref HEAD", repoPath)
-  return branch
+  return executeCommand("git rev-parse --abbrev-ref HEAD", repoPath)
 }
 
 /**

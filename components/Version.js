@@ -1,7 +1,6 @@
 import fs from "fs"
 import lodash from "lodash"
-import { Data } from "./index.js"
-const Plugin_Path = `${process.cwd()}/plugins/DF-Plugin`
+import { Data, Plugin_Path } from "./index.js"
 const README_path = `${Plugin_Path}/README.md`
 const CHANGELOG_path = `${Plugin_Path}/CHANGELOG.md`
 let packageJson = JSON.parse(fs.readFileSync(`${process.cwd()}/package.json`, "utf8"))
@@ -144,6 +143,21 @@ try {
     }
   }
 } catch (err) {}
+
+try {
+  const packagePath = `${Plugin_Path}/package.json`
+  const packageData = JSON.parse(fs.readFileSync(packagePath, "utf8"))
+
+  if (packageData.version !== currentVersion) {
+    console.log(`[DF-Plugin] 版本号不一致，更新版本号为: ${currentVersion}`)
+    packageData.version = currentVersion
+
+    fs.writeFileSync(packagePath, JSON.stringify(packageData, null, 2), "utf8")
+    console.log("[DF-Plugin] package.json 已更新")
+  }
+} catch (error) {
+  console.error("读取或解析 package.json 出现错误:", error)
+}
 
 const yunzaiVersion = packageJson.version
 const isV3 = yunzaiVersion[0] === "3"
