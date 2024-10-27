@@ -19,24 +19,22 @@ export async function PluginDirs() {
  * @param {object} result - 存储 GitHub 和 Gitee 仓库的对象
  */
 async function traverseDirectories(dir, result) {
-  try {
-    const items = fs.readdirSync(dir)
-    for (const item of items) {
-      if (item === "data" || item === "node_modules") continue // 排除指定目录
+  const items = fs.readdirSync(dir)
+  for (const item of items) try {
+    if (item === "data" || item === "node_modules") continue // 排除指定目录
 
-      const itemPath = path.join(dir, item)
-      if (fs.statSync(itemPath).isDirectory()) {
-        if (isGitRepo(itemPath)) {
-          const remoteUrl = await getRemoteUrl(itemPath)
-          const branch = await getRemoteBranch(itemPath)
-          if (remoteUrl) classifyRepo(remoteUrl, branch, result)
-        } else {
-          await traverseDirectories(itemPath, result)
-        }
+    const itemPath = path.join(dir, item)
+    if (fs.statSync(itemPath).isDirectory()) {
+      if (isGitRepo(itemPath)) {
+        const branch = await getRemoteBranch(itemPath)
+        const remoteUrl = await getRemoteUrl(itemPath, branch)
+        if (remoteUrl) classifyRepo(remoteUrl, branch, result)
+      } else {
+        await traverseDirectories(itemPath, result)
       }
     }
   } catch (err) {
-    console.error(`无法读取目录: ${dir}`, err)
+    console.error(`无法读取目录: ${dir}/${item}`, err)
   }
 }
 
@@ -51,12 +49,23 @@ function isGitRepo(dir) {
 }
 
 /**
- * 获取仓库的远程 URL
+ * 获取仓库分支远程 URL
  * @param {string} repoPath - 仓库路径
+ * @param {string} branch - 分支名称
  * @returns {Promise<string>} 仓库的远程 URL
  */
-async function getRemoteUrl(repoPath) {
-  return executeCommand("git remote get-url origin", repoPath)
+async function getRemoteUrl(repoPath, branch) {
+  return executeCommand(`git remote get-url ${await getRemoteName(repoPath, branch)}`, repoPath)
+}
+
+/**
+ * 获取仓库分支远程名称
+ * @param {string} repoPath - 仓库路径
+ * @param {string} branch - 分支名称
+ * @returns {Promise<string>} 当前分支名称
+ */
+function getRemoteName(repoPath, branch) {
+  return executeCommand(`git config branch.${branch}.remote`, repoPath)
 }
 
 /**
@@ -64,8 +73,8 @@ async function getRemoteUrl(repoPath) {
  * @param {string} repoPath - 仓库路径
  * @returns {Promise<string>} 当前分支名称
  */
-async function getRemoteBranch(repoPath) {
-  return executeCommand("git rev-parse --abbrev-ref HEAD", repoPath)
+function getRemoteBranch(repoPath) {
+  return executeCommand("git branch --show-current", repoPath)
 }
 
 /**
@@ -96,7 +105,7 @@ function classifyRepo(url, branch, result) {
  * @param {string} cwd - 要在其下执行命令的当前工作目录
  * @returns {Promise<string>} 命令执行结果的输出
  */
-async function executeCommand(command, cwd) {
+function executeCommand(command, cwd) {
   return new Promise((resolve, reject) => {
     exec(command, { cwd }, (error, stdout, stderr) => {
       if (error) {
