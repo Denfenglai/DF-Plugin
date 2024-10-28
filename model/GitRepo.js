@@ -12,6 +12,7 @@ export async function PluginDirs() {
   await traverseDirectories(Path, result)
   return result
 }
+export const PluginPath = await PluginDirs()
 
 /**
  * 递归遍历目录以查找包含 .git 的 Git 仓库
