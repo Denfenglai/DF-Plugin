@@ -21,21 +21,23 @@ export const PluginPath = await PluginDirs()
  */
 async function traverseDirectories(dir, result) {
   const items = fs.readdirSync(dir)
-  for (const item of items) try {
-    if (item === "data" || item === "node_modules") continue // 排除指定目录
+  for (const item of items) {
+    try {
+      if (item === "data" || item === "node_modules") continue
 
-    const itemPath = path.join(dir, item)
-    if (fs.statSync(itemPath).isDirectory()) {
-      if (isGitRepo(itemPath)) {
-        const branch = await getRemoteBranch(itemPath)
-        const remoteUrl = await getRemoteUrl(itemPath, branch)
-        if (remoteUrl) classifyRepo(remoteUrl, branch, result)
-      } else {
-        await traverseDirectories(itemPath, result)
+      const itemPath = path.join(dir, item)
+      if (fs.statSync(itemPath).isDirectory()) {
+        if (isGitRepo(itemPath)) {
+          const branch = await getRemoteBranch(itemPath)
+          const remoteUrl = await getRemoteUrl(itemPath, branch)
+          if (remoteUrl) classifyRepo(remoteUrl, branch, result)
+        } else {
+          await traverseDirectories(itemPath, result)
+        }
       }
+    } catch (err) {
+      console.error(`无法读取目录: ${dir}/${item}`, err)
     }
-  } catch (err) {
-    console.error(`无法读取目录: ${dir}/${item}`, err)
   }
 }
 
