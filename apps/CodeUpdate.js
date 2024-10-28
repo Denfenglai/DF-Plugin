@@ -3,9 +3,7 @@ import moment from "moment"
 import common from "../../../lib/common/common.js"
 import puppeteer from "../../../lib/puppeteer/puppeteer.js"
 import { Config, Plugin_Path } from "../components/index.js"
-import { PluginDirs } from "../model/index.js"
-
-const PluginPath = await PluginDirs()
+import { PluginPath } from "../model/index.js"
 
 export class CodeUpdate extends plugin {
   constructor() {

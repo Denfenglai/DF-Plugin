@@ -1,7 +1,6 @@
 import { Config, Poke_List } from "./components/index.js"
-import { PluginDirs } from "./model/GitRepo.js"
 
-let PluginPath = await PluginDirs()
+let PluginPath = (await import("./model/GitRepo.js")).PluginPath
 PluginPath = new Set([ ...PluginPath.gitee, ...PluginPath.github ])
 
 /**
