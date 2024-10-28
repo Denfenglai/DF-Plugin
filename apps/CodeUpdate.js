@@ -51,19 +51,26 @@ export class CodeUpdate extends plugin {
    */
   async checkUpdates(isAuto = false, e = null) {
     let { GithubList, GiteeList, GithubToken, GiteeToken, AutoPath } = Config.CodeUpdate
+
     if (AutoPath) {
       GithubList = [ ...new Set([ ...GithubList, ...PluginPath.github ]) ]
       GiteeList = [ ...new Set([ ...GiteeList, ...PluginPath.gitee ]) ]
     }
+
     logger.mark("开始检查仓库更新")
-    const content = [
-      ...await this.fetchUpdates(GithubList, "GitHub", GithubToken, "DF:CodeUpdate:GitHub", isAuto),
-      ...await this.fetchUpdates(GiteeList, "Gitee", GiteeToken, "DF:CodeUpdate:Gitee", isAuto)
-    ]
+
+    const [ githubUpdates, giteeUpdates ] = await Promise.all([
+      this.fetchUpdates(GithubList, "GitHub", GithubToken, "DF:CodeUpdate:GitHub", isAuto),
+      this.fetchUpdates(GiteeList, "Gitee", GiteeToken, "DF:CodeUpdate:Gitee", isAuto)
+    ])
+
+    const content = [ ...githubUpdates, ...giteeUpdates ]
 
     if (content.length > 0) {
-      logger.mark(`共检测到${content.length}个仓库更新`)
-      const base64 = await this.generateScreenshot(content, isAuto ? "Auto" : e.user_id)
+      logger.mark(`共检测到 ${content.length} 个仓库更新`)
+
+      const userId = isAuto ? "Auto" : e.user_id
+      const base64 = await this.generateScreenshot(content, userId)
       await this.sendMessageToGroups(base64, content, isAuto, e)
     } else {
       logger.mark("[DF-Plugin]未检测到仓库更新")
@@ -81,86 +88,115 @@ export class CodeUpdate extends plugin {
    */
   async fetchUpdates(repoList, source, token, redisKeyPrefix, isAuto) {
     const content = []
-    for (let repo of repoList) {
+
+    await Promise.all(repoList.map(async(repo) => {
+      if (!repo || Config.CodeUpdate.Exclude.includes(repo)) return
+
       try {
-        if (!repo) continue
-        if (Config.CodeUpdate.Exclude.includes(repo)) continue
-        logger.debug(`请求${source}:${repo}`)
-        let _repo = repo.split(":")
-        let branch = _repo[1]
-        let path = _repo[0]
+        logger.debug(`请求 ${source}: ${repo}`)
+        const [ path, branch ] = repo.split(":")
         let data = await this.getRepositoryData(path, source, token, branch)
-        if (!data) continue
+        if (!data) return
+        if (data?.message === "Not Found Projec" || data?.message === "Not Found") {
+          logger.error(`${source}: ${repo} 仓库不存在`)
+          return
+        }
         if (branch) data = [ data ]
         if (!data[0]?.commit) {
-          logger.error(`请求异常：${(data?.message === "Not Found Projec" || data?.message === "Not Found") ? "未找到对应仓库" : (data?.message ? data.message : data)}`)
-          continue
+          logger.error(`获取 ${source}: ${repo} 数据异常: ${data?.message || JSON.stringify(data)}`)
+          return
         }
-        const { author, committer, commit, sha, stats, files } = data[0]
-        const authorTime = "<span>" + this.timeAgo(moment(commit.author.date)) + "</span>"
-        const committerTime = "<span>" + this.timeAgo(moment(commit.committer.date)) + "</span>"
-        const author_name = "<span>" + commit.author.name + "</span>"
-        const committer_name = "<span>" + commit.committer.name + "</span>"
-        const time_info = author_name === committer_name ? `${author_name} 提交于 ${authorTime}` : `${author_name} 编写于 ${authorTime}，并由 ${committer_name} 提交于 ${committerTime}`
 
         if (isAuto) {
-          const redisData = await redis.get(`${redisKeyPrefix}:${repo}`)
-          if (redisData && JSON.parse(redisData)[0].shacode === sha) {
+          const sha = data[0].sha
+          if (await this.isUpToDate(repo, redisKeyPrefix, sha)) {
             logger.debug(`${repo} 暂无更新`)
-            continue
+            return
           }
           logger.mark(`${repo} 检测到更新`)
-          redis.set(`${redisKeyPrefix}:${repo}`, JSON.stringify([ { shacode: sha } ]))
-          if (!redisData) continue
+          await this.updateRedis(repo, redisKeyPrefix, sha, isAuto)
         }
-        /**
-         * 处理消息
-         * @param {string} msg
-         */
-        function handleMsg(msg) {
-          const msgMap = msg.split("\n")
-          msgMap[0] = "<span class='head'>" + msgMap[0] + "</span>"
-          return msgMap.join("\n")
-        }
-
-        const avatar = {
-          is: author?.avatar_url != committer?.avatar_url,
-          author: author?.avatar_url,
-          committer: committer?.avatar_url
-        }
-        const name = {
-          source,
-          repo,
-          branch,
-          authorStart: commit.author.name?.[0] ?? "?",
-          committerStart: commit.committer.name?.[0] ?? "?"
-        }
-        let _stats = false
-        if (stats && files) {
-          _stats = {
-            files: files.length,
-            additions: stats.additions,
-            deletions: stats.deletions
-          }
-        }
-        if (!author) {
-          avatar.is = false
-          avatar.author = committer?.avatar_url
-          name.authorStart = name.committerStart
-        }
-        content.push({
-          avatar,
-          name,
-          time_info,
-          text: handleMsg(commit.message),
-          stats: _stats
-        })
-        await common.sleep(3000)
+        const commitInfo = this.formatCommitInfo(data[0], source, path, branch)
+        content.push(commitInfo)
       } catch (error) {
-        this.logError(repo, source, error)
+        logger.error(`[DF-Plugin] 获取 ${source} 仓库 ${repo} 数据出错: ${error?.stack || error}`)
       }
-    }
+    }))
+
     return content
+  }
+
+  /**
+   * 检查仓库是否已更新
+   * @param {string} repo - 仓库名
+   * @param {string} redisKeyPrefix - Redis前缀
+   * @param {string} sha - 当前的提交SHA
+   * @returns {Promise<boolean>} 是否为最新
+   */
+  async isUpToDate(repo, redisKeyPrefix, sha) {
+    const redisData = await redis.get(`${redisKeyPrefix}:${repo}`)
+    return redisData && JSON.parse(redisData)[0].shacode === sha
+  }
+
+  /**
+   * 更新 Redis 记录
+   * @param {string} repo - 仓库名
+   * @param {string} redisKeyPrefix - Redis前缀
+   * @param {string} sha - 当前的提交SHA
+   * @param {boolean} isAuto - 是否自动检查
+   */
+  async updateRedis(repo, redisKeyPrefix, sha, isAuto) {
+    if (isAuto) {
+      await redis.set(`${redisKeyPrefix}:${repo}`, JSON.stringify([ { shacode: sha } ]))
+    }
+  }
+
+  /**
+   * 格式化提交信息
+   * @param {object} data - 仓库数据
+   * @param {string} source - 数据源
+   * @param {string} repo - 仓库名
+   * @param {string} branch - 分支名
+   * @returns {object} 格式化后的提交信息
+   */
+  formatCommitInfo(data, source, repo, branch) {
+    const { author, committer, commit, stats, files } = data
+    const authorName = `<span>${commit.author.name}</span>`
+    const committerName = `<span>${commit.committer.name}</span>`
+    const authorTime = `<span>${this.timeAgo(moment(commit.author.date))}</span>`
+    const committerTime = `<span>${this.timeAgo(moment(commit.committer.date))}</span>`
+    const timeInfo = authorName === committerName
+      ? `${authorName} 提交于 ${authorTime}`
+      : `${authorName} 编写于 ${authorTime}，并由 ${committerName} 提交于 ${committerTime}`
+
+    return {
+      avatar: {
+        is: author?.avatar_url !== committer?.avatar_url,
+        author: author?.avatar_url,
+        committer: committer?.avatar_url
+      },
+      name: {
+        source,
+        repo,
+        branch,
+        authorStart: commit.author.name?.[0] ?? "?",
+        committerStart: commit.committer.name?.[0] ?? "?"
+      },
+      time_info: timeInfo,
+      text: this.formatMessage(commit.message),
+      stats: stats && files ? { files: files.length, additions: stats.additions, deletions: stats.deletions } : false
+    }
+  }
+
+  /**
+   * 格式化提交信息的消息部分
+   * @param {string} message - 提交信息
+   * @returns {string} 格式化后的消息
+   */
+  formatMessage(message) {
+    const msgMap = message.split("\n")
+    msgMap[0] = "<span class='head'>" + msgMap[0] + "</span>"
+    return msgMap.join("\n")
   }
 
   /**
@@ -172,22 +208,18 @@ export class CodeUpdate extends plugin {
    * @returns {Promise<object[]>} 提交数据或空数组
    */
   async getRepositoryData(repo, source, token, sha) {
-    let url, headers, path
-    if (sha) {
-      path = `${repo}/commits/${sha}`
-    } else {
-      path = `${repo}/commits?per_page=1`
-    }
-    if (source === "GitHub") {
-      url = `https://api.github.com/repos/${path}`
-      headers = this.getHeaders(token, "GitHub")
-    } else {
-      url = `https://gitee.com/api/v5/repos/${path}`
-      if (token) url += `${sha ? "?" : "&"}access_token=${token}`
-      headers = this.getHeaders(token, "Gitee")
+    const isGitHub = source === "GitHub"
+    const baseURL = isGitHub ? "https://api.github.com/repos" : "https://gitee.com/api/v5/repos"
+    const path = sha ? `${repo}/commits/${sha}` : `${repo}/commits?per_page=1`
+    let url = `${baseURL}/${path}`
+
+    if (!isGitHub && token) {
+      url += `${sha ? "?" : "&"}access_token=${token}`
     }
 
-    return await this.fetchData(url, headers)
+    const headers = this.getHeaders(token, source)
+    const data = await this.fetchData(url, headers)
+    return data
   }
 
   /**
@@ -208,17 +240,32 @@ export class CodeUpdate extends plugin {
   }
 
   /**
-   * 获取指定URL的JSON数据
-   * @param {string} url - 请求的URL
-   * @param {object} headers - 请求头
-   * @returns {Promise<object | false>} 返回请求的数据或false（请求失败）
+   * 获取指定 URL 的 JSON 数据
+   * @param {string} url - 请求的 URL
+   * @param {object} [headers] - 请求头
+   * @returns {Promise<object | false>} 返回请求的数据或 false（请求失败）
    */
-  async fetchData(url, headers) {
+  async fetchData(url, headers = {}) {
     try {
-      const response = await fetch(url, { method: "get", headers })
+      const response = await fetch(url, {
+        method: "GET",
+        headers
+      })
+
+      if (!response.ok) {
+        logger.error(`请求失败: ${url}，状态码: ${response.status}`)
+        return false
+      }
+
+      const contentType = response.headers.get("content-type")
+      if (!contentType || !contentType.includes("application/json")) {
+        logger.error(`响应非 JSON 格式: ${url} , 内容：${await response.text()}`)
+        return false
+      }
+
       return await response.json()
     } catch (error) {
-      logger.error(`请求失败: ${url}：${error}`)
+      logger.error(`请求失败: ${url}，错误信息: ${error.stack}`)
       return false
     }
   }
@@ -257,16 +304,6 @@ export class CodeUpdate extends plugin {
       }
       await common.sleep(5000)
     }
-  }
-
-  /**
-   * 记录错误日志
-   * @param {string} repo - 仓库路径
-   * @param {string} source - 数据源（GitHub/Gitee）
-   * @param {Error} error - 错误对象
-   */
-  logError(repo, source, error) {
-    logger.error(`[DF-Plugin]获取 ${source} 仓库 ${repo} 数据出错: ${error}`)
   }
 
   /**
