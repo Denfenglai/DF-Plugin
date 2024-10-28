@@ -88,8 +88,8 @@ export class CodeUpdate extends plugin {
         logger.debug(`请求${source}:${repo}`)
         let _repo = repo.split(":")
         let branch = _repo[1]
-        repo = _repo[0]
-        let data = await this.getRepositoryData(repo, source, token, branch)
+        let path = _repo[0]
+        let data = await this.getRepositoryData(path, source, token, branch)
         if (!data) continue
         if (branch) data = [ data ]
         if (!data[0]?.commit) {
