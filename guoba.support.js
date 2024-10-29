@@ -184,6 +184,7 @@ export function supportGuoba() {
           field: "CodeUpdate.GithubToken",
           label: "Github Api Token",
           helpMessage: "用于请求Github Api",
+          bottomHelpMessage: "填写后可解除请求速率限制和监听私库",
           component: "Input",
           componentProps: {
             placeholder: "请输入Github Token"
@@ -192,7 +193,7 @@ export function supportGuoba() {
         {
           field: "CodeUpdate.GithubList",
           label: "关注的Github仓库路径",
-          bottomHelpMessage: "格式：用户名/仓库名\n如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin",
+          bottomHelpMessage: "格式：用户名/仓库名:分支名\n如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin",
           component: "GTags",
           componentProps: {
             allowAdd: true,
@@ -203,6 +204,7 @@ export function supportGuoba() {
           field: "CodeUpdate.GiteeToken",
           label: "Gitee Api Token",
           helpMessage: "用于请求 Gitee Api",
+          bottomHelpMessage: "填写后可解除请求速率限制和监听私库",
           component: "Input",
           componentProps: {
             placeholder: "请输入Gitee Token"
@@ -211,7 +213,7 @@ export function supportGuoba() {
         {
           field: "CodeUpdate.GiteeList",
           label: "关注的Gitee仓库路径",
-          bottomHelpMessage: "格式：用户名/仓库名\n如: https://gitee.com/denfenglai/DF-Plugin 则填 denfenglai/DF-Plugin",
+          bottomHelpMessage: "格式：用户名/仓库名:分支名\n如: https://gitee.com/denfenglai/DF-Plugin 则填 denfenglai/DF-Plugin",
           component: "GTags",
           componentProps: {
             allowAdd: true,

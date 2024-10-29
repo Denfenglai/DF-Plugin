@@ -9,7 +9,7 @@ Cron: "0 */10 * * * *"
 AutoPath: false
 
 # 自定义关注的Github仓库路径
-# 格式: 用户名/仓库名
+# 格式: 用户名/仓库名:分支名(可选)
 # 如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
 # 支持分支 DenFengLai/DF-Plugin:dev
 GithubList:
@@ -17,7 +17,7 @@ GithubList:
   - DenFengLai/DF-Plugin
 
 # 自定义关注的Gitee仓库路径
-# 格式: 用户名/仓库名
+# 格式: 用户名/仓库名:分支名(可选)
 # 如: gitee.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
 GiteeList:
   - DenFengLai/poke
@@ -27,9 +27,11 @@ GiteeList:
 Exclude: []
 
 # Gitee个人token
+# 可用于解除API每小时60次限制
 # 获取方式：https://gitee.com/profile/personal_access_tokens
 GiteeToken: ""
 
 # Github个人token
+# 可用于解除API每小时60次限制
 # 获取方式：https://github.com/settings/tokens
 GithubToken: ""
