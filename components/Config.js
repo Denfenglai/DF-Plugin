@@ -20,14 +20,31 @@ class Config {
 
   /** 初始化配置 */
   initCfg() {
-    let path = `${Plugin_Path}/config/config/`
-    let pathDef = `${Plugin_Path}/config/default_config/`
+    const path = `${Plugin_Path}/config/config/`
+    const pathDef = `${Plugin_Path}/config/default_config/`
     const files = fs.readdirSync(pathDef).filter(file => file.endsWith(".yaml"))
+
     for (let file of files) {
-      if (!fs.existsSync(`${path}${file}`)) {
-        fs.copyFileSync(`${pathDef}${file}`, `${path}${file}`)
+      const userFilePath = `${path}${file}`
+      const defFilePath = `${pathDef}${file}`
+
+      // const defYaml = new YamlReader(defFilePath)
+      // const defData = defYaml.jsonData
+
+      const mergedYaml = new YamlReader(defFilePath)
+      mergedYaml.yamlPath = userFilePath
+
+      if (fs.existsSync(userFilePath)) {
+        const userYaml = new YamlReader(userFilePath)
+
+        for (const [ key, value ] of Object.entries(userYaml.jsonData)) {
+          mergedYaml.set(key, value)
+        }
       }
-      this.watch(`${path}${file}`, file.replace(".yaml", ""), "config")
+
+      mergedYaml.save()
+
+      this.watch(userFilePath, file.replace(".yaml", ""), "config")
     }
   }
 
