@@ -21,10 +21,18 @@
             <div class="text">
               <img src="{{pluResPath}}CodeUpdate/icon/{{item.name.source}}.svg" class="icon">
               {{item.name.repo}}
+              {{if item.release}}
+              <snap>New releases</snap>
+              {{/if}}
             </div>
             {{if item.name.branch}}
             <div class="branch">
               <img src="{{pluResPath}}CodeUpdate/icon/branch.svg">{{item.name.branch}}
+            </div>
+            {{/if}}
+            {{if item.name.tag}}
+            <div class="branch">
+              <img src="{{pluResPath}}CodeUpdate/icon/tag.svg">{{item.name.tag}}
             </div>
             {{/if}}
             <div class="dec">

@@ -35,6 +35,12 @@ git clone --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plug
 git clone --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
 ```
 
+### 🔧 安装依赖
+
+```sh
+pnpm install
+```
+
 ## 🤗 已实现的功能
 
 <details><summary>随机图片</summary>

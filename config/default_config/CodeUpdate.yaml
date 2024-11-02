@@ -1,7 +1,5 @@
 # 自动检查仓库更新开关
 Auto: false
-# 发行版监听
-# Release: false
 # 推送的群聊列表
 Group: []
 # 推送的QQ列表
@@ -24,7 +22,7 @@ GithubList:
 
 # Github发行版监听仓库列表
 # 格式: 用户名/仓库名
-# GithubReleases: []
+GithubReleases: []
 
 # 自定义关注的Gitee仓库路径
 # 格式: 用户名/仓库名:分支名(可选)
@@ -34,7 +32,7 @@ GiteeList:
 
 # Gitee发行版监听仓库列表
 # 格式: 用户名/仓库名
-# GiteeReleases: []
+GiteeReleases: []
 
 # Gitee个人token
 # 可用于解除API每小时60次限制
