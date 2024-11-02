@@ -7,7 +7,7 @@ import { Config, Plugin_Path } from "../components/index.js"
 
 export default new class CodeUpdate {
   /**
-   * 检查更新并发送通知
+   * 检查仓库更新并发送通知
    * @param {boolean} isAuto - 是否为自动检查
    * @param {object} [e] - 消息事件对象
    */
@@ -33,7 +33,7 @@ export default new class CodeUpdate {
 
       const userId = isAuto ? "Auto" : e.user_id
       const base64 = await this.generateScreenshot(content, userId)
-      await this.sendMessageToGroups(base64, content, isAuto, e)
+      await this.sendMessageToUser(base64, content, isAuto, e)
     } else {
       logger.mark("[DF-Plugin]未检测到仓库更新")
     }
@@ -266,21 +266,24 @@ export default new class CodeUpdate {
   }
 
   /**
-   * 向群聊推送更新内容
+   * 推送更新内容
    * @param {string} data - 要发送的截图的base64编码
    * @param {object[]} content - 消息内容
    * @param {boolean} isAuto - 是否自动
    * @param {object} e - 消息事件
    */
-  async sendMessageToGroups(data, content, isAuto, e) {
-    let { Gruop } = Config.CodeUpdate
+  async sendMessageToUser(data, content, isAuto, e) {
+    let { Group, QQ } = Config.CodeUpdate
     if (!isAuto) return e.reply(data)
-    if (!Array.isArray(Gruop) && Gruop) {
-      Gruop = [ Gruop ]
-    }
-    for (const group of Gruop) {
+    for (const group of Group) {
       if (content.length > 0 && data) {
         Bot.pickGroup(group).sendMsg(data)
+      }
+      await common.sleep(5000)
+    }
+    for (const qq of QQ) {
+      if (content.length > 0 && data) {
+        Bot.pickFriend(qq).sendMsg(data)
       }
       await common.sleep(5000)
     }

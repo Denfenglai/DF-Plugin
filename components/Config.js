@@ -28,9 +28,6 @@ class Config {
       const userFilePath = `${path}${file}`
       const defFilePath = `${pathDef}${file}`
 
-      // const defYaml = new YamlReader(defFilePath)
-      // const defData = defYaml.jsonData
-
       const mergedYaml = new YamlReader(defFilePath)
       mergedYaml.yamlPath = userFilePath
 
@@ -38,7 +35,16 @@ class Config {
         const userYaml = new YamlReader(userFilePath)
 
         for (const [ key, value ] of Object.entries(userYaml.jsonData)) {
-          mergedYaml.set(key, value)
+          if (file === "CodeUpdate.yaml" && key === "Gruop") {
+            const gruopValue = value || []
+            const groupValue = userYaml.jsonData.Group || []
+
+            const combinedGroups = Array.from(new Set([ ...groupValue, ...gruopValue ]))
+
+            mergedYaml.set("Group", combinedGroups)
+          } else {
+            mergedYaml.set(key, value)
+          }
         }
       }
 

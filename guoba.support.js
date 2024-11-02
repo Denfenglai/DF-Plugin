@@ -139,7 +139,7 @@ export function supportGuoba() {
         },
         {
           component: "Divider",
-          label: "Github仓库监听设置"
+          label: "Git仓库监听设置"
         },
         {
           field: "CodeUpdate.Auto",
@@ -157,13 +157,22 @@ export function supportGuoba() {
           }
         },
         {
-          field: "CodeUpdate.Gruop",
+          field: "CodeUpdate.Group",
           helpMessage: "检测到仓库更新后推送的群列表",
           label: "推送群",
           componentProps: {
             placeholder: "点击选择要推送的群"
           },
           component: "GSelectGroup"
+        },
+        {
+          field: "CodeUpdate.QQ",
+          helpMessage: "检测到仓库更新后推送的用户列表",
+          label: "推送好友",
+          componentProps: {
+            placeholder: "点击选择要推送的好友"
+          },
+          component: "GSelectFriend"
         },
         {
           field: "CodeUpdate.AutoPath",
