@@ -4,7 +4,6 @@
 }
 * {
   margin: 0;
-  padding: 0;
   font-family: "FZB";
   box-sizing: border-box;
   -webkit-user-select: none;
@@ -68,6 +67,10 @@ body {
   display: flex;
   align-items: center;
 }
+.list .item .title .text snap {
+  text-indent: 10px;
+  color: #909195;
+}
 .list .item .title .text .icon {
   width: 18px;
   height: 18px;
@@ -130,6 +133,17 @@ body {
 .list .item .title .desc .head {
   font-size: 14px;
   color: #FAF8FC;
+}
+.list .item .title .desc ul, .list .item .title .desc ol {
+  padding-left: 14px;
+}
+.list .item .title .desc ul li, .list .item .title .desc ol li {
+  margin: 0;
+  padding: 0;
+  line-height: 0.6;
+}
+.list .item .title .desc a {
+  color: #90d0e4;
 }
 .list .item .title .stats {
   border-top: 1px solid rgba(67, 67, 67, 0.5490196078);

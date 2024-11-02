@@ -32,6 +32,7 @@ async function loadApps({ AppsName }) {
   const apps = {}
   let loadedFilesCount = 0
   let loadedFilesCounterr = 0
+  const packageErr = []
 
   try {
     const jsFilePaths = await traverseDirectory(filepath)
@@ -52,7 +53,7 @@ async function loadApps({ AppsName }) {
           }
         }
       } catch (error) {
-        logPluginError(item, error)
+        logPluginError(item, error, packageErr)
         loadedFilesCounterr++
       }
     }))
@@ -60,6 +61,7 @@ async function loadApps({ AppsName }) {
     logger.error("读取插件目录失败:", error.message)
   }
 
+  packageTips(packageErr)
   return { apps, loadedFilesCount, loadedFilesCounterr }
 }
 
@@ -100,7 +102,27 @@ function logDuplicateExport(item, key) {
   logger.info(`[${AppName}] 已存在 class ${key} 同名导出: ${item}`)
 }
 
-function logPluginError(item, error) {
+function logPluginError(item, error, packageErr) {
   logger.error(`[${AppName}] 载入插件错误 ${chalk.red(item)}`)
-  logger.error(error)
+
+  if (error.code === "ERR_MODULE_NOT_FOUND") {
+    packageErr.push({
+      file: { name: item },
+      error
+    })
+  } else {
+    logger.error(error)
+  }
+}
+
+function packageTips(packageErr) {
+  if (!packageErr.length) return
+  logger.error("--------- 插件加载错误 ---------")
+  for (const i of packageErr) {
+    const pack = i.error.stack.match(/'(.+?)'/g)[0].replace(/'/g, "")
+    logger.error(`${logger.cyan(i.file.name)} 缺少依赖 ${logger.red(pack)}`)
+  }
+  logger.error(`请使用 ${logger.red("pnpm i")} 安装依赖`)
+  logger.error(`仍报错 ${logger.red("进入插件目录")} pnpm add 依赖`)
+  logger.error("--------------------------------")
 }
