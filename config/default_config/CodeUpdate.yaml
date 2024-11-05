@@ -5,7 +5,7 @@ Group: []
 # 推送的QQ列表
 QQ: []
 # 仓库更新检查Cron表达式
-Cron: "0 */10 * * * *"
+Cron: "0 */30 * * * *"
 
 # 自动获取已安装的插件地址并监听
 AutoPath: false
