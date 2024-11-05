@@ -12,6 +12,8 @@ export async function PluginDirs() {
   await traverseDirectories(Path, result)
   return result
 }
+
+/** 插件远程路径，包含 GitHub 和 Gitee 仓库 */
 export const PluginPath = await PluginDirs()
 
 /**
