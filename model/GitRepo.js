@@ -9,7 +9,9 @@ import { Path } from "../components/index.js"
  */
 export async function PluginDirs() {
   const result = { github: [], gitee: [] }
+  console.time("遍历文件夹")
   await traverseDirectories(Path, result)
+  console.timeEnd("遍历文件夹")
   return result
 }
 
@@ -23,9 +25,9 @@ export const PluginPath = await PluginDirs()
  */
 async function traverseDirectories(dir, result) {
   const items = fs.readdirSync(dir)
-  for (const item of items) {
+  const promises = items.map(async(item) => {
     try {
-      if (item === "data" || item === "node_modules") continue
+      if (item === "data" || item === "node_modules") return
 
       const itemPath = path.join(dir, item)
       if (fs.statSync(itemPath).isDirectory()) {
@@ -40,7 +42,8 @@ async function traverseDirectories(dir, result) {
     } catch (err) {
       console.error(`无法读取目录: ${dir}/${item}`, err)
     }
-  }
+  })
+  await Promise.all(promises)
 }
 
 /**
