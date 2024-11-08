@@ -4,19 +4,23 @@ import { exec } from "child_process"
 import { Path } from "../components/index.js"
 
 /**
- * 获取所有包含 .git 的目录
+ * 插件远程路径，包含 GitHub 和 Gitee 仓库
+ * @type {object}
+ */
+export const PluginPath = { github: [], gitee: [] }
+
+/**
+ * 遍历插件目录，获取所有 Git 仓库路径
  * @returns {Promise<object>} result 插件远程路径，包含 GitHub 和 Gitee 仓库
  */
 export async function PluginDirs() {
-  const result = { github: [], gitee: [] }
   console.time("遍历文件夹")
-  await traverseDirectories(Path, result)
+  await traverseDirectories(Path, PluginPath)
   console.timeEnd("遍历文件夹")
-  return result
+  return PluginPath
 }
 
-/** 插件远程路径，包含 GitHub 和 Gitee 仓库 */
-export const PluginPath = await PluginDirs()
+PluginDirs()
 
 /**
  * 递归遍历目录以查找包含 .git 的 Git 仓库
