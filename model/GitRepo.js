@@ -14,9 +14,9 @@ export const PluginPath = { github: [], gitee: [] }
  * @returns {Promise<object>} result 插件远程路径，包含 GitHub 和 Gitee 仓库
  */
 export async function PluginDirs() {
-  console.time("遍历文件夹")
+  console.time("获取Git目录")
   await traverseDirectories(Path, PluginPath)
-  console.timeEnd("遍历文件夹")
+  console.timeEnd("获取Git目录")
   return PluginPath
 }
 
