@@ -36,9 +36,10 @@ export class SendMasterMsgs extends plugin {
     if (Sending) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
 
     let { open, cd, BotId, sendAvatar, banWords, banUser, banGroup } = Config.sendMaster
+
     if (!e.isMaster) {
       if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦", true)
-      if (cd != 0 && await redis.get(key)) return e.reply("❎ 操作频繁，请稍后再试", true)
+      if (cd !== 0 && await redis.get(key)) return e.reply("❎ 操作频繁，请稍后再试", true)
       if (banWords.some(item => e.msg.includes(item))) return e.reply("❎ 消息包含违禁词，请检查后重试", true)
       if (banUser.includes(e.user_id)) return e.reply("❎ 对不起，您不可用", true)
       if (e.isGroup && banGroup.includes(e.group_id)) return e.reply("❎ 该群暂不可用该功能", true)
@@ -51,24 +52,24 @@ export class SendMasterMsgs extends plugin {
       if (message.length === 0) return e.reply("❎ 消息不能为空")
 
       const type = e.bot?.version?.id || e?.adapter_id || "QQ"
-      const img = e.member?.getAvatarUrl() || e.friend.getAvatarUrl()
+      const img = e.member?.getAvatarUrl() || e.friend?.getAvatarUrl()
       const id = `${e.sender.nickname}(${e.user_id})`
       const group = e.isGroup ? `${e.group.name || "未知群名"}(${e.group_id})` : "私聊"
       const bot = `${e.bot.nickname}(${e.bot.uin})`
       const time = moment().format("YYYY-MM-DD HH:mm:ss")
 
       const msg = [
-        `联系主人消息(${e.message_id})\n`,
-        sendAvatar ? segment.image(img) : "",
-        `平台: ${type}\n`,
-        `用户: ${id}\n`,
-        `来自: ${group}\n`,
-        `BOT: ${bot}\n`,
-        `时间: ${time}\n`,
-        "消息内容:\n",
-        ...message,
-        "\n-------------\n",
-        "引用该消息：#回复 <内容>"
+      `联系主人消息(${e.message_id})\n`,
+      sendAvatar ? segment.image(img) : "",
+      `平台: ${type}\n`,
+      `用户: ${id}\n`,
+      `来自: ${group}\n`,
+      `BOT: ${bot}\n`,
+      `时间: ${time}\n`,
+      "消息内容:\n",
+      ...message,
+      "\n-------------\n",
+      "引用该消息：#回复 <内容>"
       ]
 
       const info = {
@@ -79,7 +80,6 @@ export class SendMasterMsgs extends plugin {
       }
 
       const masterQQ = getMasterQQ(Config.sendMaster)
-
       if (!Bot[BotId]) BotId = e.self_id
 
       try {
@@ -92,7 +92,7 @@ export class SendMasterMsgs extends plugin {
         logger.error(err)
       }
     } catch (err) {
-      e.reply("❎ 出错误辣，稍后重试吧")
+      await e.reply("❎ 出错误辣，稍后重试吧")
       logger.error(err)
     } finally {
       Sending = false
