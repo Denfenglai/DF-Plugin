@@ -13,23 +13,29 @@ export default new class CodeUpdate {
    * @param {object} [e] - 消息事件对象
    */
   async checkUpdates(isAuto = false, e = null) {
-    let { GithubList, GiteeList, GiteeReleases, GithubReleases, GithubToken, GiteeToken, AutoPath } = Config.CodeUpdate
+    const {
+      GithubList = [],
+      GiteeList = [],
+      GiteeReleases = [],
+      GithubReleases = [],
+      GithubToken,
+      GiteeToken,
+      AutoPath
+    } = Config.CodeUpdate
 
-    if (AutoPath) {
-      GithubList = [ ...new Set([ ...GithubList, ...PluginPath.github ]) ]
-      GiteeList = [ ...new Set([ ...GiteeList, ...PluginPath.gitee ]) ]
-    }
+    const githubRepos = AutoPath ? [ ...new Set([ ...GithubList, ...PluginPath.github ]) ] : GithubList
+    const giteeRepos = AutoPath ? [ ...new Set([ ...GiteeList, ...PluginPath.gitee ]) ] : GiteeList
 
     logger.mark("开始检查仓库更新")
 
-    const [ githubCommits, giteeCommits, giteeReleases, githubReleases ] = await Promise.all([
-      this.fetchCommit(GithubList, "GitHub", GithubToken, "DF:CodeUpdate:GitHub", isAuto),
-      this.fetchCommit(GiteeList, "Gitee", GiteeToken, "DF:CodeUpdate:Gitee", isAuto),
-      this.fetchReleases(GiteeReleases, "Gitee", GiteeToken, "DF:CodeUpdate:Release:Gitee", isAuto),
-      this.fetchReleases(GithubReleases, "GitHub", GithubToken, "DF:CodeUpdate:Release:GitHub", isAuto)
+    const results = await Promise.all([
+      this.fetchUpdates(githubRepos, "GitHub", GithubToken, "commits", "DF:CodeUpdate:GitHub", isAuto),
+      this.fetchUpdates(giteeRepos, "Gitee", GiteeToken, "commits", "DF:CodeUpdate:Gitee", isAuto),
+      this.fetchUpdates(GiteeReleases, "Gitee", GiteeToken, "releases", "DF:CodeUpdate:Release:Gitee", isAuto),
+      this.fetchUpdates(GithubReleases, "GitHub", GithubToken, "releases", "DF:CodeUpdate:Release:GitHub", isAuto)
     ])
 
-    const content = [ ...githubCommits, ...giteeCommits, ...giteeReleases, ...githubReleases ]
+    const content = results.flat()
 
     if (content.length > 0) {
       logger.mark(`共检测到 ${content.length} 个更新`)
@@ -43,91 +49,54 @@ export default new class CodeUpdate {
   }
 
   /**
-   * 获取提交数据
+   * 通用更新检查函数
    * @param {string[]} repoList - 仓库列表
    * @param {string} source - 数据源（GitHub/Gitee）
    * @param {string} token - 访问Token
+   * @param {string} type - 数据类型（commits/releases）
    * @param {string} redisKeyPrefix - Redis前缀
    * @param {boolean} isAuto - 是否为自动检查
    * @returns {Promise<object[]>} 更新内容数组
    */
-  async fetchCommit(repoList, source, token, redisKeyPrefix, isAuto) {
+  async fetchUpdates(repoList, source, token, type, redisKeyPrefix, isAuto) {
     const content = []
 
     await Promise.all(repoList.map(async(repo) => {
       if (!repo || Config.CodeUpdate.Exclude.includes(repo)) return
 
       try {
-        logger.debug(`请求 ${source}: ${repo}`)
-        const [ path, branch ] = repo.split(":")
-        let data = await this.getRepositoryData(path, source, "commits", token, branch)
-        if (!data) return
-        if (data?.message === "Not Found Projec" || data?.message === "Not Found") {
+        logger.debug(`请求 ${source} ${type}: ${repo}`)
+
+        const [ path, branch ] = type === "commits" ? repo.split(":") : [ repo ]
+        let data = await this.getRepositoryData(path, source, type, token, branch)
+        if (!data || [ "Not Found Projec", "Not Found" ].includes(data?.message)) {
           logger.error(`${source}: ${repo} 仓库不存在`)
           return
         }
-        if (branch) data = [ data ]
-        if (!data[0]?.commit) {
-          logger.error(`获取 ${source}: ${repo} 数据异常: ${data?.message || JSON.stringify(data)}`)
+
+        if (type === "commits" && branch) data = [ data ]
+        if (data.length === 0 || (type === "releases" && !data[0]?.tag_name)) {
+          logger.warn(`${source}: ${repo} 数据为空`)
           return
         }
 
         if (isAuto) {
-          const sha = data[0].sha
-          if (await this.isUpToDate(repo, redisKeyPrefix, sha)) {
+          const id = type === "commits" ? data[0]?.sha : data[0]?.node_id
+          if (await this.isUpToDate(repo, redisKeyPrefix, id)) {
             logger.debug(`${repo} 暂无更新`)
             return
           }
           logger.mark(`${repo} 检测到更新`)
-          await this.updateRedis(repo, redisKeyPrefix, sha, isAuto)
+          await this.updateRedis(repo, redisKeyPrefix, id, isAuto)
         }
-        const commitInfo = this.formatCommitInfo(data[0], source, path, branch)
-        content.push(commitInfo)
+
+        const info =
+          type === "commits"
+            ? this.formatCommitInfo(data[0], source, path, branch)
+            : this.formatReleaseInfo(data[0], source, repo)
+        content.push(info)
       } catch (error) {
-        logger.error(`[DF-Plugin] 获取 ${source} 仓库 ${repo} 数据出错: ${error?.stack || error}`)
-      }
-    }))
-
-    return content
-  }
-
-  /**
-   * 获取发行版数据
-   * @param {string[]} repoList - 仓库列表
-   * @param {string} source - 数据源（GitHub/Gitee）
-   * @param {string} token - 访问Token
-   * @param {string} redisKeyPrefix - Redis前缀
-   * @param {boolean} isAuto - 是否为自动检查
-   * @returns {Promise<object[]>} 更新内容数组
-   */
-  async fetchReleases(repoList, source, token, redisKeyPrefix, isAuto) {
-    const content = []
-
-    await Promise.all(repoList.map(async(repo) => {
-      try {
-        logger.debug(`请求 ${source} Release: ${repo}`)
-        const data = await this.getRepositoryData(repo, source, "releases", token)
-        if (!data) return
-        if (data?.message === "Not Found Projec" || data?.message === "Not Found") {
-          logger.error(`${source}: ${repo} 仓库不存在`)
-          return
-        }
-        if (data.length === 0 || !data[0].tag_name) return logger.warn(`获取${source}发行版数据为空: ${repo}`)
-
-        if (isAuto) {
-          const { node_id } = data[0]
-          if (await this.isUpToDate(repo, redisKeyPrefix, node_id)) {
-            logger.debug(`${repo} 暂无更新`)
-            return
-          }
-          logger.mark(`${repo} 检测到更新`)
-          await this.updateRedis(repo, redisKeyPrefix, node_id, isAuto)
-        }
-        logger.debug(`${repo} 最新版本: ${data[0].tag_name}`)
-        const releaseInfo = this.formatReleaseInfo(data[0], source, repo)
-        content.push(releaseInfo)
-      } catch (error) {
-        logger.error(`[DF-Plugin] 获取 ${source} Release ${repo} 数据出错: ${error?.stack || error}`)
+        logger.error(`[DF-Plugin] 获取 ${source} ${type} ${repo} 数据出错: ${error?.stack || error}`)
       }
     }))
 
