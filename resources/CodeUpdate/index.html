@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git仓库更新推送</title>
   <link rel="stylesheet" type="text/css" href="{{pluResPath}}/CodeUpdate/index.css" />
   <link rel="shortcut icon" href="#" />
 </head>
@@ -19,7 +21,7 @@
         <div class="item">
           <div class="title">
             <div class="text">
-              <img src="{{pluResPath}}CodeUpdate/icon/{{item.name.source}}.svg" class="icon">
+              <img src="{{pluResPath}}CodeUpdate/icon/{{item.name.source}}.svg" class="icon" alt="{{item.name.source}} 图标">
               {{item.name.repo}}
               {{if item.release}}
               <snap>Releases</snap>
@@ -27,29 +29,29 @@
             </div>
             {{if item.name.branch}}
             <div class="branch">
-              <img src="{{pluResPath}}CodeUpdate/icon/branch.svg">{{item.name.branch}}
+              <img src="{{pluResPath}}CodeUpdate/icon/branch.svg" alt="分支图标">{{item.name.branch}}
             </div>
             {{/if}}
             {{if item.name.tag}}
             <div class="branch">
-              <img src="{{pluResPath}}CodeUpdate/icon/tag.svg">{{item.name.tag}}
+              <img src="{{pluResPath}}CodeUpdate/icon/tag.svg" alt="标签图标">{{item.name.tag}}
             </div>
             {{/if}}
             <div class="dec">
               <div class="avatar">
-                <img src="{{item.avatar.author}}" data-nameStart="{{item.name.authorStart}}">
+                <img src="{{item.avatar.author}}" alt="作者头像" data-nameStart="{{item.name.authorStart}}">
                 {{if item.avatar.is}}
-                <img src="{{item.avatar.committer}}" style="margin-left:-4px;"
-                  data-nameStart="{{item.name.committerStart}}">
+                <img src="{{item.avatar.committer}}" alt="提交者头像" class="committer-avatar" data-nameStart="{{item.name.committerStart}}">
                 {{/if}}
               </div>
               {{@item.time_info}}
             </div>
             <div class="desc">{{@item.text}}</div>
             {{if item.stats}}
-            <div class="stats"><span style="color: #ffffff;">{{item.stats.files}}</span> 个文件发生了变化，影响行数： <span
-                style="color: #00B400;">+{{item.stats.additions}}</span> <span
-                style="color: #D92B2F;">-{{item.stats.deletions}}</span>
+            <div class="stats">
+              <span class="file-count">{{item.stats.files}}</span> 个文件发生了变化，影响行数： 
+              <span class="additions">+{{item.stats.additions}}</span> 
+              <span class="deletions">-{{item.stats.deletions}}</span>
             </div>
             {{/if}}
           </div>

@@ -8,6 +8,7 @@
     margin: 0;
     font-family: "FZB";
     box-sizing: border-box;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -121,6 +122,7 @@ body {
                         width: 16px;
                         height: 16px;
                         border-radius: 50%;
+                        margin-left: -4px;
                         position: relative;
 
                         &[src=""]::after {
@@ -156,21 +158,33 @@ body {
                     color: #FAF8FC;
                 }
 
-                ul, ol {
-                    padding-left: 14px;
-                    li {
-                        margin: 0;
-                        padding: 0;
-                        line-height: 0.6;
+                ul,
+                ol {
+                  padding-left: 14px;
+                
+                  li {
+                    margin: 0;
+                    padding: 0;
+                    line-height: 0.8;
+                    text-indent: 0;
+                
+                    &::marker {
+                      line-height: 1;
                     }
+                
+                    &:not(:first-child) {
+                      line-height: 1.2;
+                    }
+                  }
                 }
+                
 
                 a {
                     color: #90d0e4;
                 }
-                
-                
-                
+
+
+
 
             }
 
@@ -193,3 +207,15 @@ body {
     color: #c3c4c4;
     margin-top: 10px;
 }
+
+.file-count {
+    color: #ffffff;
+  }
+  
+  .additions {
+    color: #00B400;
+  }
+  
+  .deletions {
+    color: #D92B2F;
+  }
