@@ -44,8 +44,8 @@ export class DFupdate extends plugin {
   async up_img(e) {
     if (!e.isMaster) return false
     if (fs.existsSync(Poke_Path)) {
-      e.reply("正在更新，请主人稍安勿躁~")
-      exec("git pull", { cwd: Poke_Path }, (error, stdout) => {
+      await e.reply("正在更新，请主人稍安勿躁~")
+      return exec("git pull", { cwd: Poke_Path }, (error, stdout) => {
         if (/Already up to date/.test(stdout) || stdout.includes("最新")) return e.reply("目前所有图片都已经是最新了~")
         let numRet = /(\d*) files changed,/.exec(stdout)
         if (numRet && numRet[1]) {
@@ -58,8 +58,8 @@ export class DFupdate extends plugin {
       })
     } else {
       let command = "git clone  --depth=1 https://gitee.com/DenFengLai/poke ./resources/poke"
-      e.reply("开始安装戳一戳图库,可能需要一段时间,请主人稍安勿躁~")
-      exec(command, { cwd: Plugin_Path }, (error) => {
+      await e.reply("开始安装戳一戳图库,可能需要一段时间,请主人稍安勿躁~")
+      return exec(command, { cwd: Plugin_Path }, (error) => {
         if (error) {
           e.reply(`戳一戳图库安装失败！\nError code: ${error.code}\n${error.stack}\n 请稍后重试。`)
         } else {

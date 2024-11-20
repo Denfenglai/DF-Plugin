@@ -1,4 +1,4 @@
-import fs from "fs"
+import fs from "node:fs"
 import lodash from "lodash"
 import { Data, Plugin_Path } from "./index.js"
 const README_path = `${Plugin_Path}/README.md`

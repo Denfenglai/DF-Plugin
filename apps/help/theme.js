@@ -1,5 +1,5 @@
 import lodash from "lodash"
-import fs from "fs"
+import fs from "node:fs"
 import { Data, Plugin_Name } from "../../components/index.js"
 
 const Theme = {

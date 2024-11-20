@@ -44,7 +44,7 @@ export default new class CodeUpdate {
       const base64 = await this.generateScreenshot(content, userId)
       await this.sendMessageToUser(base64, content, isAuto, e)
     } else {
-      logger.mark("[DF-Plugin]未检测到更新")
+      logger.mark("未检测到更新")
     }
   }
 

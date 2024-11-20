@@ -1,6 +1,6 @@
 # 贡献指南
 
-感谢您有兴趣为本项目做出贡献！遵循以下准则和步骤，以确保您的贡献符合项目的要求。
+感谢您愿意为本项目做出贡献！遵循以下准则和步骤，以确保您的贡献符合项目的要求。
 
 ## 环境要求
 
@@ -13,7 +13,7 @@
 
 ## Fork本项目
 
-前往[Gitee](https://gitee.com/DenFengLai/DF-Plugin)或[Github](https://gitee.com/DenFengLai/DF-Plugin)项目地址点击仓库上方的`fork`将本项目fork到你的账户
+前往[Gitee](https://gitee.com/DenFengLai/DF-Plugin)或[Github](https://gitee.com/DenFengLai/DF-Plugin)项目地址点击仓库上方的"fork"（或类似的按钮）将本项目fork到你的账户
 
 ## 克隆fork后的项目到本地
 
@@ -46,7 +46,7 @@ pnpm install
 ```sh
 pnpm husky
 git add .
-pnpm run commit
+pnpm run commit # 或 git commit
 ```
 
 - 在提交时，Husky 会自动运行预定义的 Git 钩子脚本，包括对代码规范的检测，同时会使用[Gitmoji-cli](https://github.com/carloscuesta/gitmoji)进行交互式提交
