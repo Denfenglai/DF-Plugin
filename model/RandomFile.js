@@ -1,6 +1,6 @@
-import fs from "fs"
+import fs from "node:fs"
 import _ from "lodash"
-import path from "path"
+import path from "node:path"
 import { Poke_Path } from "../components/index.js"
 
 /**

@@ -1,6 +1,6 @@
-import path from "path"
+import path from "node:path"
 import chalk from "chalk"
-import fs from "fs/promises"
+import fs from "node:fs/promises"
 import Version from "./components/Version.js"
 
 const AppName = "DF-Plugin"
