@@ -1,4 +1,4 @@
-import { Version, Common } from "../components/index.js"
+import { Version, common } from "../components/index.js"
 
 export class Version_Info extends plugin {
   constructor() {
@@ -16,7 +16,7 @@ export class Version_Info extends plugin {
   }
 
   async plugin_version(e) {
-    return await Common.render("help/version-info", {
+    return await common.render("help/version-info", {
       currentVersion: Version.ver,
       changelogs: Version.logs,
       elem: "cryo"

@@ -3,7 +3,7 @@ import moment from "moment"
 import common from "../../../lib/common/common.js"
 import puppeteer from "../../../lib/puppeteer/puppeteer.js"
 import { PluginPath } from "./index.js"
-import { Config, Plugin_Path } from "../components/index.js"
+import { Config, Res_Path } from "../components/index.js"
 import { marked } from "marked"
 
 export default new class CodeUpdate {
@@ -302,10 +302,10 @@ export default new class CodeUpdate {
    */
   async generateScreenshot(content, saveId) {
     return await puppeteer.screenshot("CodeUpdate/index", {
-      tplFile: `${Plugin_Path}/resources/CodeUpdate/index.html`,
+      tplFile: `${Res_Path}/CodeUpdate/index.html`,
       saveId,
       lifeData: content,
-      pluResPath: `${Plugin_Path}/resources/`
+      pluResPath: `${Res_Path}/`
     })
   }
 

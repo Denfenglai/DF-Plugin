@@ -1,4 +1,4 @@
-import { Config, Plugin_Path } from "../components/index.js"
+import { Config, Res_Path } from "../components/index.js"
 
 const ys = {}
 
@@ -20,7 +20,7 @@ export class OP extends plugin {
 
   async ys() {
     if (ys[this.e.group_id] || !Config.other.ys) return false
-    this.reply(segment.image(`${Plugin_Path}/resources/img/ys.png`))
+    this.reply(segment.image(`${Res_Path}/img/ys.png`))
     ys[this.e.group_id] = true
     return false
   }
