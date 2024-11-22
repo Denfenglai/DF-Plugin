@@ -1,5 +1,5 @@
 import lodash from "lodash"
-import { Common, Data } from "../components/index.js"
+import { common, Data } from "../components/index.js"
 import Theme from "./help/theme.js"
 
 export class help extends plugin {
@@ -50,7 +50,7 @@ export class help extends plugin {
     })
     let themeData = await Theme.getThemeData(diyCfg.helpCfg || {}, sysCfg.helpCfg || {})
 
-    return await Common.render("help/index", {
+    return await common.render("help/index", {
       helpCfg: helpConfig,
       helpGroup,
       ...themeData,

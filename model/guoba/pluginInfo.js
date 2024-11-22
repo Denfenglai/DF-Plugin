@@ -1,3 +1,5 @@
+import { Res_Path } from "../../components/index.js"
+
 export default {
   name: "DF-Plugin",
   title: "DF-Plugin",
@@ -8,6 +10,6 @@ export default {
   isV3: true,
   isV2: false,
   showInMenu: "auto",
-  icon: "svg-spinners:blocks-wave",
+  iconPath: `${Res_Path}/img/Roxy.png`,
   iconColor: "#d19f56"
 }
