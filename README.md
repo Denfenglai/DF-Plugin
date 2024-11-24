@@ -9,7 +9,6 @@
 
 [![DF-Plugin](https://img.shields.io/github/package-json/v/Denfenglai/DF-Plugin?label=DF-Plugin&color=green
 )](https://github.com/DenFengLai/DF-Plugin)
-[![Yunzai-Bot](https://img.shields.io/badge/Yunzai_Bot-v3-red)](https://gitee.com/Le-niao/Yunzai-Bot)
 [![Miao-Yunzai V3](https://img.shields.io/github/package-json/v/yoimiya-kokomi/Miao-Yunzai?label=Miao-Yunzai&color=yellow)](https://github.com/yoimiya-kokomi/Miao-Yunzai)
 [![TRSS-Yunzai](https://img.shields.io/github/package-json/v/TimeRainStarSky/Yunzai?label=TRSS-Yunzai&color=blue)](https://github.com/TimeRainStarSky/Yunzai)
 
@@ -23,16 +22,16 @@
 
 ## 💡 安装教程
 
-- 使用Gitee
-
-```sh
-git clone --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
-```
-
 - 使用Github
 
 ```sh
 git clone --depth=1 https://github.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
+```
+
+- 使用Gitee
+
+```sh
+git clone --depth=1 https://gitee.com/DenFengLai/DF-Plugin.git ./plugins/DF-Plugin
 ```
 
 ### 🔧 安装依赖
