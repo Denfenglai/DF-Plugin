@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import { exec } from "child_process"
-import { Path } from "../components/index.js"
+import { Path } from "#components"
 
 /**
  * 插件远程路径，包含 GitHub 和 Gitee 仓库

@@ -3,7 +3,7 @@ import moment from "moment"
 import common from "../../../lib/common/common.js"
 import puppeteer from "../../../lib/puppeteer/puppeteer.js"
 import { PluginPath } from "./index.js"
-import { Config, Res_Path } from "../components/index.js"
+import { Config, Res_Path } from "#components"
 import { marked } from "marked"
 
 export default new class CodeUpdate {

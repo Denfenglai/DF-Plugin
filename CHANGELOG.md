@@ -1,4 +1,13 @@
 
+# 1.1.5
+
+* 更新所有文件中的导入路径，使用别名替代相对路径
+* 重构CodeUpdata代码，将Commit与Rebase数据获取函数合并
+* 新增开发依赖`eslint-import-resolver-custom-alias`
+* 模块化guoba.support.js，增加可维护性
+* 重构组件导出并增加常量路径
+* 新增`Res_Path`常量
+
 # 1.1.4
 
 * 获取Git仓库路径改为异步减少启动时间

@@ -40,5 +40,16 @@ module.exports = {
     "jsdoc/require-param-type": 0,
     "import/extensions": [ "error", "ignorePackages" ]
   },
+  settings: {
+    "import/resolver": {
+      "custom-alias": {
+        alias: {
+          "#components": "./components/index.js",
+          "#model": "./model/index.js"
+        },
+        extensions: [ ".js", ".json", ".jsx", ".ts", ".tsx" ]
+      }
+    }
+  },
   ignorePatterns: [ "test.js" ]
 }

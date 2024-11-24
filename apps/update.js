@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import { exec } from "node:child_process"
 import { update as Update } from "../../other/update.js"
-import { Plugin_Name, Plugin_Path, Poke_Path } from "../components/index.js"
+import { Plugin_Name, Plugin_Path, Poke_Path } from "#components"
 
 export class DFupdate extends plugin {
   constructor() {

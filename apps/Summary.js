@@ -1,5 +1,5 @@
-import { Config } from "../components/index.js"
-import Sum from "../model/summary.js"
+import { Config } from "#components"
+import { Summary as Sum } from "#model"
 
 if (Config.summary.sum) Sum.lint()
 

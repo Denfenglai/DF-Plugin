@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
-import { imagePoke as RandomFace } from "../model/index.js"
-import { Config, Poke_List as Face_List } from "../components/index.js"
+import { imagePoke as RandomFace } from "#model"
+import { Config, Poke_List as Face_List } from "#components"
 
 export class Random_Picturs extends plugin {
   constructor() {

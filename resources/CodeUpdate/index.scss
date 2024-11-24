@@ -160,24 +160,24 @@ body {
 
                 ul,
                 ol {
-                  padding-left: 14px;
-                
-                  li {
-                    margin: 0;
-                    padding: 0;
-                    line-height: 0.8;
-                    text-indent: 0;
-                
-                    &::marker {
-                      line-height: 1;
+                    padding-left: 14px;
+
+                    li {
+                        margin: 0;
+                        padding: 0;
+                        line-height: 0.8;
+                        text-indent: 0;
+
+                        &::marker {
+                            line-height: 1;
+                        }
+
+                        &:not(:first-child) {
+                            line-height: 1.2;
+                        }
                     }
-                
-                    &:not(:first-child) {
-                      line-height: 1.2;
-                    }
-                  }
                 }
-                
+
 
                 a {
                     color: #90d0e4;
@@ -210,12 +210,12 @@ body {
 
 .file-count {
     color: #ffffff;
-  }
-  
-  .additions {
+}
+
+.additions {
     color: #00B400;
-  }
-  
-  .deletions {
+}
+
+.deletions {
     color: #D92B2F;
-  }
+}

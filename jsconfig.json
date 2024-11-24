@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "#components": [ "components/index.js" ],
+      "#model": [ "model/index.js" ]
+    }
+  },
+  "exclude": [ "node_modules", "data", "resources", "temp" ]
+}

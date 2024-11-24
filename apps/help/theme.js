@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import fs from "node:fs"
-import { Data, Plugin_Name } from "../../components/index.js"
+import { Data, Plugin_Name } from "#components"
 
 const Theme = {
   async getThemeCfg(theme, exclude) {
