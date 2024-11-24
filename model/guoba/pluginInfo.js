@@ -1,4 +1,4 @@
-import { Res_Path } from "../../components/index.js"
+import { Res_Path } from "#components"
 
 export default {
   name: "DF-Plugin",

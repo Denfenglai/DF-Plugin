@@ -1,4 +1,4 @@
-import { Config, Res_Path } from "../components/index.js"
+import { Config, Res_Path } from "#components"
 
 const ys = {}
 

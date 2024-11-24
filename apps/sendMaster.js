@@ -1,6 +1,5 @@
 import moment from "moment"
-import common from "../lib/common/common.js"
-import { Config } from "../components/index.js"
+import { common, Config } from "#components"
 import { sendMasterMsg, extractMessageId, getSourceMessage, getMasterQQ } from "../model/sendMasterMsg.js"
 
 const key = "DF:contact"

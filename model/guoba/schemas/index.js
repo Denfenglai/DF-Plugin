@@ -4,7 +4,7 @@ import Picture from "./Picture.js"
 import summary from "./Summary.js"
 import other from "./other.js"
 import sendMaster from "./SendMaster.js"
-import { Config } from "../../../components/index.js"
+import { Config } from "#components"
 
 export const schemas = [
   ...sendMaster,

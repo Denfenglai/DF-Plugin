@@ -1,4 +1,4 @@
-import { Version, common } from "../components/index.js"
+import { Version, common } from "#components"
 
 export class Version_Info extends plugin {
   constructor() {

@@ -1,4 +1,4 @@
-import { Poke_List } from "../../../components/index.js"
+import { Poke_List } from "#components"
 
 export default [
   {

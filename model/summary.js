@@ -1,5 +1,5 @@
 import fetch from "node-fetch"
-import { Config } from "../components/index.js"
+import { Config } from "#components"
 import _ from "lodash"
 
 let Sum

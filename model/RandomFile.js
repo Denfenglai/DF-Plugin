@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import _ from "lodash"
 import path from "node:path"
-import { Poke_Path } from "../components/index.js"
+import { Poke_Path } from "#components"
 
 /**
  * 随机获取一个文件
