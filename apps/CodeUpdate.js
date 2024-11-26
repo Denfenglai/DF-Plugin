@@ -26,6 +26,6 @@ export class CodeUpdate extends plugin {
   }
 
   async cupdate(e) {
-    await Cup.checkUpdates(false, e)
+    return Cup.checkUpdates(false, e)
   }
 }

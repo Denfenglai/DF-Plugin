@@ -7,8 +7,7 @@
 [![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square)](https://gitmoji.dev)
 [![license](https://img.shields.io/github/license/Denfenglai/DF-Plugin.svg?style=flat&logo=gnu)](https://github.com/Denfenglai/DF-Plugin/blob/master/LICENSE)
 
-[![DF-Plugin](https://img.shields.io/github/package-json/v/Denfenglai/DF-Plugin?label=DF-Plugin&color=green
-)](https://github.com/DenFengLai/DF-Plugin)
+[![DF-Plugin](https://img.shields.io/github/package-json/v/Denfenglai/DF-Plugin?label=DF-Plugin&color=green)](https://github.com/DenFengLai/DF-Plugin)
 [![Miao-Yunzai V3](https://img.shields.io/github/package-json/v/yoimiya-kokomi/Miao-Yunzai?label=Miao-Yunzai&color=yellow)](https://github.com/yoimiya-kokomi/Miao-Yunzai)
 [![TRSS-Yunzai](https://img.shields.io/github/package-json/v/TimeRainStarSky/Yunzai?label=TRSS-Yunzai&color=blue)](https://github.com/TimeRainStarSky/Yunzai)
 
@@ -55,14 +54,6 @@ pnpm install
 - #联系主人 + `消息内容`  
 
 > 详细配置请见[config/sendMaster.yaml](/config/default_config/sendMaster.yaml)
-
-</details>
-
-<details><summary>随机网易云</summary>
-
-- #来首歌
-
-> 从API获取一首网易云歌曲
 
 </details>
 
