@@ -3,6 +3,9 @@ import path from "node:path"
 import { exec } from "child_process"
 import { Path } from "#components"
 
+/** 初始化常量 */
+PluginDirs()
+
 /**
  * 插件远程路径，包含 GitHub 和 Gitee 仓库
  * @type {object}
@@ -10,24 +13,29 @@ import { Path } from "#components"
 export const PluginPath = { github: [], gitee: [] }
 
 /**
- * 遍历插件目录，获取所有 Git 仓库路径
- * @returns {Promise<object>} result 插件远程路径，包含 GitHub 和 Gitee 仓库
+ * 获取插件对应远程路径
+ * @returns {Promise<object>} 插件路径
  */
-export async function PluginDirs() {
-  console.time("获取Git目录")
-  await traverseDirectories(Path, PluginPath)
-  console.timeEnd("获取Git目录")
-  return PluginPath
+export async function getPluginsRepo() {
+  return traverseDirectories(Path)
 }
 
-PluginDirs()
+/** 遍历插件目录，载入常量 */
+async function PluginDirs() {
+  console.time("获取Git目录")
+  const result = await getPluginsRepo()
+  console.timeEnd("获取Git目录")
+  PluginPath.github.push(...result.github)
+  PluginPath.gitee.push(...result.gitee)
+}
 
 /**
  * 递归遍历目录以查找包含 .git 的 Git 仓库
  * @param {string} dir - 当前遍历的目录路径
- * @param {object} result - 存储 GitHub 和 Gitee 仓库的对象
+ * @param {object} result - 数据对象
+ * @returns {Promise<object>} result - 获取到的插件路径
  */
-async function traverseDirectories(dir, result) {
+async function traverseDirectories(dir, result = { github: [], gitee: [] }) {
   const items = fs.readdirSync(dir)
   const promises = items.map(async(item) => {
     try {
@@ -48,6 +56,7 @@ async function traverseDirectories(dir, result) {
     }
   })
   await Promise.all(promises)
+  return result
 }
 
 /**

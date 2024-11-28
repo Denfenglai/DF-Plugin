@@ -1,6 +1,6 @@
 import lodash from "lodash"
 import { common, Data } from "#components"
-import Theme from "./help/theme.js"
+import Theme from "../model/help/theme.js"
 
 export class help extends plugin {
   constructor() {
