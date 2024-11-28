@@ -1,4 +1,6 @@
-import { PluginPath } from "../../GitRepo.js"
+import { PluginPath } from "#model"
+
+const _ = new Set([ ...PluginPath.gitee, ...PluginPath.github ])
 
 export default [
   {
@@ -50,7 +52,7 @@ export default [
     componentProps: {
       allowClear: true,
       mode: "tags",
-      options: Array.from((new Set([ ...PluginPath.gitee, ...PluginPath.github ]))).map((name) => ({ value: name }))
+      options: Array.from(_).map((name) => ({ value: name }))
     }
   },
   {
