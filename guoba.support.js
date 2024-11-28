@@ -4,4 +4,4 @@
  * 组件类型，可参考 https://antdv.com/components/overview-cn/
  */
 
-export { supportGuoba } from "#model"
+export { supportGuoba } from "./model/guoba/index.js"
