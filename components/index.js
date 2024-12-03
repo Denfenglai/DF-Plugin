@@ -1,16 +1,8 @@
-import Data from "./Data.js"
-import Config from "./Config.js"
-import YamlReader from "./YamlReader.js"
-import Version from "./Version.js"
-import common from "../lib/common/common.js"
-import render from "../lib//puppeteer/render.js"
+export { default as Data } from "./Data.js"
+export { default as Config } from "./Config.js"
+export { default as YamlReader } from "./YamlReader.js"
+export { default as Version } from "./Version.js"
+export { default as common } from "../lib/common/common.js"
+export { default as render } from "../lib/puppeteer/render.js"
 export { Poke_List } from "../constants/Poke.js"
 export { Path, Plugin_Name, Plugin_Path, Poke_Path, Res_Path } from "../constants/Path.js"
-export {
-  Config,
-  Data,
-  YamlReader,
-  render,
-  Version,
-  common
-}
