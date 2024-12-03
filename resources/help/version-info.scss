@@ -1,11 +1,12 @@
-.linear-bg(@color) {
-  background-image: linear-gradient(to right, @color, @color 80%, fade(@color, 0) 100%);
+@mixin linear-bg($color) {
+  background-image: linear-gradient(to right, $color, $color 80%, fade($color, 0) 100%);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -21,7 +22,6 @@ body {
   width: 520px;
   padding: 10px 0 10px 0;
   background-size: 100% 100%;
-
 }
 
 .log-cont {
@@ -40,9 +40,6 @@ body {
     &.current-version {
       font-size: 20px;
     }
-  }
-
-  .cont-body {
   }
 
   ul {
@@ -79,7 +76,7 @@ body {
     margin: 0 -3px 0 1px;
   }
 
-  .new:before {
+  .new::before {
     content: "NEW";
     display: inline-block;
     transform: scale(0.6);
