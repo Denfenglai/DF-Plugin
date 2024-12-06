@@ -1,4 +1,5 @@
 import path from "node:path"
+import chalk from "chalk"
 import fs from "node:fs/promises"
 import Version from "./components/Version.js"
 import { Plugin_Name as AppName } from "#components"
@@ -86,9 +87,9 @@ async function traverseDirectory(dir) {
 
 function logSuccess(...messages) {
   const endTime = Date.now()
-  logger.info(logger.rgb(253, 235, 255)("-------------------------"))
-  messages.forEach(msg => logger.info(logger.rgb(82, 242, 255)(msg)))
-  logger.info(logger.rgb(82, 242, 255)(`耗时 ${endTime - startTime} 毫秒`))
+  logger.info(chalk.rgb(253, 235, 255)("-------------------------"))
+  messages.forEach(msg => logger.info(chalk.rgb(82, 242, 255)(msg)))
+  logger.info(chalk.rgb(82, 242, 255)(`耗时 ${endTime - startTime} 毫秒`))
 }
 
 function logDuplicateExport(item, key) {
@@ -96,7 +97,7 @@ function logDuplicateExport(item, key) {
 }
 
 function logPluginError(item, error, packageErr) {
-  logger.error(`[${AppName}] 载入插件错误 ${logger.red(item)}`)
+  logger.error(`[${AppName}] 载入插件错误 ${chalk.red(item)}`)
 
   if (error.code === "ERR_MODULE_NOT_FOUND") {
     packageErr.push({
