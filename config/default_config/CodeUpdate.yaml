@@ -5,6 +5,7 @@ Group: []
 # 推送的QQ列表
 QQ: []
 # 仓库更新检查Cron表达式
+# Github/Gitee Api 未认证用户每小时限制60（ip限制),认证用户每小时限制5000次（账号限制）
 Cron: "0 */30 * * * *"
 
 # 自动获取已安装的插件地址并监听
@@ -17,29 +18,29 @@ Exclude: []
 # 如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
 # 支持分支 DenFengLai/DF-Plugin:dev
 GithubList:
-  - yoimiya-kokomi/miao-plugin
-  - DenFengLai/DF-Plugin
-
-# Github发行版监听仓库列表
-# 格式: 用户名/仓库名
-GithubReleases: []
+  - yoimiya-kokomi/miao-plugin:master
+  - DenFengLai/DF-Plugin:master
 
 # 自定义关注的Gitee仓库路径
 # 格式: 用户名/仓库名:分支名(可选)
 # 如: gitee.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
 GiteeList:
-  - DenFengLai/poke
+  - DenFengLai/poke:main
+
+# Github发行版监听仓库列表
+# 格式: 用户名/仓库名
+GithubReleases: []
 
 # Gitee发行版监听仓库列表
 # 格式: 用户名/仓库名
 GiteeReleases: []
 
 # Gitee个人token
-# 可用于解除API每小时60次限制
+# 请求Api时用于身份验证
 # 获取方式：https://gitee.com/profile/personal_access_tokens
 GiteeToken: ""
 
 # Github个人token
-# 可用于解除API每小时60次限制
+# 请求Api时用于身份验证
 # 获取方式：https://github.com/settings/tokens
 GithubToken: ""
