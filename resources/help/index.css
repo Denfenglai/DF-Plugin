@@ -1,19 +1,18 @@
+@charset "UTF-8";
 @font-face {
-  font-family: 'YS';
-  src: url("../common/font/HYWH-65W.woff") format('woff'), url("../common/font/HYWH-65W.ttf") format('truetype');
+  font-family: "YS";
+  src: url("../common/font/HYWH-65W.woff") format("woff"), url("../common/font/HYWH-65W.ttf") format("truetype");
 }
-
 .font-YS {
-  font-family: 'YS', '汉仪文黑-65W', 'PingFangSC-Medium', 'PingFang SC', sans-serif;
+  font-family: "YS", "汉仪文黑-65W", "PingFangSC-Medium", "PingFang SC", sans-serif;
 }
 
 @font-face {
-  font-family: 'HuaSheng';
-  src: url('主.ttf') format('truetype');
+  font-family: "HuaSheng";
+  src: url("主.ttf") format("truetype");
 }
-
 .font-HuaSheng {
-  font-family: 'HuaSheng', 'YS', '汉仪文黑-65W', 'PingFangSC-Medium', 'PingFang SC', sans-serif;
+  font-family: "HuaSheng", "YS", "汉仪文黑-65W", "PingFangSC-Medium", "PingFang SC", sans-serif;
 }
 
 body {
@@ -31,22 +30,19 @@ body {
   margin: 60px 0 0 0;
   padding-bottom: 0;
 }
-
 .head-box .title {
   font-size: 50px;
   color: #bbffff;
 }
-
 .head-box .label {
   font-size: 20px;
-  font-family: 'YS', '汉仪文黑-65W', 'PingFangSC-Medium', 'PingFang SC', sans-serif;
+  font-family: "YS", "汉仪文黑-65W", "PingFangSC-Medium", "PingFang SC", sans-serif;
   text-shadow: -2px 0 rgb(237, 19, 48), 0 2px rgb(237, 19, 48), 2px 0 rgb(237, 19, 48), 0 -2px rgb(237, 19, 48);
 }
 
 .cont-box {
   border-radius: 15px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px 0;
   overflow: hidden;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.15);
   position: relative;
@@ -54,7 +50,7 @@ body {
 
 .help-group {
   font-size: 21px;
-  font-family: 'YS', '汉仪文黑-65W', 'PingFangSC-Medium', 'PingFang SC', sans-serif;
+  font-family: "YS", "汉仪文黑-65W", "PingFangSC-Medium", "PingFang SC", sans-serif;
   font-weight: bold;
   padding: 15px 15px 10px 20px;
 }
@@ -69,11 +65,12 @@ body {
   width: 100%;
   color: #fff;
 }
-
 .help-table .tr {
   display: table-row;
 }
-
+.help-table .tr:last-child .td {
+  padding-bottom: 12px;
+}
 .help-table .td,
 .help-table .th {
   font-size: 14px;
@@ -84,11 +81,6 @@ body {
   position: relative;
   text-align: left;
 }
-
-.help-table .tr:last-child .td {
-  padding-bottom: 12px;
-}
-
 .help-table .th {
   background: rgba(34, 41, 51, 0.5);
 }
@@ -116,7 +108,7 @@ body {
 .help-desc {
   display: block;
   font-size: 16px;
-  font-family: 'YS', '汉仪文黑-65W', 'PingFangSC-Medium', 'PingFang SC', sans-serif;
+  font-family: "YS", "汉仪文黑-65W", "PingFangSC-Medium", "PingFang SC", sans-serif;
   text-shadow: 0 0 #ffffff, 0 1.5px black, 1.5px 0 black, 0 0 grey, 0 0 pink;
   line-height: 20px;
-}
+}/*# sourceMappingURL=index.css.map */

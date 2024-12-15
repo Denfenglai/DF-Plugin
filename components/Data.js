@@ -1,14 +1,13 @@
 import _ from "lodash"
 import fs from "node:fs"
 import path from "node:path"
+import { Path, Plugin_Name, Plugin_Path } from "../constants/Path.js"
 
-const _path = process.cwd()
-const plugin = "DF-Plugin"
 const getRoot = (root = "") => {
   if (root === "root" || root === "yunzai") {
-    root = `${_path}/`
+    root = `${Path}/`
   } else if (!root) {
-    root = `${_path}/plugins/${plugin}/`
+    root = `${Plugin_Path}/`
   }
   return root
 }
@@ -118,7 +117,7 @@ let Data = {
     let sysCfg = await Data.importModule(`config/system/${key}_system.js`)
     let diyCfg = await Data.importModule(`config/${key}.js`)
     if (diyCfg.isSys) {
-      console.error(`${plugin}: config/${key}.js无效，已忽略`)
+      console.error(`${Plugin_Name}: config/${key}.js无效，已忽略`)
       console.error(`如需配置请复制config/${key}_default.js为config/${key}.js，请勿复制config/system下的系统文件`)
       diyCfg = {}
     }

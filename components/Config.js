@@ -3,10 +3,7 @@ import chokidar from "chokidar"
 import fs from "node:fs"
 import YamlReader from "./YamlReader.js"
 import cfg from "../../../lib/config/config.js"
-
-const Path = process.cwd()
-const Plugin_Name = "DF-Plugin"
-const Plugin_Path = `${Path}/plugins/${Plugin_Name}`
+import { Path, Plugin_Path } from "../constants/Path.js"
 
 class Config {
   constructor() {

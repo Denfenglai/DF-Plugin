@@ -18,7 +18,7 @@ try {
   loadedFilesCounterr = counterr
   logSuccess(
     `${AppName} v${Version.ver} 载入成功！`,
-    "作者：等风来",
+    `作者：${Version.author}`,
     `共加载了 ${loadedFilesCount} 个插件文件，${loadedFilesCounterr} 个失败`
   )
 } catch (error) {
