@@ -34,7 +34,7 @@ export class SendMasterMsgs extends plugin {
   async contact(e) {
     if (Sending) return e.reply("❎ 已有发送任务正在进行中，请稍候重试")
 
-    let { open, cd, BotId, sendAvatar, banWords, banUser, banGroup } = Config.sendMaster
+    let { open, cd, BotId, sendAvatar, banWords, banUser, banGroup, replyQQ } = Config.sendMaster
 
     if (!e.isMaster) {
       if (!open) return e.reply("❎ 该功能暂未开启，请先让主人开启才能用哦", true)
@@ -83,7 +83,9 @@ export class SendMasterMsgs extends plugin {
 
       try {
         await sendMasterMsg(msg, BotId)
-        await e.reply(`✅ 消息已送达\n主人的QQ：${masterQQ}`, true)
+        let _msg = "✅ 消息已送达"
+        if (replyQQ) _msg += `\n主人的QQ：${masterQQ}`
+        await e.reply(_msg, true)
         if (cd) redis.set(key, "1", { EX: cd })
         redis.set(`${key}:${e.message_id}`, JSON.stringify(info), { EX: 86400 })
       } catch (err) {

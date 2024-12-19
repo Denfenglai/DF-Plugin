@@ -49,6 +49,11 @@ export default [
     component: "Switch"
   },
   {
+    field: "sendMaster.replyQQ",
+    label: "发送成功是否回复主人QQ号",
+    component: "Switch"
+  },
+  {
     field: "sendMaster.banWords",
     label: "违禁词",
     bottomHelpMessage: "当消息包含下列内容时将不会发送给主人",
