@@ -1,8 +1,8 @@
 import YAML from "yaml"
-import chokidar from "chokidar"
-import fs from "node:fs"
 import YamlReader from "./YamlReader.js"
 import cfg from "../../../lib/config/config.js"
+import chokidar from "chokidar"
+import fs from "node:fs"
 import { Path, Plugin_Path } from "../constants/Path.js"
 
 class Config {

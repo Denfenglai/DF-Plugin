@@ -9,7 +9,7 @@ Master: 0
 BotId: 0
 # 是否发送触发者的头像（微信请关闭此项）
 sendAvatar: true
-# 发送成功是否回复主人QQ号
+# 是否回复主人QQ号
 replyQQ: true
 
 # 违禁词，当消息包含下列内容将不会发送给主人

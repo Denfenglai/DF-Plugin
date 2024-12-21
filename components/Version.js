@@ -2,17 +2,18 @@ import fs from "node:fs"
 import lodash from "lodash"
 import { Data, Plugin_Path } from "./index.js"
 
-const README_path = `${Plugin_Path}/README.md`
 const CHANGELOG_path = `${Plugin_Path}/CHANGELOG.md`
-let packageJson = JSON.parse(fs.readFileSync(`${process.cwd()}/package.json`, "utf8"))
+const README_path = `${Plugin_Path}/README.md`
+
 let PluginPackagePath = `${Plugin_Path}/package.json`
 let PluginPackageData = JSON.parse(fs.readFileSync(PluginPackagePath, "utf8"))
+let packageJson = JSON.parse(fs.readFileSync(`${process.cwd()}/package.json`, "utf8"))
 
 // let yunzai_ver = packageJson.version
 
-let logs = {}
 let changelogs = []
 let currentVersion
+let logs = {}
 let versionCount = 3
 
 const getLine = function(line) {
@@ -27,10 +28,10 @@ const getLine = function(line) {
 
 const readLogFile = function(root, versionCount = 4) {
   root = Data.getRoot(root)
-  let logPath = `${root}/CHANGELOG.md`
-  let logs = {}
   let changelogs = []
   let currentVersion
+  let logPath = `${root}/CHANGELOG.md`
+  let logs = {}
 
   try {
     if (fs.existsSync(logPath)) {

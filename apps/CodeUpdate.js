@@ -1,5 +1,5 @@
-import { Config } from "#components"
 import { CodeUpdate as Cup } from "#model"
+import { Config } from "#components"
 
 export class CodeUpdate extends plugin {
   constructor() {
