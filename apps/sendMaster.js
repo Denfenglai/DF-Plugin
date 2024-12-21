@@ -119,7 +119,7 @@ export class SendMasterMsgs extends plugin {
 
       const { bot, group, id, message_id } = JSON.parse(data)
       const message = await common.Replace(e, /#?回复/g)
-      message.unshift(`主人(${e.user_id})回复：\n`, segment.reply(message_id))
+      message.unshift(`主人${Config.sendMaster.replyQQ ? `(${e.user_id})` : ""}回复：\n`, segment.reply(message_id))
 
       this.Bot = Bot[bot] ?? Bot
 

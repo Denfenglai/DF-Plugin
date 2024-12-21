@@ -1,7 +1,5 @@
 import { PluginPath } from "#model"
 
-const _ = new Set([ ...PluginPath.gitee, ...PluginPath.github ])
-
 export default [
   {
     component: "Divider",
@@ -52,7 +50,7 @@ export default [
     componentProps: {
       allowClear: true,
       mode: "tags",
-      options: Array.from(_).map((name) => ({ value: name }))
+      options: Array.from((new Set([ ...PluginPath.gitee, ...PluginPath.github ]))).map((name) => ({ value: name }))
     }
   },
   {

@@ -4,7 +4,7 @@
 
 export const helpCfg = {
   title: "DF帮助",
-  subTitle: "[DF插件] Yunzai-Bot&DF-Plugin",
+  subTitle: "[DF插件] Yunzai-Bot & DF-Plugin",
   columnCount: 4,
   colWidth: 300,
   theme: "all",
