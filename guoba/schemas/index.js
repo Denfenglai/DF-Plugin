@@ -7,13 +7,13 @@ import summary from "./Summary.js"
 import { Config } from "#components"
 
 export const schemas = [
-  ...sendMaster,
-  ...Poke,
-  ...CodeUpdata,
-  ...Picture,
-  ...summary,
-  ...other
-]
+  sendMaster,
+  Poke,
+  CodeUpdata,
+  Picture,
+  summary,
+  other
+].flat()
 
 export function getConfigData() {
   return {

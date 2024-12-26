@@ -30,18 +30,16 @@ class Config {
 
       if (fs.existsSync(userFilePath)) {
         const userYaml = new YamlReader(userFilePath)
-
+        let list = {}
         for (const [ key, value ] of Object.entries(userYaml.jsonData)) {
-          if (file === "CodeUpdate.yaml" && key === "Gruop") {
-            const gruopValue = value || []
-            const groupValue = userYaml.jsonData.Group || []
-
-            const combinedGroups = Array.from(new Set([ ...groupValue, ...gruopValue ]))
-
-            mergedYaml.set("Group", combinedGroups)
+          if (file === "CodeUpdate.yaml" && [ "Group", "QQ", "AutoPath", "Exclude", "GithubList", "GiteeList", "GithubReleases", "GiteeReleases" ].includes(key)) {
+            list[key] = value
           } else {
             mergedYaml.set(key, value)
           }
+        }
+        if (file === "CodeUpdate.yaml" && Object.keys(list).length > 0) {
+          mergedYaml.addIn("List", list)
         }
       }
 

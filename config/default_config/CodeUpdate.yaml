@@ -1,46 +1,26 @@
 # 自动检查仓库更新开关
 Auto: false
-# 推送的群聊列表
-Group: []
-# 推送的QQ列表
-QQ: []
+
 # 仓库更新检查Cron表达式
 # Github/Gitee Api 未认证用户每小时限制60（ip限制),认证用户每小时限制5000次（账号限制）
 Cron: "0 */30 * * * *"
 
-# 自动获取已安装的插件地址并监听
-AutoPath: false
-# 排除的仓库路径(用于忽略一些不希望被监听的插件)
-Exclude: []
-
-# 自定义关注的Github仓库路径
-# 格式: 用户名/仓库名:分支名(可选)
-# 如: github.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
-# 支持分支 DenFengLai/DF-Plugin:dev
-GithubList:
-  - yoimiya-kokomi/miao-plugin:master
-  - DenFengLai/DF-Plugin:master
-
-# 自定义关注的Gitee仓库路径
-# 格式: 用户名/仓库名:分支名(可选)
-# 如: gitee.com/DenFengLai/DF-Plugin 则填 DenFengLai/DF-Plugin
-GiteeList:
-  - DenFengLai/poke:main
-
-# Github发行版监听仓库列表
-# 格式: 用户名/仓库名
-GithubReleases: []
-
-# Gitee发行版监听仓库列表
-# 格式: 用户名/仓库名
-GiteeReleases: []
-
-# Gitee个人token
-# 请求Api时用于身份验证
-# 获取方式：https://gitee.com/profile/personal_access_tokens
+# Gitee个人Token
+# 获取地址： https://gitee.com/profile/personal_access_tokens
 GiteeToken: ""
 
-# Github个人token
-# 请求Api时用于身份验证
-# 获取方式：https://github.com/settings/tokens
+# Github个人Token
+# 获取地址： https://github.com/settings/tokens
 GithubToken: ""
+
+# 推送配置
+# Group: 推送的群聊列表
+# QQ: 推送的QQ列表
+# AutoPath: 是否自动获取已安装的插件地址并监听
+# Exclude: 排除的仓库路径(用于忽略一些不希望被监听的插件)
+# GithubList: 自定义关注的Github仓库路径 (格式: 所有者/存储库:分支)
+# GiteeList: 自定义关注的Gitee仓库路径  (格式: 所有者/存储库:分支)
+# GithubReleases: Github发行版监听仓库列表 (格式: 所有者/存储库:分支)
+# GiteeReleases: Gitee发行版监听仓库列表 (格式: 所有者/存储库:分支)
+# note: 备注
+List: []
