@@ -3,48 +3,70 @@ import common from "../../../lib/common/common.js"
 import puppeteer from "../../../lib/puppeteer/puppeteer.js"
 import { GitApi } from "./api/index.js"
 import { PluginPath } from "#model"
-import { Config, Res_Path } from "#components"
+import { Config, Res_Path, common as Common } from "#components"
 import { marked } from "marked"
+
+const key = "DF:CodeUpdate"
 
 export default new class CodeUpdate {
   /**
    * 检查仓库更新并发送通知
    * @param {boolean} isAuto - 是否为自动检查
-   * @param {object} [e] - 消息事件对象
+   * @param {object} e - 消息事件对象
    */
-  async checkUpdates(isAuto = false, e = null) {
+  async checkUpdates(isAuto = false, e) {
     const {
-      GithubList = [],
-      GiteeList = [],
-      GiteeReleases = [],
-      GithubReleases = [],
-      GithubToken,
-      GiteeToken,
-      AutoPath
+      GithubToken = "",
+      GiteeToken = "",
+      List = []
     } = Config.CodeUpdate
 
-    const githubRepos = AutoPath ? [ ...new Set([ ...GithubList, ...PluginPath.github ]) ] : GithubList
-    const giteeRepos = AutoPath ? [ ...new Set([ ...GiteeList, ...PluginPath.gitee ]) ] : GiteeList
+    if (!List.length) {
+      logger.mark("[DF-Plugin][CodeUpdate]没有配置仓库信息，取消检查更新")
+      return isAuto ? false : e.reply("还没有配置仓库信息呢")
+    }
 
     logger.mark(logger.blue("开始检查仓库更新"))
 
-    const results = await Promise.all([
-      this.fetchUpdates(githubRepos, "GitHub", GithubToken, "commits", "DF:CodeUpdate:GitHub", isAuto),
-      this.fetchUpdates(giteeRepos, "Gitee", GiteeToken, "commits", "DF:CodeUpdate:Gitee", isAuto),
-      this.fetchUpdates(GiteeReleases, "Gitee", GiteeToken, "releases", "DF:CodeUpdate:Release:Gitee", isAuto),
-      this.fetchUpdates(GithubReleases, "GitHub", GithubToken, "releases", "DF:CodeUpdate:Release:GitHub", isAuto)
-    ])
+    let number = 0
+    for (const list of List) {
+      const {
+        GithubList = [],
+        GiteeList = [],
+        GiteeReleases = [],
+        GithubReleases = [],
+        AutoPath = false,
+        Exclude = [],
+        Group = [],
+        QQ = []
+      } = list
 
-    const content = results.flat()
+      const githubRepos = AutoPath ? [ ...new Set([ ...GithubList, ...PluginPath.github ]) ].filter(path => !Exclude.includes(path)) : GithubList
+      const giteeRepos = AutoPath ? [ ...new Set([ ...GiteeList, ...PluginPath.gitee ]) ].filter(path => !Exclude.includes(path)) : GiteeList
 
-    if (content.length > 0) {
-      logger.mark(logger.green(`共检测到 ${content.length} 个更新`))
+      const promises = []
+      if (githubRepos?.length > 0) promises.push(this.fetchUpdates(githubRepos, "GitHub", GithubToken, "commits", `${key}:GitHub`, isAuto))
+      if (giteeRepos?.length > 0) promises.push(this.fetchUpdates(giteeRepos, "Gitee", GiteeToken, "commits", `${key}:Gitee`, isAuto))
+      if (GiteeReleases?.length > 0) promises.push(this.fetchUpdates(GiteeReleases, "Gitee", GiteeToken, "releases", `${key}:GiteeReleases`, isAuto))
+      if (GithubReleases?.length > 0) promises.push(this.fetchUpdates(GithubReleases, "GitHub", GithubToken, "releases", `${key}:GithubReleases`, isAuto))
 
-      const userId = isAuto ? "Auto" : e.user_id
-      const base64 = await this.generateScreenshot(content, userId)
-      await this.sendMessageToUser(base64, content, isAuto, e)
+      const results = await Promise.all(promises)
+
+      const content = results.flat()
+
+      if (content.length > 0) {
+        number += content.length
+        const userId = isAuto ? "Auto" : e.user_id;
+        (async() => {
+          const base64 = await this.generateScreenshot(content, userId)
+          this.sendMessageToUser(base64, content, Group, QQ, isAuto, e)
+        })()
+      }
+    }
+    if (number > 0) {
+      logger.info(logger.green(`ヾ(≧▽≦*)o 本次共获取到${number}条数据~`))
     } else {
-      logger.mark(logger.yellow("未检测到更新"))
+      logger.info(logger.yellow("＞︿＜ 本次没有获取到任何数据~"))
     }
   }
 
@@ -62,14 +84,15 @@ export default new class CodeUpdate {
     const content = []
 
     await Promise.all(repoList.map(async(repo) => {
-      if (!repo || Config.CodeUpdate.Exclude.includes(repo)) return
+      if (!repo) return
 
       try {
         logger.debug(`请求 ${logger.magenta(source)} ${type}: ${logger.cyan(repo)}`)
 
         const [ path, branch ] = type === "commits" ? repo.split(":") : [ repo ]
         let data = await GitApi.getRepositoryData(path, source, type, token, branch)
-        if (!data || [ "Not Found Projec", "Not Found" ].includes(data?.message)) {
+        if (!data) return
+        if ([ "Not Found Projec", "Not Found" ].includes(data?.message)) {
           logger.error(`${logger.magenta(source)}: ${logger.cyan(repo)} 仓库不存在`)
           return
         }
@@ -140,8 +163,8 @@ export default new class CodeUpdate {
     const { author, committer, commit, stats, files } = data
     const authorName = `<span>${commit.author.name}</span>`
     const committerName = `<span>${commit.committer.name}</span>`
-    const authorTime = `<span>${this.timeAgo(moment(commit.author.date))}</span>`
-    const committerTime = `<span>${this.timeAgo(moment(commit.committer.date))}</span>`
+    const authorTime = `<span>${Common.timeAgo(moment(commit.author.date))}</span>`
+    const committerTime = `<span>${Common.timeAgo(moment(commit.committer.date))}</span>`
     const timeInfo = authorName === committerName
       ? `${authorName} 提交于 ${authorTime}`
       : `${authorName} 编写于 ${authorTime}，并由 ${committerName} 提交于 ${committerTime}`
@@ -187,7 +210,7 @@ export default new class CodeUpdate {
     const { tag_name, name, body, author, published_at } = data
     const authorName = `<span>${author?.login || author?.name}</span>`
     const authorAvatar = author?.avatar_url
-    const authorTime = `<span>${this.timeAgo(moment(published_at))}</span>`
+    const authorTime = `<span>${Common.timeAgo(moment(published_at))}</span>`
     const timeInfo = authorName ? `${authorName} 发布于 ${authorTime}` : `${authorTime}`
 
     return {
@@ -223,11 +246,12 @@ export default new class CodeUpdate {
    * 推送更新内容
    * @param {string} data - 要发送的截图的base64编码
    * @param {object[]} content - 消息内容
+   * @param {Array} Group - 要发送的群号
+   * @param {Array} QQ - 要发送的QQ号
    * @param {boolean} isAuto - 是否自动
    * @param {object} e - 消息事件
    */
-  async sendMessageToUser(data, content, isAuto, e) {
-    let { Group, QQ } = Config.CodeUpdate
+  async sendMessageToUser(data, content, Group, QQ, isAuto, e) {
     if (!isAuto) return e.reply(data)
     for (const group of Group) {
       if (content.length > 0 && data) {
@@ -240,37 +264,6 @@ export default new class CodeUpdate {
         Bot.pickFriend(qq).sendMsg(data)
       }
       await common.sleep(5000)
-    }
-  }
-
-  /**
-   * 处理时间
-   * @param {string} date 时间戳
-   * @returns {string} 多久前
-   */
-  timeAgo(date) {
-    const now = moment()
-    const duration = moment.duration(now.diff(date))
-    const years = duration.years()
-    const months = duration.months()
-    const days = duration.days()
-    const hours = duration.hours()
-    const minutes = duration.minutes()
-
-    if (years >= 2) {
-      return "两年以前"
-    } else if (years >= 1) {
-      return "1年前"
-    } else if (months >= 1) {
-      return `${months}个月前`
-    } else if (days >= 1) {
-      return `${days}天前`
-    } else if (hours >= 1) {
-      return `${hours}小时前`
-    } else if (minutes >= 1) {
-      return `${minutes}分钟前`
-    } else {
-      return "刚刚"
     }
   }
 }()
