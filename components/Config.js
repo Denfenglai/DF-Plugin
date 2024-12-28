@@ -9,7 +9,7 @@ export class Config {
   plugin_path = Plugin_Path
   /** 初始化配置 */
   async initCfg() {
-    this.config = YAML.parse(await fs.readFile(`${this.plugin_path}/config/config.yaml`, "utf8"))
+    this.config = YAML.parse(await fs.readFile(`${this.plugin_path}/config/system/config.yaml`, "utf8"))
 
     /** 导入旧配置文件 */
     const path = `${this.plugin_path}/config/config`
@@ -27,8 +27,7 @@ export class Config {
     for (const i in this.config) {
       keep[i] = {}
       for (const j in this.config[i]) {
-        if (j.endsWith("Tips"))
-          keep[i][j] = this.config[i][j]
+        if (j.endsWith("Tips")) { keep[i][j] = this.config[i][j] }
       }
     }
 
@@ -89,8 +88,7 @@ export class Config {
    * @param {string | number} value 修改的value值
    */
   modify(name, key, value) {
-    if (typeof this.config[name] != "object")
-      this.config[name] = {}
+    if (typeof this.config[name] != "object") { this.config[name] = {} }
     this.config[name][key] = value
     return this.configSave()
   }
@@ -103,13 +101,10 @@ export class Config {
    * @param {'add'|'del'} category 类别 add or del
    */
   modifyarr(name, key, value, category = "add") {
-    if (typeof this.config[name] != "object")
-      this.config[name] = {}
-    if (!Array.isArray(this.config[name][key]))
-      this.config[name][key] = []
+    if (typeof this.config[name] != "object") this.config[name] = {}
+    if (!Array.isArray(this.config[name][key])) this.config[name][key] = []
     if (category == "add") {
-      if (!this.config[name][key].includes(value))
-        this.config[name][key].push(value)
+      if (!this.config[name][key].includes(value)) this.config[name][key].push(value)
     } else {
       this.config[name][key] = this.config[name][key].filter(item => item !== value)
     }

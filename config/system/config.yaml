@@ -1,3 +1,6 @@
+# 此配置文件为系统使用，请勿修改，否则可能无法正常使用
+# 用户配置已移动至 Yz/config/DF-Plugin.yaml
+
 CodeUpdate:
   AutoTips: |-
     自动检查仓库更新开关
