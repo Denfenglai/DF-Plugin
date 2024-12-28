@@ -1,7 +1,7 @@
 export default [
   {
     component: "Divider",
-    label: "随机图片设置"
+    label: "随机图片配置"
   },
   {
     field: "Picture.open",

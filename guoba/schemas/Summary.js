@@ -1,7 +1,7 @@
 export default [
   {
-    component: "Divider",
-    label: "图片外显设置"
+    component: "SOFT_GROUP_BEGIN",
+    label: "图片外显配置"
   },
   {
     field: "summary.sum",
