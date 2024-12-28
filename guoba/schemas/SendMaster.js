@@ -1,7 +1,7 @@
 export default [
   {
-    component: "Divider",
-    label: "联系主人设置"
+    component: "SOFT_GROUP_BEGIN",
+    label: "联系主人配置"
   },
   {
     field: "sendMaster.open",
@@ -50,7 +50,7 @@ export default [
   },
   {
     field: "sendMaster.replyQQ",
-    label: "发送成功是否回复主人QQ号",
+    label: "是否回复主人账号",
     component: "Switch"
   },
   {

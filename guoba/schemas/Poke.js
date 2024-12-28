@@ -2,8 +2,8 @@ import { Poke_List } from "#components"
 
 export default [
   {
-    component: "Divider",
-    label: "戳一戳设置"
+    component: "SOFT_GROUP_BEGIN",
+    label: "戳一戳配置"
   },
   {
     field: "other.chuo",

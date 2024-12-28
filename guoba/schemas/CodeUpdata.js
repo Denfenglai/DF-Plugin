@@ -2,8 +2,8 @@ import { PluginPath } from "#model"
 
 export default [
   {
-    component: "Divider",
-    label: "Git仓库监听设置"
+    component: "SOFT_GROUP_BEGIN",
+    label: "Git仓库监听配置"
   },
   {
     field: "CodeUpdate.Auto",
