@@ -77,8 +77,9 @@ export default class YamlReader {
 
   save() {
     const yaml = this.document.toString()
-    // 数据不变不写💩
-    if (yaml === this.data) return
+    // 比较前检查文件是否存在，数据不变不写💩，比较前去除多余换行
+    const fileExists = fs.existsSync(this.yamlPath)
+    if (yaml.trim() === this.data.trim() && fileExists) return
     this.isSave = true
     fs.writeFileSync(this.yamlPath, yaml, "utf8")
   }
