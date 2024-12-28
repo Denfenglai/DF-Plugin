@@ -25,11 +25,6 @@ export const helpList = [
     "group": "功能类",
     "list": [
       {
-        "icon": 1,
-        "title": "#来首歌",
-        "desc": "随机网易云音乐"
-      },
-      {
         "icon": 2,
         "title": "戳一戳机器人",
         "desc": "戳一戳机器人发送随机表情包"
@@ -91,7 +86,7 @@ export const helpList = [
       },
       {
         "icon": 14,
-        "title": "回复",
+        "title": "#回复",
         "desc": "主人回复群友的消息"
       }
     ]
