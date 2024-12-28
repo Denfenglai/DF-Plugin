@@ -1,4 +1,5 @@
 import moment from "moment"
+import { ulid } from "ulid"
 import { common, Config } from "#components"
 import { sendMasterMsg, extractMessageId, getSourceMessage, getMasterQQ } from "../model/sendMasterMsg.js"
 
@@ -51,17 +52,18 @@ export class SendMasterMsgs extends plugin {
       if (message.length === 0) return e.reply("❎ 消息不能为空")
 
       const type = e.bot?.version?.id || e?.adapter_id || "QQ"
-      const img = e.member?.getAvatarUrl() || e.friend?.getAvatarUrl()
-      const id = `${e.sender.nickname}(${e.user_id})`
+      const avatar = e.member?.getAvatarUrl() || e.friend?.getAvatarUrl()
+      const user_id = `${e.sender.nickname}(${e.user_id})`
       const group = e.isGroup ? `${e.group.name || "未知群名"}(${e.group_id})` : "私聊"
       const bot = `${e.bot.nickname}(${e.bot.uin})`
       const time = moment().format("YYYY-MM-DD HH:mm:ss")
+      const id = ulid().slice(-5)
 
       const msg = [
-      `联系主人消息(${e.message_id})\n`,
-      sendAvatar ? segment.image(img) : "",
+      `联系主人消息(${id})\n`,
+      sendAvatar ? segment.image(avatar) : "",
       `平台: ${type}\n`,
-      `用户: ${id}\n`,
+      `用户: ${user_id}\n`,
       `来自: ${group}\n`,
       `BOT: ${bot}\n`,
       `时间: ${time}\n`,
@@ -87,7 +89,7 @@ export class SendMasterMsgs extends plugin {
         if (replyQQ) _msg += `\n主人的QQ：${masterQQ}`
         await e.reply(_msg, true)
         if (cd) redis.set(key, "1", { EX: cd })
-        redis.set(`${key}:${e.message_id}`, JSON.stringify(info), { EX: 86400 })
+        redis.set(`${key}:${id}`, JSON.stringify(info), { EX: 86400 })
       } catch (err) {
         await e.reply(`❎ 消息发送失败，请尝试自行联系：${masterQQ}\n错误信息：${err}`)
         logger.error(err)
