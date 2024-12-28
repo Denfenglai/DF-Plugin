@@ -24,7 +24,7 @@ export default [
     field: "CodeUpdate.GithubToken",
     label: "Github Api Token",
     helpMessage: "用于请求Github Api",
-    bottomHelpMessage: "填写后可解除请求速率限制和监听私库，获取地址：https://gitee.com/profile/personal_access_tokens",
+    bottomHelpMessage: "填写后可解除请求速率限制和监听私库，获取地址：https://github.com/settings/tokens",
     component: "InputPassword",
     componentProps: {
       placeholder: "请输入Github Token"
@@ -34,7 +34,7 @@ export default [
     field: "CodeUpdate.GiteeToken",
     label: "Gitee Api Token",
     helpMessage: "用于请求 Gitee Api",
-    bottomHelpMessage: "填写后可解除请求速率限制和监听私库，获取地址：https://github.com/settings/tokens",
+    bottomHelpMessage: "填写后可解除请求速率限制和监听私库，获取地址：https://gitee.com/profile/personal_access_tokens",
     component: "InputPassword",
     componentProps: {
       placeholder: "请输入Gitee Token"
