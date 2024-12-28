@@ -1,52 +1,41 @@
 import YAML from "yaml"
-import YamlReader from "./YamlReader.js"
 import cfg from "../../../lib/config/config.js"
-import chokidar from "chokidar"
-import fs from "node:fs"
-import { Path, Plugin_Path } from "../constants/Path.js"
+import makeConfig from "../../../lib/plugins/config.js"
+import fs from "node:fs/promises"
+import { Plugin_Path } from "../constants/Path.js"
+import _ from "lodash"
 
-class Config {
-  constructor() {
-    this.config = {}
-
-    /** 监听文件 */
-    this.watcher = { config: {}, defSet: {} }
-
-    this.initCfg()
-  }
-
+export class Config {
+  plugin_path = Plugin_Path
   /** 初始化配置 */
-  initCfg() {
-    const path = `${Plugin_Path}/config/config/`
-    const pathDef = `${Plugin_Path}/config/default_config/`
-    const files = fs.readdirSync(pathDef).filter(file => file.endsWith(".yaml"))
+  async initCfg() {
+    this.config = YAML.parse(await fs.readFile(`${this.plugin_path}/config/config.yaml`, "utf8"))
 
-    for (let file of files) {
-      const userFilePath = `${path}${file}`
-      const defFilePath = `${pathDef}${file}`
-
-      const mergedYaml = new YamlReader(defFilePath)
-      mergedYaml.yamlPath = userFilePath
-
-      if (fs.existsSync(userFilePath)) {
-        const userYaml = new YamlReader(userFilePath)
-        let list = {}
-        for (const [ key, value ] of Object.entries(userYaml.jsonData)) {
-          if (file === "CodeUpdate.yaml" && [ "Group", "QQ", "AutoPath", "Exclude", "GithubList", "GiteeList", "GithubReleases", "GiteeReleases" ].includes(key)) {
-            list[key] = value
-          } else {
-            mergedYaml.set(key, value)
-          }
-        }
-        if (file === "CodeUpdate.yaml" && Object.keys(list).length > 0) {
-          mergedYaml.addIn("List", list)
-        }
+    /** 导入旧配置文件 */
+    const path = `${this.plugin_path}/config/config`
+    if (await fs.stat(path).catch(() => false)) {
+      for (let file of (await fs.readdir(path)).filter(file => file.endsWith(".yaml"))) {
+        const key = file.replace(".yaml", "")
+        if (!(key in this.config)) continue
+        _.merge(this.config[key], YAML.parse(await fs.readFile(`${path}/${file}`, "utf8")))
       }
-
-      mergedYaml.save()
-
-      this.watch(userFilePath, file.replace(".yaml", ""), "config")
+      await fs.rename(path, `${path}_old`)
     }
+
+    /** 保留注释 */
+    const keep = {}
+    for (const i in this.config) {
+      keep[i] = {}
+      for (const j in this.config[i]) {
+        if (j.endsWith("Tips"))
+          keep[i][j] = this.config[i][j]
+      }
+    }
+
+    const { config, configSave } = await makeConfig("DF-Plugin", this.config, keep, i => i.replace(/(\n.+?Tips:)/g, "\n$1"))
+    this.config = config
+    this.configSave = configSave
+    return this
   }
 
   /** 主人列表 */
@@ -61,27 +50,27 @@ class Config {
 
   /** 联系主人 */
   get sendMaster() {
-    return this.getDefOrConfig("sendMaster")
+    return this.config.sendMaster
   }
 
   /** 其他配置 */
   get other() {
-    return this.getDefOrConfig("other")
+    return this.config.other
   }
 
   /** Git推送 */
   get CodeUpdate() {
-    return this.getDefOrConfig("CodeUpdate")
+    return this.config.CodeUpdate
   }
 
   /** 图片外显 */
   get summary() {
-    return this.getDefOrConfig("summary")
+    return this.config.summary
   }
 
   /** 随机图片配置 */
   get Picture() {
-    return this.getDefOrConfig("Picture")
+    return this.config.Picture
   }
 
   /**
@@ -90,100 +79,20 @@ class Config {
    * @param bot_id
    */
   getGroup(group_id = "", bot_id = "") {
-    const config = {
-      ...cfg.getdefSet("group"),
-      ...cfg.getConfig("group")
-    }
-    return {
-      ...config.default,
-      ...config[`${bot_id}:default`],
-      ...config[group_id],
-      ...config[`${bot_id}:${group_id}`]
-    }
-  }
-
-  /**
-   * 默认配置和用户配置
-   * @param name
-   */
-  getDefOrConfig(name) {
-    let def = this.getdefSet(name)
-    let config = this.getConfig(name)
-    return { ...def, ...config }
-  }
-
-  /**
-   * 默认配置
-   * @param name
-   */
-  getdefSet(name) {
-    return this.getYaml("default_config", name)
-  }
-
-  /**
-   * 用户配置
-   * @param name
-   */
-  getConfig(name) {
-    return this.getYaml("config", name)
-  }
-
-  /**
-   * 获取配置yaml
-   * @param type 默认跑配置-defSet，用户配置-config
-   * @param name 名称
-   */
-  getYaml(type, name) {
-    let file = `${Plugin_Path}/config/${type}/${name}.yaml`
-    let key = `${type}.${name}`
-
-    if (this.config[key]) return this.config[key]
-
-    this.config[key] = YAML.parse(
-      fs.readFileSync(file, "utf8")
-    )
-
-    this.watch(file, name, type)
-
-    return this.config[key]
-  }
-
-  /**
-   * 监听配置文件
-   * @param file
-   * @param name
-   * @param type
-   */
-  watch(file, name, type = "default_config") {
-    let key = `${type}.${name}`
-
-    if (this.watcher[key]) return
-
-    const watcher = chokidar.watch(file)
-    watcher.on("change", path => {
-      delete this.config[key]
-      if (typeof Bot == "undefined") return
-      logger.mark(`[DF-Plugin][修改配置文件][${type}][${name}]`)
-      if (this[`change_${name}`]) {
-        this[`change_${name}`]()
-      }
-    })
-
-    this.watcher[key] = watcher
+    return Array.isArray(Bot.uin) ? cfg.getGroup(bot_id, group_id) : cfg.getGroup(group_id)
   }
 
   /**
    * 修改设置
-   * @param {string} name 文件名
+   * @param {string} name 配置名
    * @param {string} key 修改的key值
    * @param {string | number} value 修改的value值
-   * @param {'config'|'default_config'} type 配置文件或默认
-   * @param {boolean} bot 是否修改Bot的配置
    */
-  modify(name, key, value, type = "config", bot = false) {
-    let path = `${bot ? Path : Plugin_Path}/config/${type}/${name}.yaml`
-    new YamlReader(path).set(key, value)
-    delete this.config[`${type}.${name}`]
+  modify(name, key, value) {
+    if (typeof this.config[name] != "object")
+      this.config[name] = {}
+    this.config[name][key] = value
+    return this.configSave()
   }
 
   /**
@@ -192,19 +101,20 @@ class Config {
    * @param {string | number} key key值
    * @param {string | number} value value
    * @param {'add'|'del'} category 类别 add or del
-   * @param {'config'|'default_config'} type 配置文件或默认
-   * @param {boolean} bot  是否修改Bot的配置
    */
-  modifyarr(name, key, value, category = "add", type = "config", bot = false) {
-    let path = `${bot ? Path : Plugin_Path}/config/${type}/${name}.yaml`
-    let yaml = new YamlReader(path)
+  modifyarr(name, key, value, category = "add") {
+    if (typeof this.config[name] != "object")
+      this.config[name] = {}
+    if (!Array.isArray(this.config[name][key]))
+      this.config[name][key] = []
     if (category == "add") {
-      yaml.addIn(key, value)
+      if (!this.config[name][key].includes(value))
+        this.config[name][key].push(value)
     } else {
-      let index = yaml.jsonData[key].indexOf(value)
-      yaml.delete(`${key}.${index}`)
+      this.config[name][key] = this.config[name][key].filter(item => item !== value)
     }
+    return this.configSave()
   }
 }
 
-export default new Config()
+export default await new Config().initCfg()

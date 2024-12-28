@@ -1,0 +1,149 @@
+CodeUpdate:
+  AutoTips: |-
+    自动检查仓库更新开关
+  Auto: false
+
+  CronTips: |-
+    仓库更新检查Cron表达式
+    Github/Gitee Api 未认证用户每小时限制60（ip限制),认证用户每小时限制5000次（账号限制）
+  Cron: "0 */30 * * * *"
+
+  GiteeTokenTips: |-
+    Gitee个人Token
+    获取地址： https://gitee.com/profile/personal_access_tokens
+  GiteeToken: ""
+
+  GithubTokenTips: |-
+    Github个人Token
+    获取地址： https://github.com/settings/tokens
+  GithubToken: ""
+
+  ListTips: |-
+    推送配置
+    Group: 推送的群聊列表
+    QQ: 推送的QQ列表
+    AutoPath: 是否自动获取已安装的插件地址并监听
+    Exclude: 排除的仓库路径(用于忽略一些不希望被监听的插件)
+    GithubList: 自定义关注的Github仓库路径 (格式: 所有者/存储库:分支)
+    GiteeList: 自定义关注的Gitee仓库路径  (格式: 所有者/存储库:分支)
+    GithubReleases: Github发行版监听仓库列表 (格式: 所有者/存储库:分支)
+    GiteeReleases: Gitee发行版监听仓库列表 (格式: 所有者/存储库:分支)
+    note: 备注
+  List: []
+
+other:
+  chuoTips: |-
+    戳一戳开关
+  chuo: true
+
+  chuoTypeTips: |-
+    戳一戳图片设置
+    1：柴郡表情包 
+    2：丛雨表情包 
+    3：诗歌剧表情包 
+    4：柚子厨表情包 
+    5：小南梁表情包
+    6：小鲨鱼古拉
+    7：甘城猫猫
+    8: 龙图
+    9：满穗表情包
+    10: 猫猫虫表情
+    11：纳西妲表情
+    12；心海表情
+    13：fufu表情
+    14: ATRI表情包
+    15: 绫地宁宁表情包
+    16: 永雏塔菲表情包
+    17：miku表情包
+    18：特蕾西娅表情包
+    0：自定义图片（自行在resources/poke/default中添加）
+    all: 随机类型
+  chuoType: 1
+
+  BlackTips: |-
+    戳一戳随机类型黑名单
+  Black:
+
+    - default
+  ysTips: |-
+    原神关键词发图
+  ys: true
+
+Picture:
+  openTips: |-
+    随机图片开关
+  open: true
+
+  DirectTips: |-
+    是否去除 #来张/随机 前缀
+  Direct: false
+
+sendMaster:
+  openTips: |-
+    联系主人开关
+  open: true
+
+  cdTips: |-
+    联系主人CD 单位：秒 填0关闭cd
+  cd: 300
+
+  MasterTips: |-
+    是否发送全部主人 0：仅发送首个主人 1：发送全部主人 
+    填主人账号可以指定发送某个主人
+  Master: 0
+
+  BotIdTips: |-
+    指定某个Bot发送 为0时为触发Bot
+  BotId: 0
+
+  sendAvatarTips: |-
+    是否发送触发者的头像（微信请关闭此项）
+  sendAvatar: true
+
+  replyQQTips: |-
+    是否回复主人QQ号
+  replyQQ: true
+
+  banWordsTips: |-
+    违禁词，当消息包含下列内容将不会发送给主人
+  banWords:
+    - 垃圾
+    - 你妈
+    - nm
+    - 月吗
+    - 🈷️吗
+    - 🈷吗
+    - 约吗
+
+  banUserTips: |-
+    禁用的用户，不允许该用户联系主人
+  banUser:
+    - 10086
+
+  banGroupTips: |-
+    禁用的群聊，不允许通过该群联系主人
+  banGroup:
+    - 114514
+
+summary:
+  sumTips: |-
+    图片外显开关
+  sum: false
+
+  typeTips: |-
+    外显模式 (1: 自定义外显 2： 一言接口 3：列表随机)
+  type: 2
+
+  textTips: |-
+    自定义外显
+  text: "Ciallo～(∠・ω< )⌒☆"
+
+  listTips: |-
+    自定义外显随机列表
+  list:
+    - 你干嘛~
+    - 我喜欢你
+
+  apiTips: |-
+    一言接口
+  api: "https://v1.hitokoto.cn/?encode=text"
