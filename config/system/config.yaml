@@ -59,6 +59,8 @@ other:
     16: 永雏塔菲表情包
     17：miku表情包
     18：特蕾西娅表情包
+    19：doro表情包
+    20：米塔表情包
     0：自定义图片（自行在resources/poke/default中添加）
     all: 随机类型
   chuoType: 1

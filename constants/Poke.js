@@ -17,5 +17,7 @@ export const Poke_List = [
   "绫地宁宁",
   "永雏塔菲",
   "miku",
-  "特蕾西娅"
+  "特蕾西娅",
+  "doro",
+  "米塔"
 ]
