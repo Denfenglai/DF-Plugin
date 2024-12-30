@@ -1,6 +1,6 @@
 export default [
   {
-    component: "Divider",
+    component: "SOFT_GROUP_BEGIN",
     label: "随机图片配置"
   },
   {
