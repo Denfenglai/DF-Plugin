@@ -25,9 +25,9 @@ export function getConfigData() {
   }
 }
 
-export function setConfigData(data, { Result }) {
+export async function setConfigData(data, { Result }) {
   for (let key in data) {
-    Config.modify(...key.split("."), data[key])
+    await Config.modify(...key.split("."), data[key])
   }
   return Result.ok({}, "Ciallo～(∠・ω< )⌒☆")
 }
