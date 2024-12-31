@@ -2,10 +2,11 @@ import YAML from "yaml"
 import cfg from "../../../lib/config/config.js"
 import makeConfig from "../../../lib/plugins/config.js"
 import fs from "node:fs/promises"
-import { Plugin_Path } from "../constants/Path.js"
+import { Plugin_Name, Plugin_Path } from "../constants/Path.js"
 import _ from "lodash"
 
 export class Config {
+  plugin_name = Plugin_Name
   plugin_path = Plugin_Path
   /** 初始化配置 */
   async initCfg() {
@@ -31,7 +32,7 @@ export class Config {
       }
     }
 
-    const { config, configSave } = await makeConfig("DF-Plugin", this.config, keep, i => i.replace(/(\n.+?Tips:)/g, "\n$1"))
+    const { config, configSave } = await makeConfig(this.plugin_name, this.config, keep, i => i.replace(/(\n.+?Tips:)/g, "\n$1"))
     this.config = config
     this.configSave = configSave
     return this
