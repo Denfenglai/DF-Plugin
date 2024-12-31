@@ -22,7 +22,8 @@
   "author": "DengFengLai",
   "license": "MIT",
   "dependencies": {
-    "marked": "^14.1.4"
+    "marked": "^14.1.4",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "^8.57.1",
