@@ -1,7 +1,7 @@
 import fs from "node:fs"
-import _ from "lodash"
+import lodash from "lodash"
 import path from "node:path"
-import { Poke_Path } from "#components"
+import { Poke_Path, Poke_List, Config } from "#components"
 
 /**
  * 随机获取一个文件
@@ -15,7 +15,7 @@ function randomFile(dirPath) {
       logger.error(`[DF-Plugin] 获取文件失败: ${dirPath}`)
       return null
     }
-    const fileName = _.sample(files)
+    const fileName = lodash.sample(files)
     return path.join(dirPath, fileName)
   } catch (err) {
     logger.error(`[DF-Plugin] 获取文件错误: ${dirPath}\n${err}`)
@@ -28,10 +28,17 @@ function randomFile(dirPath) {
  * @param {string} name - 表情包名称
  * @returns {string|null} 文件路径或api地址
  */
-function imagePoke(name) {
-  const Path = Poke_Path + "/" + name
-  if (!fs.existsSync(Path)) return `https://yugan.love/?name=${name}`
-  return randomFile(Path)
+function imagePoke(name = "all") {
+  let { Black } = Config.other, List = Poke_List
+  if (name == "all") {
+    if (Array.isArray(Black) && Black.length > 0) {
+      List = Poke_List.filter(type => !Black.includes(type))
+    }
+    name = lodash.sample(List)
+  }
+  const path = Poke_Path + "/" + name
+  if (!fs.existsSync(path)) return `https://yugan.love/?name=${name}`
+  return randomFile(path)
 }
 
 export { randomFile, imagePoke }

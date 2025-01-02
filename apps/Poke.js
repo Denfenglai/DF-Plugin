@@ -1,5 +1,4 @@
 import fs from "node:fs"
-import _ from "lodash"
 import { imagePoke } from "#model"
 import { Config, Poke_List, Poke_Path } from "#components"
 
@@ -17,16 +16,11 @@ export class DF_Poke extends plugin {
   }
 
   async poke() {
-    const { chuo, chuoType, Black } = Config.other
+    const { chuo, chuoType } = Config.other
     if (!chuo) return false
     if (this.e.target_id !== this.e.self_id) return false
     let name
-    let List = Poke_List
-
-    if (chuoType === "all") {
-      if (Array.isArray(Black) && Black.length > 0) List = Poke_List.filter(type => !Black.includes(type))
-      name = _.sample(List)
-    } else {
+    if (chuoType !== "all") {
       name = Poke_List[chuoType]
     }
     if (!name) return false

@@ -2,9 +2,7 @@ import Version from "./components/Version.js"
 import { Plugin_Name as AppName } from "#components"
 import { loadApps, logSuccess } from "./lib/load/loadApps.js"
 
-let apps
-let loadedFilesCount = 0
-let loadedFilesCounterr = 0
+let apps, loadedFilesCount = 0, loadedFilesCounterr = 0
 
 try {
   const {
