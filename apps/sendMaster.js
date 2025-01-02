@@ -1,7 +1,9 @@
 import moment from "moment"
 import { ulid } from "ulid"
 import { common, Config } from "#components"
+import { imagePoke } from "#model"
 import { sendMasterMsg, extractMessageId, getSourceMessage, getMasterQQ } from "../model/sendMasterMsg.js"
+import { segment } from "oicq"
 
 const key = "DF:contact"
 let Sending = false
@@ -52,7 +54,7 @@ export class SendMasterMsgs extends plugin {
       if (message.length === 0) return e.reply("❎ 消息不能为空")
 
       const type = e.bot?.version?.id || e?.adapter_id || "QQ"
-      const avatar = e.member?.getAvatarUrl() || e.friend?.getAvatarUrl()
+      const avatar = sendAvatar ? segment.image(e.sender?.getAvatarUrl?.() || e.friend?.getAvatarUrl?.() || imagePoke("all")) : ""
       const user_id = `${e.sender.nickname}(${e.user_id})`
       const group = e.isGroup ? `${e.group.name || "未知群名"}(${e.group_id})` : "私聊"
       const bot = `${e.bot.nickname}(${e.bot.uin})`
@@ -61,7 +63,7 @@ export class SendMasterMsgs extends plugin {
 
       const msg = [
       `联系主人消息(${id})\n`,
-      sendAvatar ? segment.image(avatar) : "",
+      (avatar && sendAvatar) ? segment.image(avatar) : "",
       `平台: ${type}\n`,
       `用户: ${user_id}\n`,
       `来自: ${group}\n`,

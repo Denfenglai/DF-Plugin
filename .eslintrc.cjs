@@ -38,7 +38,8 @@ module.exports = {
     "jsdoc/require-param-description": 0,
     "jsdoc/require-returns-description": 0,
     "jsdoc/require-param-type": 0,
-    "import/extensions": [ "error", "ignorePackages" ]
+    "import/extensions": [ "error", "ignorePackages" ],
+    "one-var": [ "off" ]
   },
   settings: {
     "import/resolver": {
