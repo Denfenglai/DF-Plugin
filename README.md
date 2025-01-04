@@ -85,7 +85,10 @@ pnpm install
 
 </details>
 
-- 更多功能请使用 `#DF帮助`
+---
+
+> 更多功能请使用 `#DF帮助`  
+> 查看近期更改请使用`#DF版本`
 
 ## ⚙️ 插件配置
 
@@ -147,16 +150,25 @@ pnpm install
 
 如果您有兴趣对本项目做出贡献，请阅读[贡献指南](./CONTRIBUTING.md)。
 
+## 👥 联系我们
+
+- QQ交流群: [964193559](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=hGiK1lQOmbJzP7S0xm-00NKdNi9Oe8Ma&authKey=aQRGoOwAyQ%2BYZ%2BZ5QNKJegwf5Y%2BgYM3Y%2F3%2Fc61cSquEuoIPM1qKemM6ajHb0sRFk&noverify=0&group_code=964193559)
+- Terlegram: [点击加入](https://t.me/dengfenglaidudu)
+
 ## ⭐ 支持本项目
 
 如果你觉得本项目对你有帮助，请给本项目点点star，你是鼓励是我们前进的动力。
+
+## ❤️ 赞助作者
+
+- [爱发电](https://afdian.com/a/DenFengLai)
 
 ## 💝 友情链接
 
 - [TRSS.me](https://TRSS.me)
 - [Yenai-Plugin](https://Yenai.TRSS.me)
 - [Fanji-plugin](http://gitee.com/adrae/Fanji-plugin)
-- [DF戳一戳图库](https://gitee.com/DenFengLai/poke)
+- [DF-Poke](https://gitee.com/DenFengLai/poke)
 
 ## 🎁 特别鸣谢
 
