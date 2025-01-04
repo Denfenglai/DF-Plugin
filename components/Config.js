@@ -33,7 +33,7 @@ export class Config {
     }
 
     const { config, configSave } = await makeConfig(this.plugin_name, this.config, keep, {
-      replacer: i => i.replace(/(\n.+?Tips:)/g, "\n$1"),
+      replacer: i => i.replace(/(\n.+?Tips:)/g, "\n$1")
     })
     this.config = config
     this.configSave = configSave
