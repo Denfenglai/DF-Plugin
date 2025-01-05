@@ -19,12 +19,12 @@ export class DF_Poke extends plugin {
     const { chuo, chuoType } = Config.other
     if (!chuo) return false
     if (this.e.target_id !== this.e.self_id) return false
-    let name
+    let name = chuoType
     if (chuoType !== "all") {
       name = Poke_List[chuoType]
     }
     if (!name) return false
-    logger.mark(`${logger.blue("[DF-Plugin]")}${logger.green("[戳一戳]")}获取 ${name} 图片`)
+    logger.info(`${logger.blue("[DF-Plugin]")}${logger.green("[戳一戳]")}获取 ${name} 图片`)
     const file = imagePoke(name)
     if (!file) return false
     return this.e.reply(segment.image(file))
