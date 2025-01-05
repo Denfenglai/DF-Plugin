@@ -63,7 +63,7 @@ export class SendMasterMsgs extends plugin {
 
       const msg = [
       `联系主人消息(${id})\n`,
-      (avatar && sendAvatar) ? segment.image(avatar) : "",
+      (avatar && sendAvatar) ? avatar : "",
       `平台: ${type}\n`,
       `用户: ${user_id}\n`,
       `来自: ${group}\n`,
