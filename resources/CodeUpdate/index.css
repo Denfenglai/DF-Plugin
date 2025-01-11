@@ -1,10 +1,10 @@
 @font-face {
-  font-family: "FZB";
-  src: url("../font/FZB.ttf");
+  font-family: "font";
+  src: url("../font/font.ttf");
 }
 * {
   margin: 0;
-  font-family: "FZB";
+  font-family: "font";
   box-sizing: border-box;
   -webkit-user-select: none;
   -moz-user-select: none;

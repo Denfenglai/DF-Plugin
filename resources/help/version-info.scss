@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "FZB";
-  src: url("../font/FZB.ttf");
+  font-family: "font";
+  src: url("../font/font.ttf");
 }
 
 @mixin linear-bg($color) {
@@ -10,7 +10,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "FZB";
+  font-family: "font";
   box-sizing: border-box;
   -webkit-user-select: none;
   user-select: none;
@@ -27,6 +27,35 @@ body {
   width: 520px;
   padding: 10px 0;
   background: #1e1f20;
+}
+
+.cont {
+  border-radius: 10px;
+  background: url("./imgs/card-bg.png") top left repeat-x;
+  background-size: auto 100%;
+  margin: 15px 0px;
+  position: relative;
+  box-shadow: 0 0 1px 0 #ccc, 2px 2px 4px 0 rgba(50, 50, 50, 0.8);
+  overflow: hidden;
+  color: #fff;
+  font-size: 16px;
+
+  .cont-title {
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 1px 0 #fff;
+    color: #d3bc8e;
+    padding: 10px 20px;
+    text-align: left;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .cont-body {
+    padding: 10px 15px;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px 0 #fff;
+    font-weight: normal;
+  }
 }
 
 .log-cont {
@@ -84,5 +113,21 @@ body {
     transform-origin: 0 0;
     color: #d3bc8e;
     white-space: nowrap;
+  }
+}
+
+.copyright {
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  padding-left: 10px;
+  text-shadow: 1px 1px 1px #000;
+  margin: 10px 0;
+
+  .version {
+    color: #d3bc8e;
+    display: inline-block;
+    padding: 0 3px;
   }
 }
