@@ -43,8 +43,7 @@ const Theme = {
 
     const ret = [
       `
-      body{background-image:url(${theme.bg});width:${width}px;}
-      .container{background-image:url(${theme.main});width:${width}px;}
+      .container{background:url(${theme.main}) center top / cover no-repeat;width:${width}px;}
       .help-table .td,.help-table .th{width:${100 / colCount}%}
       `
     ]

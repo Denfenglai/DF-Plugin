@@ -8,7 +8,7 @@ export class Version_Info extends plugin {
       priority: 400,
       rule: [
         {
-          reg: "^#?DF(插件)?版本$",
+          reg: "^#?[Dd][Ff](插件)?版本$",
           fnc: "plugin_version"
         }
       ]

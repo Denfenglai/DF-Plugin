@@ -53,8 +53,7 @@ export class help extends plugin {
     return await common.render("help/index", {
       helpCfg: helpConfig,
       helpGroup,
-      ...themeData,
-      element: "default"
+      ...themeData
     }, { e, scale: 1.6 })
   }
 }
